@@ -29,6 +29,6 @@ class VacationEditEmployeeCommand
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $userEmployee = $this->getContainer()->get(EmployeeManager::EMPLOYEE_MANAGER);
-        
+        $employee = 
     }
 }
