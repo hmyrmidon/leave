@@ -73,28 +73,4 @@ class Team
     {
         return $this->name;
     }
-
-    /**
-     * Set employee
-     *
-     * @param \AppBundle\Entity\Employee $employee
-     *
-     * @return Team
-     */
-    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
-    {
-        $this->employee = $employee;
-
-        return $this;
-    }
-
-    /**
-     * Get employee
-     *
-     * @return \AppBundle\Entity\Employee
-     */
-    public function getEmployee()
-    {
-        return $this->employee;
-    }
 }

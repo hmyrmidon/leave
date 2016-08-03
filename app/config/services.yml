@@ -7,3 +7,8 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.employee_manager:
+        class: 'AppBundle\Manager\EmployeeManager'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"

@@ -7,6 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    command.default_name: %vacation_command%
 
 framework:
     #esi:             ~
@@ -70,7 +71,7 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: AppBundle\Entity\Employe
+    user_class: AppBundle\Entity\Employee
 
 doctrine_migrations:
     dir_name: "%kernel.root_dir%/DoctrineMigrations"
