@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
  * Class Employe
  * @package AppBundle\Entity
  * @ORM\Entity()
- * @ORM\Table(name="employe")
+ * @ORM\Table(name="employee")
  */
-class Employe extends BaseUser
+class Employee extends BaseUser
 {
     /**
      * @var int $id
@@ -39,6 +39,18 @@ class Employe extends BaseUser
      * @ORM\Column(name="hiring_date", type="datetime", nullable=false)
      */
     protected $hiringDate;
+
+    /**
+     *
+     * @var \Team
+     * 
+     * @ORM\OneToMany(targetEntity="Team", mappedBy="employee")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     * }}
+     * 
+     */
+    private $team;
 
     public function __construct()
     {
