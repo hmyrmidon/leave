@@ -29,9 +29,9 @@ class WorkflowStatus
     protected $label;
     /**
      * @var WorkflowModel $workflow
-     * @ORM\OneToMany(targetEntity="WorkflowModel", mappedBy="wfStatus")
+     * @ORM\OneToMany(targetEntity="WorkflowModelStep", mappedBy="wfStatus")
      */
-    protected $workflow;
+    protected $wfModelStep;
     /**
      * @return int
      */
@@ -104,5 +104,39 @@ class WorkflowStatus
     public function getWorkflow()
     {
         return $this->workflow;
+    }
+
+    /**
+     * Add wfModelStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     *
+     * @return WorkflowStatus
+     */
+    public function addWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    {
+        $this->wfModelStep[] = $wfModelStep;
+
+        return $this;
+    }
+
+    /**
+     * Remove wfModelStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     */
+    public function removeWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    {
+        $this->wfModelStep->removeElement($wfModelStep);
+    }
+
+    /**
+     * Get wfModelStep
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWfModelStep()
+    {
+        return $this->wfModelStep;
     }
 }

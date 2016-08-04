@@ -3,6 +3,8 @@
 namespace AppBundle\Listener;
 
 
+use AppBundle\Entity\VacationRequest;
+
 class VacationListener
 {
     public function onWaiting(){}
@@ -15,6 +17,7 @@ class VacationListener
     public function onStatusChanged(){}
     public function onSubmitRequest($event)
     {
-        dump('request sended');
+        dump($event->getEmployee());die;
+        dump('sended email to '.$event->getEmployee());
     }
 }

@@ -36,9 +36,13 @@ class Team
     protected $name;
     /**
      * @var TeamWorkflowModel $teamWf
-     * @ORM\OneToMany(targetEntity="TeamWorkflowModel", mappedBy="team")
+     * @ORM\OneToMany(targetEntity="WorkflowModelStep", mappedBy="team")
      */
-    protected $teamWf;
+    protected $wfModelStep;
+    /**
+     * @ORM\OneToMany(targetEntity="Employee", mappedBy="team")
+     */
+    protected $employee;
 
     /**
      * Team constructor.
@@ -102,5 +106,73 @@ class Team
     public function removeTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
     {
         $this->teamWf->removeElement($teamWf);
+    }
+
+    /**
+     * Add wfModelStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     *
+     * @return Team
+     */
+    public function addWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    {
+        $this->wfModelStep[] = $wfModelStep;
+
+        return $this;
+    }
+
+    /**
+     * Remove wfModelStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     */
+    public function removeWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    {
+        $this->wfModelStep->removeElement($wfModelStep);
+    }
+
+    /**
+     * Get wfModelStep
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWfModelStep()
+    {
+        return $this->wfModelStep;
+    }
+
+    /**
+     * Add employee
+     *
+     * @param \AppBundle\Entity\Employee $employee
+     *
+     * @return Team
+     */
+    public function addEmployee(\AppBundle\Entity\Employee $employee)
+    {
+        $this->employee[] = $employee;
+
+        return $this;
+    }
+
+    /**
+     * Remove employee
+     *
+     * @param \AppBundle\Entity\Employee $employee
+     */
+    public function removeEmployee(\AppBundle\Entity\Employee $employee)
+    {
+        $this->employee->removeElement($employee);
+    }
+
+    /**
+     * Get employee
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
     }
 }

@@ -3,6 +3,8 @@
 namespace AppBundle\Command;
 
 use AppBundle\Entity\VacationRequest;
+use AppBundle\Event\OnSubmitVacationRequestEvent;
+use AppBundle\Event\VacationAvailableEvent;
 use AppBundle\Manager\VacationRequestManager;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -31,8 +33,10 @@ class VacationRequestCommand extends ContainerAwareCommand
         $this
             ->setName('app:vacation:request-command')
             ->addOption('user', 'u', InputOption::VALUE_REQUIRED)
-            ->addOption('add', null, InputOption::VALUE_NONE)
-            ->addOption('addwf', 'w', InputOption::VALUE_NONE)
+            ->addOption('add', null, InputOption::VALUE_OPTIONAL)
+            ->addOption('addwf', null, InputOption::VALUE_OPTIONAL)
+            ->addOption('addstep', null, InputOption::VALUE_OPTIONAL)
+            ->addOption('addstatus', null, InputOption::VALUE_OPTIONAL)
             ->setDescription('Perform vacation request');
     }
 
@@ -43,7 +47,6 @@ class VacationRequestCommand extends ContainerAwareCommand
     {
         $this->input  = $input;
         $this->output = $output;
-
         if ($input->getOption('user')) {
             $user = $input->getOption('user');
             if ($input->getOption('add')) {
@@ -78,7 +81,10 @@ class VacationRequestCommand extends ContainerAwareCommand
          * @var VacationRequestManager $srv
          */
         $srv = $this->getContainer()->get(VacationRequestManager::SERVICE_NAME);
-        $srv->save($vacation);
+        $vacation = $srv->save($vacation);
+        $event = new OnSubmitVacationRequestEvent($vacation);
+        $this->getContainer()->get('event_dispatcher')->dispatch(VacationAvailableEvent::ON_SUBMIT_VACATION, $event);
+
         $this->output->writeln('vacation request saved!');
         $this->output->writeln(':)');
     }
@@ -86,7 +92,7 @@ class VacationRequestCommand extends ContainerAwareCommand
     public function addWorkflow()
     {
         $this->output->writeln('add new workflow rule');
-        
+
         $this->output->writeln(':)');
         
     }

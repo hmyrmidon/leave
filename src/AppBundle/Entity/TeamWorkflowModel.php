@@ -22,16 +22,6 @@ class TeamWorkflowModel
      */
     protected $id;
     /**
-     * @var string $label
-     * @ORM\Column(name="label", type="string", length=50)
-     */
-    protected $label;
-    /**
-     * @var User $validator
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="teamWf")
-     */
-    protected $validator;
-    /**
      * @var WorkflowModel $workflow
      * @ORM\ManyToOne(targetEntity="WorkflowModel", inversedBy="teamWf")
      */
@@ -88,29 +78,5 @@ class TeamWorkflowModel
     public function setTeam($team)
     {
         $this->team = $team;
-    }
-
-    /**
-     * Set validator
-     *
-     * @param \AppBundle\Entity\User $validator
-     *
-     * @return TeamWorkflowModel
-     */
-    public function setValidator(\AppBundle\Entity\User $validator = null)
-    {
-        $this->validator = $validator;
-
-        return $this;
-    }
-
-    /**
-     * Get validator
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getValidator()
-    {
-        return $this->validator;
     }
 }

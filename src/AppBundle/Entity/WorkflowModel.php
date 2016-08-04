@@ -36,20 +36,15 @@ class WorkflowModel
      */
     protected $description;
     /**
-     * @var WorkflowStatus $wfStatus
-     * @ORM\ManyToOne(targetEntity="WorkflowStatus", inversedBy="workflow")
-     */
-    protected $wfStatus;
-    /**
      * @var WorkflowStep $wfStep
-     * @ORM\ManyToOne(targetEntity="WorkflowStep", inversedBy="workflow")
+     * @ORM\OneToMany(targetEntity="WorkflowModelStep", mappedBy="workflow")
      */
     protected $wfStep;
     /**
      * @var TeamWorkflowModel $teamWf
      * @ORM\OneToMany(targetEntity="TeamWorkflowModel", mappedBy="workflow")
      */
-    protected $teamWf;
+    protected $wfModelStep;
 
     /**
      * WorkflowModel constructor.
@@ -179,5 +174,63 @@ class WorkflowModel
     public function getTeamWf()
     {
         return $this->teamWf;
+    }
+
+    /**
+     * Add wfStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfStep
+     *
+     * @return WorkflowModel
+     */
+    public function addWfStep(\AppBundle\Entity\WorkflowModelStep $wfStep)
+    {
+        $this->wfStep[] = $wfStep;
+
+        return $this;
+    }
+
+    /**
+     * Remove wfStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfStep
+     */
+    public function removeWfStep(\AppBundle\Entity\WorkflowModelStep $wfStep)
+    {
+        $this->wfStep->removeElement($wfStep);
+    }
+
+    /**
+     * Add wfModelStep
+     *
+     * @param \AppBundle\Entity\TeamWorkflowModel $wfModelStep
+     *
+     * @return WorkflowModel
+     */
+    public function addWfModelStep(\AppBundle\Entity\TeamWorkflowModel $wfModelStep)
+    {
+        $this->wfModelStep[] = $wfModelStep;
+
+        return $this;
+    }
+
+    /**
+     * Remove wfModelStep
+     *
+     * @param \AppBundle\Entity\TeamWorkflowModel $wfModelStep
+     */
+    public function removeWfModelStep(\AppBundle\Entity\TeamWorkflowModel $wfModelStep)
+    {
+        $this->wfModelStep->removeElement($wfModelStep);
+    }
+
+    /**
+     * Get wfModelStep
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWfModelStep()
+    {
+        return $this->wfModelStep;
     }
 }

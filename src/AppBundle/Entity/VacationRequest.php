@@ -79,7 +79,7 @@ class VacationRequest
     /**
      * @return string
      */
-    public function getReason()
+    public function getReason()     
     {
         return $this->reason;
     }

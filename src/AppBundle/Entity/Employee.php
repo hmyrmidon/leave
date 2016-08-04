@@ -50,6 +50,11 @@ class Employee
      * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="employee")
      */
     protected $vacation;
+    /**
+     * @var Team $team
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="employee")
+     */
+    protected $team;
 
     public function __construct()
     {
@@ -159,5 +164,63 @@ class Employee
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add vacation
+     *
+     * @param \AppBundle\Entity\VacationRequest $vacation
+     *
+     * @return Employee
+     */
+    public function addVacation(\AppBundle\Entity\VacationRequest $vacation)
+    {
+        $this->vacation[] = $vacation;
+
+        return $this;
+    }
+
+    /**
+     * Remove vacation
+     *
+     * @param \AppBundle\Entity\VacationRequest $vacation
+     */
+    public function removeVacation(\AppBundle\Entity\VacationRequest $vacation)
+    {
+        $this->vacation->removeElement($vacation);
+    }
+
+    /**
+     * Get vacation
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVacation()
+    {
+        return $this->vacation;
+    }
+
+    /**
+     * Set team
+     *
+     * @param \AppBundle\Entity\Team $team
+     *
+     * @return Employee
+     */
+    public function setTeam(\AppBundle\Entity\Team $team = null)
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * Get team
+     *
+     * @return \AppBundle\Entity\Team
+     */
+    public function getTeam()
+    {
+        return $this->team;
     }
 }

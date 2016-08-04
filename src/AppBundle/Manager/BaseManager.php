@@ -29,5 +29,7 @@ class BaseManager
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
         $this->entityManager->clear();
+
+        return $entity;
     }
 }

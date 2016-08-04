@@ -40,9 +40,9 @@ class WorkflowStep
     protected $order;
     /**
      * @var WorkflowModel $workflow
-     * @ORM\OneToMany(targetEntity="WorkflowModel", mappedBy="wfStep")
+     * @ORM\OneToMany(targetEntity="WorkflowModelStep", mappedBy="wfStep")
      */
-    protected $workflow;
+    protected $wfModelStep;
 
     /**
      * @return string
@@ -122,5 +122,39 @@ class WorkflowStep
     public function removeWorkflow(\AppBundle\Entity\WorkflowModel $workflow)
     {
         $this->workflow->removeElement($workflow);
+    }
+
+    /**
+     * Add wfModelStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     *
+     * @return WorkflowStep
+     */
+    public function addWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    {
+        $this->wfModelStep[] = $wfModelStep;
+
+        return $this;
+    }
+
+    /**
+     * Remove wfModelStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     */
+    public function removeWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    {
+        $this->wfModelStep->removeElement($wfModelStep);
+    }
+
+    /**
+     * Get wfModelStep
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWfModelStep()
+    {
+        return $this->wfModelStep;
     }
 }
