@@ -2,16 +2,18 @@
 
 namespace AppBundle\Entity;
 
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
- * Team
- *
- * @ORM\Table(name="team")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamRepository")
+ * 
+ * @package AppBundle\Entity
+ * @ORM\Entity()
+ * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
-class Team
+class User extends BaseUser
 {
     /**
      * @var int
@@ -20,24 +22,26 @@ class Team
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
+
+    /**
+     * @var string $lastName
+     * @ORM\Column(name="last_name", type="string", length=100, nullable=false)
+     */
+    protected $lastName;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="first_name", type="string", length=255)
      */
-    private $name;
+    protected $firstName;
 
     /**
      *
      * @var \Employee
-     * 
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Employee", inversedBy="team")
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
-     * })
-     * 
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="user")
+     * @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
      */
     private $employee;
 
@@ -60,37 +64,51 @@ class Team
     private $updated;
 
     /**
-     * Get id
+     * Set lastName
      *
-     * @return int
+     * @param string $lastName
+     *
+     * @return User
      */
-    public function getId()
+    public function setLastName($lastName)
     {
-        return $this->id;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Team
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
+        $this->lastName = $lastName;
 
         return $this;
     }
 
     /**
-     * Get name
+     * Get lastName
      *
      * @return string
      */
-    public function getName()
+    public function getLastName()
     {
-        return $this->name;
+        return $this->lastName;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     *
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
     }
 
     /**
@@ -98,7 +116,7 @@ class Team
      *
      * @param \AppBundle\Entity\Employee $employee
      *
-     * @return Team
+     * @return User
      */
     public function setEmployee(\AppBundle\Entity\Employee $employee = null)
     {

@@ -4,11 +4,28 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
     app.employee_manager:
         class: 'AppBundle\Manager\EmployeeManager'
         arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+
+    app.user_manager:
+        class: 'AppBundle\Manager\UserManager'
+        arguments: 
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+
+    app.employee_listner:
+        class: 'AppBundle\Listener\VacationEmployeeListener'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags: 
+            - { name : "kernel.event_listener" , event: "app.on_user_process", method: "onCreateEmployee"}
+
+    app.team_manager:
+        class: 'AppBundle\Manager\TeamManager'
+        arguments: 
             - "@doctrine.orm.entity_manager"
             - "@router"

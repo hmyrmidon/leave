@@ -4,11 +4,13 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 /**
  * Class Employee
  * @package AppBundle\Entity
  * @ORM\Entity()
  * @ORM\Table(name="employee")
+ * 
  */
 class Employee extends BaseUser
 {
@@ -42,12 +44,64 @@ class Employee extends BaseUser
 
     /**
      *
+     * @var string $maritalStatus
+     * @ORM\Column(name="marital_status", type="string", length=25, nullable=false)
+     */
+    protected $maritalStatus;
+
+    /**
+     *
+     * @var string $address
+     * @ORM\Column(name="address", type="string", length=50, nullable=false)
+     */
+    protected $address;
+
+    /**
+     *
+     * @var integer
+     * @ORM\Column(name="number_children", type="integer", nullable=true)
+     */
+    protected $nbChildren;
+
+    /**
+     *
+     * @var \Datetime
+     * @ORM\Column(name="birth_date", type="datetime", nullable=true)
+     * 
+     */
+    protected $birthDate;
+
+    /**
+     *
+     * @var \User
+     * @ORM\OneToOne(targetEntity="User", mappedBy="employee", cascade={"persist"})
+     */
+    private $user;
+
+    /**
+     *
      * @var \Team
      * 
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Team", mappedBy="employee")
      * 
      */
     private $team;
+
+    /**
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
 
     public function __construct()
     {
@@ -167,5 +221,125 @@ class Employee extends BaseUser
     public function getTeam()
     {
         return $this->team;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Employee
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
+     * Set maritalStatus
+     *
+     * @param string $maritalStatus
+     *
+     * @return Employee
+     */
+    public function setMaritalStatus($maritalStatus)
+    {
+        $this->maritalStatus = $maritalStatus;
+
+        return $this;
+    }
+
+    /**
+     * Get maritalStatus
+     *
+     * @return string
+     */
+    public function getMaritalStatus()
+    {
+        return $this->maritalStatus;
+    }
+
+    /**
+     * Set address
+     *
+     * @param string $address
+     *
+     * @return Employee
+     */
+    public function setAddress($address)
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * Get address
+     *
+     * @return string
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * Set nbChildren
+     *
+     * @param integer $nbChildren
+     *
+     * @return Employee
+     */
+    public function setNbChildren($nbChildren)
+    {
+        $this->nbChildren = $nbChildren;
+
+        return $this;
+    }
+
+    /**
+     * Get nbChildren
+     *
+     * @return integer
+     */
+    public function getNbChildren()
+    {
+        return $this->nbChildren;
+    }
+
+    /**
+     * Set birthDate
+     *
+     * @param \DateTime $birthDate
+     *
+     * @return Employee
+     */
+    public function setBirthDate($birthDate)
+    {
+        $this->birthDate = $birthDate;
+
+        return $this;
+    }
+
+    /**
+     * Get birthDate
+     *
+     * @return \DateTime
+     */
+    public function getBirthDate()
+    {
+        return $this->birthDate;
     }
 }

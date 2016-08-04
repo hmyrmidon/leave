@@ -23,6 +23,8 @@ class VacationAddEmployeeCommand extends Command
                 ->addArgument("firstname", InputArgument::REQUIRED, 'The firstname of the employee.')
                 ->addArgument("registrationNumber", InputArgument::REQUIRED, 'The number of registration of the employee.')
                 ->addArgument("hiringDate", InputArgument::REQUIRED, 'The hiring date of the employee.')
+                ->addArgument("maritalStatus", InputArgument::REQUIRED, 'The marital status of the employee.')
+                ->addArgument("address", InputArgument::REQUIRED, 'The address of the employee.')
         ;
     }
 
@@ -34,10 +36,10 @@ class VacationAddEmployeeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $userEmployee = $this->getContainer()->get(EmployeeManager::EMPLOYEE_MANAGER);
-        $employee = new \AppBundle\Entity\Employee();
+        $employee     = new \AppBundle\Entity\Employee();
 
         $hiringDate = new \DateTime($input->getArgument('hiringDate')); 
-        $password = md5($input->getArgument('password'), 'salt');
+        $password   = crypt($input->getArgument('password'));
 
         $employee->setUsername($input->getArgument('username'));
         $employee->setEmail($input->getArgument('email'));
@@ -46,10 +48,13 @@ class VacationAddEmployeeCommand extends Command
         $employee->setFirstName($input->getArgument('firstname'));
         $employee->setRegistrationNumber($input->getArgument('registrationNumber'));
         $employee->setHiringDate($hiringDate);
+        $employee->setMaritalStatus($input->getArgument('maritalStatus'));
+        $employee->setAddress($input->getArgument('address'));
         $userEmployee->add($employee);
+
+        $event = new \AppBundle\Event\VacationEmployeeEvent($employee);
+        $this->getContainer()->get('event_dispatcher')->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME, $event);
 
         $output->writeln('User successfully generated!', $employee->getUsername());
     }
-
-    
 }

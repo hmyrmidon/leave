@@ -1,6 +1,10 @@
 <?php
 
-class TeamManager 
+namespace AppBundle\Manager;
+
+use AppBundle\Manager\BaseManager;
+
+class TeamManager extends BaseManager
 {
-    //put your code here
+    const TEAM_MANAGER = 'app.team_manager';
 }

@@ -23,12 +23,8 @@ class VacationEditEmployeeCommand
                 ->addArgument("firstname", InputArgument::REQUIRED, 'The firstname of the employee.')
                 ->addArgument("registrationNumber", InputArgument::REQUIRED, 'The number of registration of the employee.')
                 ->addArgument("hiringDate", InputArgument::REQUIRED, 'The hiring date of the employee.')
+                ->addArgument("maritalStatus", InputArgument::REQUIRED, 'The marital status of the employee.')
+                ->addArgument("address", InputArgument::REQUIRED, 'The address of the employee.')
         ;
-    }
-
-    public function execute(InputInterface $input, OutputInterface $output)
-    {
-        $userEmployee = $this->getContainer()->get(EmployeeManager::EMPLOYEE_MANAGER);
-        $employee = 
     }
 }
