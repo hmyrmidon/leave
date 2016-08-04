@@ -10,4 +10,15 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
+    app.app.wf_step_manager:
+        class: 'AppBundle\Manager\WorkflowStepManager'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+    #Application's Event Listeners
+    app.event.listeners:
+        class: 'AppBundle\Listener\VacationListener'
+        tags:
+            - { name: "kernel.event_listener", event: "app.on_validate_event", method: "onValidate" }
+            - { name: "kernel.event_listener", event: "app.on_submit_vacation_event", method: 'onSubmitRequest'}
     #Application's external services

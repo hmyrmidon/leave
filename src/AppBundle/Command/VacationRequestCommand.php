@@ -2,13 +2,27 @@
 
 namespace AppBundle\Command;
 
+use AppBundle\Entity\VacationRequest;
+use AppBundle\Manager\VacationRequestManager;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class VacationRequestCommand extends ContainerAwareCommand
 {
+    /**
+     * @var InputInterface $input
+     */
+    private $input;
+    /**
+     * @var OutputInterface $output
+     */
+    private $output;
+
     /**
      * {@inheritdoc}
      */
@@ -16,10 +30,10 @@ class VacationRequestCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:vacation:request-command')
-            ->addArgument('start', InputArgument::REQUIRED, 'Vacation start date')
-            ->addArgument('end', InputArgument::REQUIRED, 'Vacation end date')
-            ->addArgument('reason', InputArgument::REQUIRED, 'Vacation reason')
-            ->setDescription('Hello PhpStorm');
+            ->addOption('user', 'u', InputOption::VALUE_REQUIRED)
+            ->addOption('add', null, InputOption::VALUE_NONE)
+            ->addOption('addwf', 'w', InputOption::VALUE_NONE)
+            ->setDescription('Perform vacation request');
     }
 
     /**
@@ -27,6 +41,53 @@ class VacationRequestCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->input  = $input;
+        $this->output = $output;
+
+        if ($input->getOption('user')) {
+            $user = $input->getOption('user');
+            if ($input->getOption('add')) {
+                $add = $input->getOption('add');
+                if (!is_array($add)) {
+                    $add = explode(',', $add);
+                }
+                array_push($add, $user);
+                $this->save($add);
+            }
+        }
+        if ($input->getOption('addwf')) {
+            $this->addWorkflow();
+        }
+    }
+
+    public function save($_vacation)
+    {
+        $this->output->writeln('load vacation from input');
+        $vacation = new VacationRequest();
+        $vacation->setStartDate(\DateTime::createFromFormat('Y-m-d', $_vacation[0]));
+        $vacation->setEndDate(\DateTime::createFromFormat('Y-m-d', $_vacation[1]));
+        $vacation->setReason($_vacation[2]);
+        $this->output->writeln('load employee from database');
+        $employee = $this->getContainer()
+                         ->get('doctrine.orm.entity_manager')
+                         ->getRepository('AppBundle:Employee')
+                         ->find($_vacation[3]);
+        $vacation->setEmployee($employee);
+        $this->output->writeln('save vacation request');
+        /**
+         * @var VacationRequestManager $srv
+         */
+        $srv = $this->getContainer()->get(VacationRequestManager::SERVICE_NAME);
+        $srv->save($vacation);
+        $this->output->writeln('vacation request saved!');
+        $this->output->writeln(':)');
+    }
+
+    public function addWorkflow()
+    {
+        $this->output->writeln('add new workflow rule');
+        
+        $this->output->writeln(':)');
         
     }
 }

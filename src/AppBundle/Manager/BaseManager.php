@@ -5,6 +5,7 @@ namespace AppBundle\Manager;
 
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\Router;
 
 class BaseManager
 {
@@ -13,11 +14,11 @@ class BaseManager
      */
     protected $entityManager;
     /**
-     * @var Route $router
+     * @var Router $router
      */
     protected $router;
 
-    public function __construct(EntityManager $entityManager, Route $route)
+    public function __construct(EntityManager $entityManager, Router $route)
     {
         $this->entityManager = $entityManager;
         $this->router = $route;

@@ -6,15 +6,14 @@ use AppBundle\Traits\BaseTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Annotation as Gedmo;
-use AppBundle\Entity\BaseEntity as Base;
 /**
  * Class VacationRequest
  * @package AppBundle\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\VacationRequestRepository")
  * @ORM\Table(name="vacation_request")
  * @ORM\HasLifecycleCallbacks()
  */
-class VacationRequest extends Base
+class VacationRequest
 {
     use BaseTrait;
     /**
@@ -40,8 +39,8 @@ class VacationRequest extends Base
      */
     protected $reason;
     /**
-     * @var Employe $employee
-     *
+     * @var Employee $employee
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="vacation")
      */
     protected $employee;
 
@@ -93,4 +92,20 @@ class VacationRequest extends Base
         $this->reason = $reason;
     }
 
+    /**
+     * @return Employee
+     */
+    public function getEmployee()
+    {
+        return $this->employee;
+    }
+
+    /**
+     * @param Employee $employee
+     */
+    public function setEmployee($employee)
+    {
+        $this->employee = $employee;
+    }
+    
 }

@@ -6,12 +6,12 @@ namespace AppBundle\Entity;
 use AppBundle\Traits\BaseTrait;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Annotation as Gedmo;
-use AppBundle\Entity\Employe;
+use AppBundle\Entity\Employee;
 use \FOS\UserBundle\Model\User as BaseUser;
 /**
  * Class User
  * @package AppBundle\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
  *
  */
@@ -26,13 +26,17 @@ class User extends BaseUser
      */
     protected $id;
     /**
-     * @var Employe $employee
-     * @ORM\OneToOne(targetEntity="Employe", inversedBy="user", orphanRemoval=false)
+     * @var Employee $employee
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="user", orphanRemoval=false)
      */
     protected $employee;
-
     /**
-     * @return \AppBundle\Entity\Employe
+     * @var TeamWorkflowModel $teamWf
+     * @ORM\OneToMany(targetEntity="TeamWorkflowModel", mappedBy="validator")
+     */
+    protected $teamWf;
+    /**
+     * @return \AppBundle\Entity\Employee
      */
     public function getEmployee()
     {
@@ -40,10 +44,44 @@ class User extends BaseUser
     }
 
     /**
-     * @param \AppBundle\Entity\Employe $employee
+     * @param \AppBundle\Entity\Employee $employee
      */
     public function setEmployee($employee=null)
     {
         $this->employee = $employee;
+    }
+
+    /**
+     * Add teamWf
+     *
+     * @param \AppBundle\Entity\TeamWorkflowModel $teamWf
+     *
+     * @return User
+     */
+    public function addTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
+    {
+        $this->teamWf[] = $teamWf;
+
+        return $this;
+    }
+
+    /**
+     * Remove teamWf
+     *
+     * @param \AppBundle\Entity\TeamWorkflowModel $teamWf
+     */
+    public function removeTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
+    {
+        $this->teamWf->removeElement($teamWf);
+    }
+
+    /**
+     * Get teamWf
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeamWf()
+    {
+        return $this->teamWf;
     }
 }

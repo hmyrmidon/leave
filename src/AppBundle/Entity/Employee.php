@@ -6,12 +6,12 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Entity\User;
 /**
- * Class Employe
+ * Class Employee
  * @package AppBundle\Entity
- * @ORM\Entity()
- * @ORM\Table(name="employe")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
+ * @ORM\Table(name="employee")
  */
-class Employe
+class Employee
 {
     /**
      * @var int $id
@@ -45,6 +45,11 @@ class Employe
      * @ORM\OneToOne(targetEntity="User", mappedBy="employee")
      */
     protected $user;
+    /**
+     * @var VacationRequest $vacation
+     * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="employee")
+     */
+    protected $vacation;
 
     public function __construct()
     {
@@ -131,4 +136,28 @@ class Employe
         $this->hiringDate = $hiringDate;
     }
 
+
+    /**
+     * Set user
+     *
+     * @param \AppBundle\Entity\User $user
+     *
+     * @return Employee
+     */
+    public function setUser(\AppBundle\Entity\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }
