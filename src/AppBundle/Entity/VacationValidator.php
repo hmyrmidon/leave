@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 
+use AppBundle\Traits\BaseTrait;
 use AppBundle\Entity\BaseEntity as Base;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,6 +17,14 @@ use Doctrine\ORM\Mapping\Annotation as Gedmo;
  */
 class VacationValidator extends Base
 {
+    use BaseTrait;
+    /**
+     * @var int $id
+     * @ORM\Id()
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
     /**
      * @var string $lastName
      */
@@ -24,19 +33,6 @@ class VacationValidator extends Base
      * @var string $firstName
      */
     protected $firstName;
-    /**
-     * @var Collection $vacationRequest
-     * @ORM\ManyToMany(targetEntity="VacationRequest", inversedBy="validator")
-     * @ORM\JoinTable(name="vacation_request_validator",
-     *     joinColumns={
-     *          @ORM\JoinColumn(name="validator_id", referencedColumnName="id")
-     *     },
-     *     inverseJoinColumns={
-     *          @ORM\JoinColumn(name="vacation_request_id", referencedColumnName="id")
-     *     }
-     * )
-     */
-    protected $vacationRequest;
 
     /**
      * @return int

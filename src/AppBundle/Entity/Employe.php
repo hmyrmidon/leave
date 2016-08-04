@@ -4,13 +4,14 @@ namespace AppBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Entity\User;
 /**
  * Class Employe
  * @package AppBundle\Entity
  * @ORM\Entity()
  * @ORM\Table(name="employe")
  */
-class Employe extends BaseUser
+class Employe
 {
     /**
      * @var int $id
@@ -39,6 +40,11 @@ class Employe extends BaseUser
      * @ORM\Column(name="hiring_date", type="datetime", nullable=false)
      */
     protected $hiringDate;
+    /**
+     * @var User $user
+     * @ORM\OneToOne(targetEntity="User", mappedBy="employee")
+     */
+    protected $user;
 
     public function __construct()
     {
@@ -54,7 +60,7 @@ class Employe extends BaseUser
     }
 
     /**
-     * @param int $id
+     * @paramint $id
      */
     public function setId($id)
     {

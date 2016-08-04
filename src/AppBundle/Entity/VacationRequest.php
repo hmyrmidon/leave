@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Traits\BaseTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Annotation as Gedmo;
@@ -15,6 +16,14 @@ use AppBundle\Entity\BaseEntity as Base;
  */
 class VacationRequest extends Base
 {
+    use BaseTrait;
+    /**
+     * @var int $id
+     * @ORM\Id()
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
     /**
      * @var \DateTime $startDate
      * @ORM\Column(name="start_date", type="datetime", nullable=false)
@@ -31,26 +40,10 @@ class VacationRequest extends Base
      */
     protected $reason;
     /**
-     * @var Collection $validator
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\VacationValidator", mappedBy="vacationRequest")
+     * @var Employe $employee
+     *
      */
-    protected $validator;
-
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
+    protected $employee;
 
     /**
      * @return \DateTime
@@ -98,22 +91,6 @@ class VacationRequest extends Base
     public function setReason($reason)
     {
         $this->reason = $reason;
-    }
-
-    /**
-     * @return Collection
-     */
-    public function getValidator()
-    {
-        return $this->validator;
-    }
-
-    /**
-     * @param VacationValidator $validator
-     */
-    public function setValidator($validator)
-    {
-        $this->validator = $validator;
     }
 
 }
