@@ -17,9 +17,6 @@ class VacationEditEmployeeCommand extends Command
                 ->setDescription('Update an employee.')
                 ->setHelp("This command allows you to update an employee.")
                 ->addOption("id", null, \Symfony\Component\Console\Input\InputOption::VALUE_REQUIRED)
-                ->addArgument("username", InputArgument::REQUIRED, 'The username of the employee.')
-                ->addArgument("email", InputArgument::REQUIRED, 'The email of the employee.')
-                ->addArgument("password", InputArgument::REQUIRED, 'The password of the employee.')
                 ->addArgument("lastname", InputArgument::REQUIRED, 'The lastname of the employee.')
                 ->addArgument("firstname", InputArgument::REQUIRED, 'The firstname of the employee.')
                 ->addArgument("registrationNumber", InputArgument::REQUIRED, 'The number of registration of the employee.')
@@ -36,12 +33,10 @@ class VacationEditEmployeeCommand extends Command
         $employeeEdit = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('AppBundle:Employee')->find($idEmployee);
 
         $hiringDate = new \DateTime($input->getArgument('hiringDate')); 
-        $password   = crypt($input->getArgument('password'));
+       
         $user = $employeeEdit->getUser();
 
-        $employeeEdit->setUsername($input->getArgument('username'));
-        $employeeEdit->setEmail($input->getArgument('email'));
-        $employeeEdit->setPassword($password);
+
         $employeeEdit->setLastName($input->getArgument('lastname'));
         $employeeEdit->setFirstName($input->getArgument('firstname'));
         $employeeEdit->setRegistrationNumber($input->getArgument('registrationNumber'));

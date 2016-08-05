@@ -47,17 +47,17 @@ class VacationEmployeeListener
          */
         $employee = $event->getEmployee();
 
-        $username  = $employee->getUsername();
-        $email     = $employee->getEmail();
-        $password  = $employee->getPassword();
+//        $username  = $employee->getUsername();
+//        $email     = $employee->getEmail();
+//        $password  = $employee->getPassword();
         $lastName  = $employee->getLastName();
         $firstName = $employee->getFirstName();
 
         $user = $employee->getUser();
 
-        $user->setUsername($username);
-        $user->setEmail($email);
-        $user->setPassword($password);
+//        $user->setUsername($username);
+//        $user->setEmail($email);
+//        $user->setPassword($password);
         $user->setLastName($lastName);
         $user->setFirstName($firstName);
         $user->setEmployee($employee);

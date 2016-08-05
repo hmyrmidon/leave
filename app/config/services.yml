@@ -4,9 +4,8 @@ parameters:
 #    parameter_name: value
 
 services:
-
     app.employee_manager:
-        class: 'AppBundle\Manager\EmployeeManager'
+        class: 'AppBundle\Manager\BaseManager'
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
@@ -32,7 +31,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@router"
 
-     app.vacation_request_manager:
+    app.vacation_request_manager:
         class: 'AppBundle\Manager\VacationRequestManager'
         arguments:
             - "@doctrine.orm.entity_manager"
@@ -46,6 +45,7 @@ services:
         class: 'AppBundle\Manager\HolidayManager'
         arguments:
             - "@doctrine.orm.entity_manager"
+
     #Application's Event Listeners
     app.event.listeners:
         class: 'AppBundle\Listener\VacationListener'

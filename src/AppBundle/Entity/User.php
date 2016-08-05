@@ -4,10 +4,11 @@ namespace AppBundle\Entity;
 
 
 use AppBundle\Traits\BaseTrait;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Annotation as Gedmo;
 use AppBundle\Entity\Employee;
-use \FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * Class User
  * @package AppBundle\Entity

@@ -2,7 +2,7 @@
 
 namespace AppBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
+
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use AppBundle\Entity\User;
@@ -93,11 +93,6 @@ class Employee
      * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="employee")
      */
     protected $vacation;
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * @return int
