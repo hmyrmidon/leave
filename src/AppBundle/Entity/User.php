@@ -4,10 +4,11 @@ namespace AppBundle\Entity;
 
 
 use AppBundle\Traits\BaseTrait;
-use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Annotation as Gedmo;
 use AppBundle\Entity\Employee;
-use \FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 /**
  * Class User
  * @package AppBundle\Entity
@@ -18,6 +19,7 @@ use \FOS\UserBundle\Model\User as BaseUser;
 class User extends BaseUser
 {
     use BaseTrait;
+
     /**
      * @var int $id
      * @ORM\Id()
@@ -25,16 +27,19 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @var Employee $employee
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="user", orphanRemoval=false)
+     * @ORM\OneToOne(targetEntity="Employee", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $employee;
+
     /**
      * @var TeamWorkflowModel $teamWf
      * @ORM\OneToMany(targetEntity="TeamWorkflowModel", mappedBy="validator")
      */
     protected $teamWf;
+
     /**
      * @return \AppBundle\Entity\Employee
      */

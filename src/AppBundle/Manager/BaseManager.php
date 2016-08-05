@@ -2,34 +2,61 @@
 
 namespace AppBundle\Manager;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
-use Doctrine\ORM\EntityManager;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\Routing\Router;
-
-class BaseManager
+class BaseManager 
 {
+    
     /**
-     * @var EntityManager $entityManager
+     * @var EntityManagerInterface $entityManager
      */
-    protected $entityManager;
-    /**
-     * @var Router $router
-     */
-    protected $router;
+    private $entityManager;
 
-    public function __construct(EntityManager $entityManager, Router $route)
+    /**
+     * 
+     * @param EntityManagerInterface $entityManager
+     * @param Router $router
+     * 
+     */
+    public function __construct(EntityManagerInterface $entityManager, Router $router) 
     {
         $this->entityManager = $entityManager;
-        $this->router = $route;
+        $this->route         = $router;
     }
 
-    public function save($entity)
+    /**
+     * 
+     * @param type $entity
+     */
+    public function add($entity)
     {
         $this->entityManager->persist($entity);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
+        $this->flushAndClear();
+    }
 
-        return $entity;
+    /**
+     * 
+     * @param type $entity
+     */
+    public function edit($entity)
+    {
+        $this->entityManager->persist($entity);
+        $this->flushAndClear();
+    }
+
+    /**
+     * 
+     * @param type $entity
+     */
+    public function delete($entity)
+    {
+        $this->entityManager->remove($entity);
+        $this->flushAndClear();
+    }
+
+    public function flushAndClear()
+    {
+        $this->entityManager->flush();
     }
 }

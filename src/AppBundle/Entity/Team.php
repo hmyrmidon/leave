@@ -1,19 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: joel
- * Date: 04/08/16
- * Time: 11:55
- */
 
 namespace AppBundle\Entity;
 
 use AppBundle\Traits\BaseTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\Annotation as Gedmo;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
+ * Team
  * Class Team
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamRepository")
  * @ORM\Table(name="team")
@@ -23,35 +18,66 @@ class Team
 {
     use BaseTrait;
     /**
-     * @var int $id
-     * @ORM\Id()
+     * @var int
+     *
      * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
+
     /**
-     * @var string $description
-     * @ORM\Column(name="name", type="string")
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    protected $name;
+    private $name;
+
     /**
      * @var TeamWorkflowModel $teamWf
      * @ORM\OneToMany(targetEntity="WorkflowModelStep", mappedBy="team")
      */
     protected $wfModelStep;
-    /**
-     * @ORM\OneToMany(targetEntity="Employee", mappedBy="team")
-     */
-    protected $employee;
 
     /**
-     * Team constructor.
+     *
+     * @var \Employee
+     * 
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Employee", inversedBy="team")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
+     * })
+     * 
      */
-    public function __construct()
-    {
-        $this->teamWf = new ArrayCollection();
-    }
+    private $employee;
+
     /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Team
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
      * @return string
      */
     public function getName()
@@ -60,52 +86,75 @@ class Team
     }
 
     /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return TeamWorkflowModel
-     */
-    public function getTeamWf()
-    {
-        return $this->teamWf;
-    }
-
-    /**
-     * @param TeamWorkflowModel $teamWf
-     */
-    public function setTeamWf($teamWf)
-    {
-        $this->teamWf = $teamWf;
-    }
-
-
-    /**
-     * Add teamWf
+     * Set employee
      *
-     * @param \AppBundle\Entity\TeamWorkflowModel $teamWf
+     * @param \AppBundle\Entity\Employee $employee
      *
      * @return Team
      */
-    public function addTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
+    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
     {
-        $this->teamWf[] = $teamWf;
+        $this->employee = $employee;
 
         return $this;
     }
 
     /**
-     * Remove teamWf
+     * Get employee
      *
-     * @param \AppBundle\Entity\TeamWorkflowModel $teamWf
+     * @return \AppBundle\Entity\Employee
      */
-    public function removeTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
+    public function getEmployee()
     {
-        $this->teamWf->removeElement($teamWf);
+        return $this->employee;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Team
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param \DateTime $updated
+     *
+     * @return Team
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
     /**
@@ -140,39 +189,5 @@ class Team
     public function getWfModelStep()
     {
         return $this->wfModelStep;
-    }
-
-    /**
-     * Add employee
-     *
-     * @param \AppBundle\Entity\Employee $employee
-     *
-     * @return Team
-     */
-    public function addEmployee(\AppBundle\Entity\Employee $employee)
-    {
-        $this->employee[] = $employee;
-
-        return $this;
-    }
-
-    /**
-     * Remove employee
-     *
-     * @param \AppBundle\Entity\Employee $employee
-     */
-    public function removeEmployee(\AppBundle\Entity\Employee $employee)
-    {
-        $this->employee->removeElement($employee);
-    }
-
-    /**
-     * Get employee
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getEmployee()
-    {
-        return $this->employee;
     }
 }

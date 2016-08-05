@@ -2,18 +2,17 @@
 
 namespace AppBundle\Entity;
 
-
+use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use AppBundle\Entity\User;
 /**
  * Class Employee
  * @package AppBundle\Entity
- * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
+ * @ORM\Entity()
  * @ORM\Table(name="employee")
  * 
  */
-class Employee
+class Employee extends BaseUser
 {
     /**
      * @var int $id
@@ -22,25 +21,21 @@ class Employee
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
      * @var string $lastName
      * @ORM\Column(name="last_name", type="string", length=100, nullable=false)
      */
     protected $lastName;
-
     /**
      * @var string $firstName
      * @ORM\Column(name="first_name", type="string", length=100, nullable=true)
      */
     protected $firstName;
-
     /**
      * @var string $registrationNumber
      * @ORM\Column(name="registration_number", type="string", length=10, nullable=false)
      */
     protected $registrationNumber;
-
     /**
      * @var \DateTime
      * @ORM\Column(name="hiring_date", type="datetime", nullable=false)
@@ -79,8 +74,7 @@ class Employee
     /**
      *
      * @var \User
-     * @ORM\OneToOne(targetEntity="User", inversedBy="employee")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="User", mappedBy="employee", cascade={"persist"})
      */
     private $user;
 
@@ -94,10 +88,25 @@ class Employee
     private $team;
 
     /**
-     * @var VacationRequest $vacation
-     * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="employee")
+     * @var \DateTime $created
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(type="datetime")
      */
-    protected $vacation;
+    private $created;
+
+    /**
+     * @var \DateTime $updated
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(type="datetime")
+     */
+    private $updated;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     /**
      * @return int
@@ -332,87 +341,5 @@ class Employee
     public function getBirthDate()
     {
         return $this->birthDate;
-    }
-
-    /**
-     * Set created
-     *
-     * @param \DateTime $created
-     *
-     * @return Employee
-     */
-    public function setCreated($created)
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    /**
-     * Get created
-     *
-     * @return \DateTime
-     */
-    public function getCreated()
-    {
-        return $this->created;
-    }
-
-    /**
-     * Set updated
-     *
-     * @param \DateTime $updated
-     *
-     * @return Employee
-     */
-    public function setUpdated($updated)
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    /**
-     * Add vacation
-     *
-     * @param \AppBundle\Entity\VacationRequest $vacation
-     *
-     * @return Employee
-     */
-    public function addVacation(\AppBundle\Entity\VacationRequest $vacation)
-    {
-        $this->vacation[] = $vacation;
-
-        return $this;
-    }
-
-    /**
-     * Remove vacation
-     *
-     * @param \AppBundle\Entity\VacationRequest $vacation
-     */
-    public function removeVacation(\AppBundle\Entity\VacationRequest $vacation)
-    {
-        $this->vacation->removeElement($vacation);
-    }
-
-    /**
-     * Get vacation
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getVacation()
-    {
-        return $this->vacation;
     }
 }

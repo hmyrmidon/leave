@@ -10,7 +10,7 @@ parameters:
 
 framework:
     #esi:             ~
-    translator:      { fallbacks: ["%locale%"] }
+    #translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -68,13 +68,18 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_user:
-    db_driver: %fos_user.db_driver%
-    firewall_name: %fos_user.firewall_name_main%
-    user_class: %fos_user.user_class%
+    db_driver: %fos_user.firewall_db_driver%
+    firewall_name: %fos_user.firewall_name%
+    user_class: %fos_user.firewall_user_class%
 
+# StofDoctrineExtensions (Gedmo)
 stof_doctrine_extensions:
-    default_locale: %locale%
-    translation_fallback: true
     orm:
         default:
-            timestampable: true
+            timestampable: true,
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
