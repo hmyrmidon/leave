@@ -38,7 +38,7 @@ class Employee extends BaseUser
     protected $registrationNumber;
     /**
      * @var \DateTime
-     * @ORM\Column(name="hiring_date", type="datetime", nullable=false)
+     * @ORM\Column(name="hiring_date", type="datetime", nullable=true)
      */
     protected $hiringDate;
 
@@ -74,7 +74,7 @@ class Employee extends BaseUser
     /**
      *
      * @var \User
-     * @ORM\OneToOne(targetEntity="User", mappedBy="employee", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="User", mappedBy="employee", cascade={"persist", "remove"})
      */
     private $user;
 
