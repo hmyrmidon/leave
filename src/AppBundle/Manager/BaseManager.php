@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class BaseManager 
 {
-    const EMPLOYEE_MANAGER = 'app.employee_manager';
     
     /**
      * @var EntityManagerInterface $entityManager

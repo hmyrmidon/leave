@@ -5,7 +5,7 @@ parameters:
 
 services:
     app.employee_manager:
-        class: 'AppBundle\Manager\BaseManager'
+        class: 'AppBundle\Manager\EmployeeManager'
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
@@ -22,8 +22,8 @@ services:
             - "@doctrine.orm.entity_manager"
         tags: 
             - { name : "kernel.event_listener" , event: "app.on_user_process", method: "onCreateEmployee"}
-            - { name : "kernel.event_listener" , event: "app.on_user_update", method: "onUpdateEmployee"}
-            - { name : "kernel.event_listener" , event: "app.on_user_remove", method: "onRemoveEmployee"}
+#            - { name : "kernel.event_listener" , event: "app.on_user_update", method: "onUpdateEmployee"}
+#            - { name : "kernel.event_listener" , event: "app.on_user_remove", method: "onRemoveEmployee"}
 
     app.team_manager:
         class: 'AppBundle\Manager\TeamManager'

@@ -22,21 +22,25 @@ class Employee
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @var string $lastName
      * @ORM\Column(name="last_name", type="string", length=100, nullable=false)
      */
     protected $lastName;
+
     /**
      * @var string $firstName
      * @ORM\Column(name="first_name", type="string", length=100, nullable=true)
      */
     protected $firstName;
+
     /**
      * @var string $registrationNumber
      * @ORM\Column(name="registration_number", type="string", length=10, nullable=false)
      */
     protected $registrationNumber;
+
     /**
      * @var \DateTime
      * @ORM\Column(name="hiring_date", type="datetime", nullable=false)
@@ -75,7 +79,8 @@ class Employee
     /**
      *
      * @var \User
-     * @ORM\OneToOne(targetEntity="User", mappedBy="employee", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="User", inversedBy="employee")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 

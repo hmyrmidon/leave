@@ -14,24 +14,21 @@ class VacationEmployeeListener
 
     public function onCreateEmployee(\AppBundle\Event\VacationEmployeeEvent $event)
     {
+        dump('test');
         /**
          * @var AppBundle\Entity\Employee $employee
          */
-        $employee = $event->getEmployee();
+        $eventOpt = $event->getOption();
+        $employee  = $eventOpt->employee;
 
-        $username  = $employee->getUsername();
-        $email     = $employee->getEmail();
-        $password  = $employee->getPassword();
-        $lastName  = $employee->getLastName();
-        $firstName = $employee->getFirstName();
+        $username  = $eventOpt->username;
+        $email     = $eventOpt->email;
+        $password  = $eventOpt->password;
 
-        $user = new \AppBundle\Entity\User();
+        $user = new \AppBundle\Entity\User(); 
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($password);
-        $user->setLastName($lastName);
-        $user->setFirstName($firstName);
-        $user->setEmployee($employee);
 
         $this->entityManager->persist($user);
         $employee->setUser($user);
@@ -40,43 +37,42 @@ class VacationEmployeeListener
 
     }
 
-    public function onUpdateEmployee (\AppBundle\Event\VacationEmployeeEvent $event)
-    {
-        /**
-         * @var AppBundle\Entity\Employee $employee
-         */
-        $employee = $event->getEmployee();
-
+//    public function onUpdateEmployee (\AppBundle\Event\VacationEmployeeEvent $event)
+//    {
+//        /**
+//         * @var AppBundle\Entity\Employee $employee
+//         */
+//        $employee = $event->getEmployee();
+//
 //        $username  = $employee->getUsername();
 //        $email     = $employee->getEmail();
 //        $password  = $employee->getPassword();
-        $lastName  = $employee->getLastName();
-        $firstName = $employee->getFirstName();
-
-        $user = $employee->getUser();
-
+//        $lastName  = $employee->getLastName();
+//        $firstName = $employee->getFirstName();
+//
+//        $user = $employee->getUser();
+//
 //        $user->setUsername($username);
 //        $user->setEmail($email);
 //        $user->setPassword($password);
-        $user->setLastName($lastName);
-        $user->setFirstName($firstName);
-        $user->setEmployee($employee);
-
-        $this->entityManager->persist($user);
-        $employee->setUser($user);
-
-        $this->entityManager->flush();
-    }
-
-    public function onRemoveEmployee (\AppBundle\Event\VacationEmployeeEvent $event)
-    {
-        /**
-         * @var AppBundle\Entity\Employee $employee
-         */
-        $employee = $event->getEmployee();
-
-        $user = $employee->getUser();
-        $this->entityManager->remove($user);
-        $this->entityManager->flush();
-    }
+//        $user->setLastName($lastName);
+//        $user->setFirstName($firstName);
+//
+//        $this->entityManager->persist($user);
+//        $employee->setUser($user);
+//
+//        $this->entityManager->flush();
+//    }
+//
+//    public function onRemoveEmployee (\AppBundle\Event\VacationEmployeeEvent $event)
+//    {
+//        /**
+//         * @var AppBundle\Entity\Employee $employee
+//         */
+//        $employee = $event->getEmployee();
+//
+//        $user = $employee->getUser();
+//        $this->entityManager->remove($user);
+//        $this->entityManager->flush();
+//    }
 }

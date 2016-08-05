@@ -8,18 +8,18 @@ class VacationEmployeeEvent extends \Symfony\Component\EventDispatcher\Event
     const VACATION_EMPLOYEE_EVENT_NAME_UPDATE_USER = 'app.on_user_update';
     const VACATION_EMPLOYEE_EVENT_NAME_REMOVE_USER = 'app.on_user_remove';
 
-    private $employee;
+    private $option;
 
-    public function __construct(\AppBundle\Entity\Employee $employee)
+    public function __construct($option)
     {
-        $this->employee = $employee;
+        $this->option = $option;
     }
     /**
      * 
-     * @return \AppBundle\Entity\Employee
+     * @return mixed
      */
-    public function getEmployee()
+    public function getOption()
     {
-        return $this->employee;
+        return $this->option;
     }
 }
