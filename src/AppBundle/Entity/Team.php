@@ -2,17 +2,21 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Traits\BaseTrait;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Team
- *
- * @ORM\Table(name="team")
+ * Class Team
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamRepository")
+ * @ORM\Table(name="team")
+ * @package AppBundle\Entity
  */
 class Team
 {
+    use BaseTrait;
     /**
      * @var int
      *
@@ -28,6 +32,12 @@ class Team
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+
+    /**
+     * @var TeamWorkflowModel $teamWf
+     * @ORM\OneToMany(targetEntity="WorkflowModelStep", mappedBy="team")
+     */
+    protected $wfModelStep;
 
     /**
      *
@@ -163,5 +173,39 @@ class Team
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Add wfModelStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     *
+     * @return Team
+     */
+    public function addWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    {
+        $this->wfModelStep[] = $wfModelStep;
+
+        return $this;
+    }
+
+    /**
+     * Remove wfModelStep
+     *
+     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     */
+    public function removeWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    {
+        $this->wfModelStep->removeElement($wfModelStep);
+    }
+
+    /**
+     * Get wfModelStep
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWfModelStep()
+    {
+        return $this->wfModelStep;
     }
 }

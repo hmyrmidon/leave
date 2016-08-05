@@ -5,14 +5,15 @@ namespace AppBundle\Entity;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use AppBundle\Entity\User;
 /**
  * Class Employee
  * @package AppBundle\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
  * @ORM\Table(name="employee")
  * 
  */
-class Employee extends BaseUser
+class Employee
 {
     /**
      * @var int $id
@@ -38,7 +39,7 @@ class Employee extends BaseUser
     protected $registrationNumber;
     /**
      * @var \DateTime
-     * @ORM\Column(name="hiring_date", type="datetime", nullable=true)
+     * @ORM\Column(name="hiring_date", type="datetime", nullable=false)
      */
     protected $hiringDate;
 
@@ -88,20 +89,10 @@ class Employee extends BaseUser
     private $team;
 
     /**
-     * @var \DateTime $created
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
+     * @var VacationRequest $vacation
+     * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="employee")
      */
-    private $created;
-
-    /**
-     * @var \DateTime $updated
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    private $updated;
+    protected $vacation;
 
     public function __construct()
     {
@@ -389,5 +380,39 @@ class Employee extends BaseUser
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Add vacation
+     *
+     * @param \AppBundle\Entity\VacationRequest $vacation
+     *
+     * @return Employee
+     */
+    public function addVacation(\AppBundle\Entity\VacationRequest $vacation)
+    {
+        $this->vacation[] = $vacation;
+
+        return $this;
+    }
+
+    /**
+     * Remove vacation
+     *
+     * @param \AppBundle\Entity\VacationRequest $vacation
+     */
+    public function removeVacation(\AppBundle\Entity\VacationRequest $vacation)
+    {
+        $this->vacation->removeElement($vacation);
+    }
+
+    /**
+     * Get vacation
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVacation()
+    {
+        return $this->vacation;
     }
 }

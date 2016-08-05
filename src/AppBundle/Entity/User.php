@@ -2,132 +2,40 @@
 
 namespace AppBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
+use AppBundle\Traits\BaseTrait;
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\Annotation as Gedmo;
+use AppBundle\Entity\Employee;
+use \FOS\UserBundle\Model\User as BaseUser;
 /**
- * 
+ * Class User
  * @package AppBundle\Entity
- * @ORM\Entity()
- * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ * @ORM\Table(name="user")
+ *
  */
 class User extends BaseUser
 {
+    use BaseTrait;
     /**
-     * @var int
-     *
+     * @var int $id
+     * @ORM\Id()
      * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
     /**
-     * @var string $lastName
-     * @ORM\Column(name="last_name", type="string", length=100, nullable=false)
+     * @var Employee $employee
+     * @ORM\OneToOne(targetEntity="Employee", inversedBy="user", orphanRemoval=false)
      */
-    protected $lastName;
-
+    protected $employee;
     /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=255)
+     * @var TeamWorkflowModel $teamWf
+     * @ORM\OneToMany(targetEntity="TeamWorkflowModel", mappedBy="validator")
      */
-    protected $firstName;
-
+    protected $teamWf;
     /**
-     *
-     * @var \Employee
-     * @ORM\OneToOne(targetEntity="Employee", inversedBy="user")
-     * @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
-     */
-    private $employee;
-
-    
-    
-    /**
-     * @var \DateTime $created
-     *
-     * @Gedmo\Timestampable(on="create")
-     * @ORM\Column(type="datetime")
-     */
-    private $created;
-
-    /**
-     * @var \DateTime $updated
-     *
-     * @Gedmo\Timestampable(on="update")
-     * @ORM\Column(type="datetime")
-     */
-    private $updated;
-
-    /**
-     * Set lastName
-     *
-     * @param string $lastName
-     *
-     * @return User
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
-
-        return $this;
-    }
-
-    /**
-     * Get lastName
-     *
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * Set firstName
-     *
-     * @param string $firstName
-     *
-     * @return User
-     */
-    public function setFirstName($firstName)
-    {
-        $this->firstName = $firstName;
-
-        return $this;
-    }
-
-    /**
-     * Get firstName
-     *
-     * @return string
-     */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * Set employee
-     *
-     * @param \AppBundle\Entity\Employee $employee
-     *
-     * @return User
-     */
-    public function setEmployee(\AppBundle\Entity\Employee $employee = null)
-    {
-        $this->employee = $employee;
-
-        return $this;
-    }
-
-    /**
-     * Get employee
-     *
      * @return \AppBundle\Entity\Employee
      */
     public function getEmployee()
@@ -136,50 +44,44 @@ class User extends BaseUser
     }
 
     /**
-     * Set created
+     * @param \AppBundle\Entity\Employee $employee
+     */
+    public function setEmployee($employee=null)
+    {
+        $this->employee = $employee;
+    }
+
+    /**
+     * Add teamWf
      *
-     * @param \DateTime $created
+     * @param \AppBundle\Entity\TeamWorkflowModel $teamWf
      *
      * @return User
      */
-    public function setCreated($created)
+    public function addTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
     {
-        $this->created = $created;
+        $this->teamWf[] = $teamWf;
 
         return $this;
     }
 
     /**
-     * Get created
+     * Remove teamWf
      *
-     * @return \DateTime
+     * @param \AppBundle\Entity\TeamWorkflowModel $teamWf
      */
-    public function getCreated()
+    public function removeTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
     {
-        return $this->created;
+        $this->teamWf->removeElement($teamWf);
     }
 
     /**
-     * Set updated
+     * Get teamWf
      *
-     * @param \DateTime $updated
-     *
-     * @return User
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setUpdated($updated)
+    public function getTeamWf()
     {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    /**
-     * Get updated
-     *
-     * @return \DateTime
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
+        return $this->teamWf;
     }
 }

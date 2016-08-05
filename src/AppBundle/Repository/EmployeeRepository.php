@@ -2,7 +2,9 @@
 
 namespace AppBundle\Repository;
 
-class EmployeeRepository 
+
+use Doctrine\ORM\EntityRepository;
+
+class EmployeeRepository extends EntityRepository
 {
-    //put your code here
-}
+
