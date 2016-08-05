@@ -36,10 +36,12 @@ class HolidayManager
             $currentDate = new DateTime();
             $year        = $currentDate->format('Y');
         }
+        $currentDate = new \DateTime();
+        $currentYear = $currentDate->format('Y');
         /**
          * @var \DateTime $easterDate
          */
-        $easterDate = easter_date($year);
+        $easterDate = new \DateTime($currentYear.'-03-21');
         $easterDay  = easter_days($easterDate->format('Y'));
         $list       = $this->_em->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($year);
         $easterDate->modify('+' . $easterDay . ' day')->format('Y-m-d');
@@ -78,10 +80,10 @@ class HolidayManager
      *
      * @return array
      */
-    public static function getVacancies($dateBegin, $daysNumber = '1D', $dayPart = 'All')
+    public function getVacancies($dateBegin, $daysNumber = '1D', $dayPart = 'All')
     {
         $hour = '00:00:00';
-        preg_match('#([0-9]+[.|?][0-9]+|[0-9]+)([D|d])#', $daysNumber, $datePattern);
+        /*preg_match('#([0-9]+[.|?][0-9]+|[0-9]+)([D|d])#', $daysNumber, $datePattern);
         if(preg_match('#[.]#', $datePattern[1])){
             $parts = preg_split('#[.]#', $datePattern[1]);
             if($parts[0] > 0){
@@ -92,17 +94,24 @@ class HolidayManager
                 }
                 $daysNumber = 'T'.(24*$datePattern[1]).'H';
             }
-        }
+        }*/
+        $daysNumber = $this->roundUp($daysNumber);
         $dateBegin = new \DateTime($dateBegin.' '.$hour);
         $dateInterval = new \DateInterval('P'.$daysNumber);
-        $dateRange = new \DatePeriod($dateBegin, $dateInterval, $dateBegin->add($dateInterval));
+        $end = clone $dateBegin;
+        $end->add($dateInterval);
+        $endInterval = clone $end;
+        $endInterval->modify('+1 day');
+        $dateRange = new \DatePeriod($dateBegin, new \DateInterval('P1D'), $endInterval, 1);
+        $test = array();
         foreach ($dateRange as $range){
             if($this->isHoliday($range)){
-                $dateBegin->modify('+1 day');
+                $end->modify('+1 day');
             }
+            array_push($test, array('value'=>$range->format('Y-m-d'), 'isHoliday'=>$this->isHoliday($range)));
         }
-
-        return $dateBegin;
+        dump($test);
+        return $end;
     }
 
     /**
@@ -117,5 +126,23 @@ class HolidayManager
         $end = strtotime($end);
         $diff = $end-$begin;
         return floor($diff/3600/24);
+    }
+
+    public function roundUp($value, $places = 0)
+    {
+        if ($places < 0) {
+            $places = 0;
+        }
+
+        if (is_int($value)) {
+            return $value;
+        }
+
+        $tDec = explode('.', $value);
+        if (!isset($tDec[1]) || (strlen($tDec[1]) <= $places)) {
+            return $value;
+        }
+        $mult = pow(10, $places);
+        return ceil($value * $mult) / $mult;
     }
 }
