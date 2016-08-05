@@ -14,7 +14,6 @@ class VacationEmployeeListener
 
     public function onCreateEmployee(\AppBundle\Event\VacationEmployeeEvent $event)
     {
-        dump('test');
         /**
          * @var AppBundle\Entity\Employee $employee
          */
