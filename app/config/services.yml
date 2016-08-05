@@ -10,11 +10,15 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
-    app.app.wf_step_manager:
+    app.wf_step_manager:
         class: 'AppBundle\Manager\WorkflowStepManager'
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
+    app.holiday_manager:
+        class: 'AppBundle\Manager\HolidayManager'
+        arguments:
+            - "@doctrine.orm.entity_manager"
     #Application's Event Listeners
     app.event.listeners:
         class: 'AppBundle\Listener\VacationListener'

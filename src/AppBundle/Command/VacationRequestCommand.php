@@ -5,6 +5,7 @@ namespace AppBundle\Command;
 use AppBundle\Entity\VacationRequest;
 use AppBundle\Event\OnSubmitVacationRequestEvent;
 use AppBundle\Event\VacationAvailableEvent;
+use AppBundle\Manager\HolidayManager;
 use AppBundle\Manager\VacationRequestManager;
 use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
@@ -32,11 +33,13 @@ class VacationRequestCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:vacation:request-command')
-            ->addOption('user', 'u', InputOption::VALUE_REQUIRED)
+            ->addOption('user', 'u', InputOption::VALUE_OPTIONAL)
             ->addOption('add', null, InputOption::VALUE_OPTIONAL)
-            ->addOption('addwf', null, InputOption::VALUE_OPTIONAL)
-            ->addOption('addstep', null, InputOption::VALUE_OPTIONAL)
-            ->addOption('addstatus', null, InputOption::VALUE_OPTIONAL)
+            ->addOption('addwf', null, InputOption::VALUE_NONE)
+            ->addOption('addstep', null, InputOption::VALUE_NONE)
+            ->addOption('addstatus', null, InputOption::VALUE_NONE)
+            ->addOption('datediff', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, '', [])
+            ->addOption('vacancies', 'a', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'vacancies[startDate, days]', [])
             ->setDescription('Perform vacation request');
     }
 
@@ -60,6 +63,14 @@ class VacationRequestCommand extends ContainerAwareCommand
         }
         if ($input->getOption('addwf')) {
             $this->addWorkflow();
+        }
+        if($input->getOption('datediff')) {
+            $dates = $input->getOption('datediff');
+            $this->dateDiff($dates[0], $dates[1]);
+        }
+        if($input->getOption('vacancies')){
+            $params = $input->getOption('vacancies');
+            $this->getVacanciesRange($params);
         }
     }
 
@@ -91,9 +102,22 @@ class VacationRequestCommand extends ContainerAwareCommand
 
     public function addWorkflow()
     {
-        $this->output->writeln('add new workflow rule');
-
-        $this->output->writeln(':)');
         
+    }
+
+    public function dateDiff($date1, $date2)
+    {
+        $this->output->writeln(sprintf('DateDiff(%s, %s)', $date1, $date2));
+        //$begin = new \DateTime($date1);
+        //$end = new \DateTime($date2);
+        $interval = $this->getContainer()->get(HolidayManager::SERVICE_NAME)->getDayNumber($date1, $date2);
+        $this->output->writeln($interval);
+        $this->output->writeln(':)');
+    }
+
+    public function getVacanciesRange($params)
+    {
+        $range = $this->getContainer()->get(HolidayManager::SERVICE_NAME)->getVacancies($params[0], $params[1], $params[2]);
+        dump($range);
     }
 }
