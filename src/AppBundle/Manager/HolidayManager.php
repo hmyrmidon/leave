@@ -41,7 +41,7 @@ class HolidayManager
         /**
          * @var \DateTime $easterDate
          */
-        $easterDate = new \DateTime($currentYear.'-03-21');
+        $easterDate = new \DateTime($currentYear . '-03-21');
         $easterDay  = easter_days($easterDate->format('Y'));
         $list       = $this->_em->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($year);
         $easterDate->modify('+' . $easterDay . ' day')->format('Y-m-d');
@@ -68,50 +68,31 @@ class HolidayManager
      */
     public function isHoliday(\DateTime $date)
     {
-        $year = $date->format('Y');
+        $year     = $date->format('Y');
         $holidays = $this->listAll($year);
-        return (in_array($date->format('Y-m-d'), $holidays) || in_array($date->format('N'), array(6,7)));
+        return (in_array($date->format('Y-m-d'), $holidays) || in_array($date->format('N'), array(6, 7)));
     }
 
     /**
      * @param        $dateBegin
-     * @param string $daysNumber Y for years,M for months, D for days, H for hours, i for minutes,S for seconds
-     * @param string $dayPart All, AM, PM
+     * @param string $dayCount Y for years,M for months, D for days, H for hours, i for minutes,S for seconds
      *
      * @return array
      */
-    public function getVacancies($dateBegin, $daysNumber = '1D', $dayPart = 'All')
+    public function getVacancies($dateBegin, $dayCount = '1')
     {
-        $hour = '00:00:00';
-        /*preg_match('#([0-9]+[.|?][0-9]+|[0-9]+)([D|d])#', $daysNumber, $datePattern);
-        if(preg_match('#[.]#', $datePattern[1])){
-            $parts = preg_split('#[.]#', $datePattern[1]);
-            if($parts[0] > 0){
-                $daysNumber = $parts[0].$datePattern[2];
-            } else {
-                if($dayPart === 'PM'){
-                    $hour = '12:00:00';
-                }
-                $daysNumber = 'T'.(24*$datePattern[1]).'H';
+        $dateBegin    = new \DateTime($dateBegin);
+        $dateInterval = new \DateInterval("P{$dayCount}D");
+        $dateEnd      = clone $dateBegin;
+        $dateEnd->add($dateInterval);
+        $DateRange = new \DatePeriod($dateBegin, new \DateInterval('P1D'), $dateEnd);
+        foreach ($DateRange as $range) {
+            if ($this->isHoliday($range)) {
+                $dateEnd->modify('+1 day');
             }
-        }*/
-        $daysNumber = $this->roundUp($daysNumber);
-        $dateBegin = new \DateTime($dateBegin.' '.$hour);
-        $dateInterval = new \DateInterval('P'.$daysNumber);
-        $end = clone $dateBegin;
-        $end->add($dateInterval);
-        $endInterval = clone $end;
-        $endInterval->modify('+1 day');
-        $dateRange = new \DatePeriod($dateBegin, new \DateInterval('P1D'), $endInterval, 1);
-        $test = array();
-        foreach ($dateRange as $range){
-            if($this->isHoliday($range)){
-                $end->modify('+1 day');
-            }
-            array_push($test, array('value'=>$range->format('Y-m-d'), 'isHoliday'=>$this->isHoliday($range)));
         }
-        dump($test);
-        return $end;
+
+        return $dateEnd;
     }
 
     /**
@@ -120,12 +101,14 @@ class HolidayManager
      *
      * @return string
      */
-    public function getDayNumber($begin, $end)
+    public function getDayCount($begin, $end)
     {
-        $begin = strtotime($begin);
-        $end = strtotime($end);
-        $diff = $end-$begin;
-        return floor($diff/3600/24);
+        $holiday = $this->countHolidayBetween(new \DateTime($begin), new \DateTime($end));
+        $begin   = strtotime($begin);
+        $end     = strtotime($end);
+        $diff    = $end - $begin;
+        $days    = $this->roundUp((($diff / 3600) / 24) - $holiday, 1);
+        return $days;
     }
 
     public function roundUp($value, $places = 0)
@@ -133,16 +116,28 @@ class HolidayManager
         if ($places < 0) {
             $places = 0;
         }
-
         if (is_int($value)) {
             return $value;
         }
-
-        $tDec = explode('.', $value);
-        if (!isset($tDec[1]) || (strlen($tDec[1]) <= $places)) {
+        $decimals = explode('.', $value);
+        if (!isset($decimals[1]) || (strlen($decimals[1]) <= $places)) {
             return $value;
         }
-        $mult = pow(10, $places);
-        return ceil($value * $mult) / $mult;
+        $powerUp = pow(10, $places);
+
+        return ceil($value * $powerUp) / $powerUp;
+    }
+
+    public function countHolidayBetween(\DateTime $dateSart, \DateTime $dateEnd)
+    {
+        $count = 0;
+        $range = new \DatePeriod($dateSart, new \DateInterval('P1D'), $dateEnd);
+        foreach ($range as $date) {
+            if ($this->isHoliday($date)) {
+                $count++;
+            }
+        }
+
+        return $count;
     }
 }

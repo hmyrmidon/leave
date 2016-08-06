@@ -43,6 +43,10 @@ class WorkflowStep
      * @ORM\OneToMany(targetEntity="WorkflowModelStep", mappedBy="wfStep")
      */
     protected $wfModelStep;
+    /**
+     * @ORM\OneToMany(targetEntity="VacationRequestValidation", mappedBy="step")
+     */
+    protected $validation;
 
     /**
      * @return string
@@ -157,4 +161,21 @@ class WorkflowStep
     {
         return $this->wfModelStep;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getValidation()
+    {
+        return $this->validation;
+    }
+
+    /**
+     * @param mixed $validation
+     */
+    public function setValidation($validation)
+    {
+        $this->validation = $validation;
+    }
+    
 }

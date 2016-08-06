@@ -43,6 +43,10 @@ class VacationRequest
      * @ORM\ManyToOne(targetEntity="Employee", inversedBy="vacation")
      */
     protected $employee;
+    /**
+     * @ORM\OneToMany(targetEntity="VacationRequestValidation", mappedBy="vacation")
+     */
+    protected $validation;
 
     /**
      * @return \DateTime
@@ -106,6 +110,22 @@ class VacationRequest
     public function setEmployee($employee)
     {
         $this->employee = $employee;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidation()
+    {
+        return $this->validation;
+    }
+
+    /**
+     * @param mixed $validation
+     */
+    public function setValidation($validation)
+    {
+        $this->validation = $validation;
     }
     
 }

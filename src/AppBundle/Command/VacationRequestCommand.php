@@ -33,6 +33,9 @@ class VacationRequestCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:vacation:request-command')
+            ->addOption('sendRequest', 's', InputOption::VALUE_OPTIONAL|InputOption::VALUE_IS_ARRAY, '', [])
+            ->addOption('listVacancies', null, InputOption::VALUE_OPTIONAL)
+            ->addOption('validate', null, InputOption::VALUE_OPTIONAL)
             ->addOption('user', 'u', InputOption::VALUE_OPTIONAL)
             ->addOption('add', null, InputOption::VALUE_OPTIONAL)
             ->addOption('addwf', null, InputOption::VALUE_NONE)
@@ -110,7 +113,7 @@ class VacationRequestCommand extends ContainerAwareCommand
         $this->output->writeln(sprintf('DateDiff(%s, %s)', $date1, $date2));
         //$begin = new \DateTime($date1);
         //$end = new \DateTime($date2);
-        $interval = $this->getContainer()->get(HolidayManager::SERVICE_NAME)->getDayNumber($date1, $date2);
+        $interval = $this->getContainer()->get(HolidayManager::SERVICE_NAME)->getDayCount($date1, $date2);
         $this->output->writeln($interval);
         $this->output->writeln(':)');
     }
@@ -119,5 +122,9 @@ class VacationRequestCommand extends ContainerAwareCommand
     {
         $range = $this->getContainer()->get(HolidayManager::SERVICE_NAME)->getVacancies($params[0], $params[1], $params[2]);
         dump($range);
+    }
+    public function validateVacation()
+    {
+        
     }
 }

@@ -39,6 +39,10 @@ class User extends BaseUser
      * @ORM\OneToMany(targetEntity="TeamWorkflowModel", mappedBy="validator")
      */
     protected $teamWf;
+    /**
+     * @ORM\OneToMany(targetEntity="VacationRequestValidation", mappedBy="validator")
+     */
+    protected $validation;
 
     /**
      * @return \AppBundle\Entity\Employee
@@ -89,4 +93,21 @@ class User extends BaseUser
     {
         return $this->teamWf;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getValidation()
+    {
+        return $this->validation;
+    }
+
+    /**
+     * @param mixed $validation
+     */
+    public function setValidation($validation)
+    {
+        $this->validation = $validation;
+    }
+    
 }
