@@ -11,7 +11,7 @@ class BaseManager
     /**
      * @var EntityManagerInterface $entityManager
      */
-    private $entityManager;
+    protected $entityManager;
 
     /**
      * 

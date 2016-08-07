@@ -125,6 +125,6 @@ class VacationRequestCommand extends ContainerAwareCommand
     }
     public function validateVacation()
     {
-        
+        $this->getOption();
     }
 }

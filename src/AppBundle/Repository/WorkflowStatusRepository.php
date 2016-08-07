@@ -10,4 +10,30 @@ namespace AppBundle\Repository;
  */
 class WorkflowStatusRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param array $params
+     *
+     * @return array
+     */
+    public function getStatusBy($params=array())
+    {
+        $query = 'SELECT s FROM AppBudle:WorkflowModelStep wf_mt 
+                           JOIN wf_mt.wfStatus s 
+                           JOIN wf_mt.validator u';
+        $dql = $this->_em->createQuery($query)->;
+//        $dql = $this->_em->createQueryBuilder()
+//                    ->addSelect('SELECT s FROM AppBudle:WorkflowModelStep wf_mt')
+//                    ->innerJoin('wf_mt.wfStatus', 's')
+//                    ->innerJoin('wf_mt.validator', 'u');
+        if(count($params) > 0) {
+            if(array_key_exists('userid',$params)){
+                $dql->andWhere('u.id = :userid');
+            }
+            if(array_key_exists('modelid',$params)){
+                $dql->andWhere('wf_mt.id = :modelid');
+            }
+        }
+
+        return $dql->setParameters($params)->getQuery()->getResult();
+    }
 }
