@@ -41,12 +41,9 @@ class Team
 
     /**
      *
-     * @var \Employee
+     * @var \Team
      * 
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Employee", mappedBy="team")
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
-     * })
      * 
      */
     private $employee;

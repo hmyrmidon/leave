@@ -6,6 +6,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use AppBundle\Entity\User;
+use AppBundle\Traits\BaseTrait;
 /**
  * Class Employee
  * @package AppBundle\Entity
@@ -15,6 +16,8 @@ use AppBundle\Entity\User;
  */
 class Employee
 {
+    use BaseTrait;
+
     /**
      * @var int $id
      * @ORM\Id()
@@ -84,11 +87,15 @@ class Employee
      */
     private $user;
 
+    
     /**
      *
      * @var \Team
      * 
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team", inversedBy="employee")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     * })
      * 
      */
     private $team;
