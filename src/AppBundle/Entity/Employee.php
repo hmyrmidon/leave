@@ -82,7 +82,7 @@ class Employee
     /**
      *
      * @var \User
-     * @ORM\OneToOne(targetEntity="User", inversedBy="employee")
+     * @ORM\OneToOne(targetEntity="User", inversedBy="employee", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

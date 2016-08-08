@@ -15,6 +15,9 @@ use Doctrine\ORM\Mapping\Annotation as Gedmo;
  */
 class VacationRequest
 {
+    const PENDING_STATUS = 0;
+    const VALIDATE_STATUS = 1;
+    const DENIED_STATUS = 2;
     use BaseTrait;
     /**
      * @var int $id
@@ -40,12 +43,12 @@ class VacationRequest
     protected $reason;
     /**
      * @var Employee $employee
-     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="vacation")
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="vacation", cascade={"persist"})
      */
     protected $employee;
     /**
-     * @var WorkflowStatus $status
-     * @ORM\ManyToOne(targetEntity="Status", inversedBy="validation")
+     * @var int $status
+     * @ORM\Column(name="status", type="integer")
      */
     protected $status;
     /**

@@ -4,6 +4,7 @@ namespace AppBundle\Listener;
 
 
 use AppBundle\Entity\VacationRequest;
+use AppBundle\Entity\VacationValidation;
 use AppBundle\Event\OnSubmitVacationRequestEvent;
 use Doctrine\ORM\EntityManager;
 
@@ -20,7 +21,23 @@ class VacationListener
 
     public function onWaiting(){}
     public function onValidate($event){
-        //mail to employee
+        /**
+         * @var VacationRequest $vacation
+         */
+        $vacation = $event->getVacation();
+        $team = $vacation->getEmployee()->getTeam();
+        $teamResult = $this->entityManager->getRepository('AppBundle:TeamValidator')->findBy(array('team'=>$team));
+        $vacationValidate = $this->entityManager->getRepository('AppBundle:VacationValidation')->findBy(array(
+            'vacation' => $vacation
+        ));
+        $status = VacationRequest::PENDING_STATUS;
+        if(count($teamResult) == count($vacationValidate)) {
+            $status = VacationRequest::VALIDATE_STATUS;
+        }
+        $vacation->setStatus($status);
+        $this->entityManager->persist($vacation);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
     }
     public function onDenied(){}
     public function onUserCreated(){}
@@ -32,6 +49,14 @@ class VacationListener
          * @var VacationRequest $vacation
          */
         $vacation = $event->getVacation();
+        $validation = new VacationValidation();
+        $validation->setVacation($vacation);
+        $validation->setManager($vacation->getValidator());
+
+        $this->entityManager->persist($validation);
+        $this->entityManager->flush();
+        $this->entityManager->clear();
+
         dump('email send to '.$vacation->getValidator());
     }
 }

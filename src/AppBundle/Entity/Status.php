@@ -27,10 +27,7 @@ class Status
      * @ORM\Column(name="label", type="string", length=50)
      */
     protected $label;
-    /**
-     * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="status")
-     */
-    protected $validation;
+
     /**
      * @return int
      */
