@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\User;
+use AppBundle\Entity\VacationRequest;
 
 /**
  * VacationRequestRepository
@@ -10,4 +12,25 @@ namespace AppBundle\Repository;
  */
 class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function validate(VacationRequest $vacation, User $validator)
+    {
+        $employee = $vacation->getEmployee();
+        $team = $employee->getTeam();
+        $params = array(
+            'userid' => $validator->getId(),
+            'team' => $team->getId()
+        );
+        $result = $this->_em->getRepository('AppBundle:WorkflowStatus')->getStatusBy($params);
+        
+        $step = $result[0]->getWfStep();
+        $status = $result[0]->getwfStatus();
+
+        $vacation->setStep($step);
+        $vacation->setStatus($status);
+        $vacation->setValidator($validator);
+
+        $this->_em->persist($vacation);
+        $this->_em->flush();
+        $this->_em->clear();
+    }
 }

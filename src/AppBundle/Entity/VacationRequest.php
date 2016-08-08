@@ -43,6 +43,21 @@ class VacationRequest
      * @ORM\ManyToOne(targetEntity="Employee", inversedBy="vacation")
      */
     protected $employee;
+    /**
+     * @var User $validator
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="validation")
+     */
+    protected $validator;
+    /**
+     * @var WorkflowStep $step
+     * @ORM\ManyToOne(targetEntity="WorkflowStep", inversedBy="validation")
+     */
+    protected $step;
+    /**
+     * @var WorkflowStatus $status
+     * @ORM\ManyToOne(targetEntity="WorkflowStatus", inversedBy="validation")
+     */
+    protected $status;
 
     /**
      * @return \DateTime
@@ -106,6 +121,54 @@ class VacationRequest
     public function setEmployee($employee)
     {
         $this->employee = $employee;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getValidator()
+    {
+        return $this->validator;
+    }
+
+    /**
+     * @param mixed $validator
+     */
+    public function setValidator($validator)
+    {
+        $this->validator = $validator;
+    }
+
+    /**
+     * @return WorkflowStep
+     */
+    public function getStep()
+    {
+        return $this->step;
+    }
+
+    /**
+     * @param WorkflowStep $step
+     */
+    public function setStep($step)
+    {
+        $this->step = $step;
+    }
+
+    /**
+     * @return WorkflowStatus
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param WorkflowStatus $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
     }
     
 }

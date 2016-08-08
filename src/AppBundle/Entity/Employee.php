@@ -214,7 +214,7 @@ class Employee
     /**
      * Get team
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \AppBundle\Entity\Team
      */
     public function getTeam()
     {

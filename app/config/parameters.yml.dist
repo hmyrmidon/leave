@@ -17,3 +17,8 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+    #FOS
+    fos_user.firewall_db_driver: orm
+    fos_user.firewall_name: main
+    fos_user.firewall_user_class: AppBundle\Entity\User

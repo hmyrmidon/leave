@@ -37,7 +37,7 @@ class VacationTeamCommand extends Command
             $teamEdit = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('AppBundle:Team')->find($idTeam);
             $teamEdit->setName($input->getOption('update'));
 
-            $team->edit($teamEdit);
+            $team->save($teamEdit);
             $output->writeln('team successfully updated!');
 
         } else {
