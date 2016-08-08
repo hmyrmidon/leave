@@ -166,4 +166,28 @@ class VacationRequest
         $this->status = $status;
     }
     
+
+    /**
+     * Set recovery
+     *
+     * @param integer $recovery
+     *
+     * @return VacationRequest
+     */
+    public function setRecovery($recovery)
+    {
+        $this->recovery = $recovery;
+
+        return $this;
+    }
+
+    /**
+     * Get recovery
+     *
+     * @return integer
+     */
+    public function getRecovery()
+    {
+        return $this->recovery;
+    }
 }

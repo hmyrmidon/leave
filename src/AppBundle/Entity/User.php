@@ -90,4 +90,52 @@ class User extends BaseUser
         $this->teamValidator = $teamValidator;
     }
     
+
+    /**
+     * Add vacation
+     *
+     * @param \AppBundle\Entity\VacationRequest $vacation
+     *
+     * @return User
+     */
+    public function addVacation(\AppBundle\Entity\VacationRequest $vacation)
+    {
+        $this->vacation[] = $vacation;
+
+        return $this;
+    }
+
+    /**
+     * Remove vacation
+     *
+     * @param \AppBundle\Entity\VacationRequest $vacation
+     */
+    public function removeVacation(\AppBundle\Entity\VacationRequest $vacation)
+    {
+        $this->vacation->removeElement($vacation);
+    }
+
+    /**
+     * Add teamValidator
+     *
+     * @param \AppBundle\Entity\TeamValidator $teamValidator
+     *
+     * @return User
+     */
+    public function addTeamValidator(\AppBundle\Entity\TeamValidator $teamValidator)
+    {
+        $this->teamValidator[] = $teamValidator;
+
+        return $this;
+    }
+
+    /**
+     * Remove teamValidator
+     *
+     * @param \AppBundle\Entity\TeamValidator $teamValidator
+     */
+    public function removeTeamValidator(\AppBundle\Entity\TeamValidator $teamValidator)
+    {
+        $this->teamValidator->removeElement($teamValidator);
+    }
 }

@@ -3,10 +3,11 @@
 namespace AppBundle\Manager;
 
 
+use AppBundle\Entity\Holiday;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\Validator\Constraints\DateTime;
 
-class HolidayManager
+class HolidayManager extends BaseManager
 {
     /**
      * @var EntityManager $_em
@@ -93,6 +94,18 @@ class HolidayManager
         }
 
         return $dateEnd;
+    }
+
+    public function add(\DateTime $date, $frequency = Holiday::EARLY)
+    {
+        $date = $date->format('Y-m-d');
+        list($year, $month, $day) = preg_split('-', $date);
+        $holiday = new Holiday();
+        $holiday->setYear($year);
+        $holiday->setMonth($month);
+        $holiday->setDay($day);
+        $holiday->setFrequency($frequency);
+        $this->save($holiday);
     }
 
     /**

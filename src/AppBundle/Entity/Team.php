@@ -186,4 +186,38 @@ class Team
     {
         $this->employee->removeElement($employee);
     }
+
+    /**
+     * Add validator
+     *
+     * @param \AppBundle\Entity\TeamValidator $validator
+     *
+     * @return Team
+     */
+    public function addValidator(\AppBundle\Entity\TeamValidator $validator)
+    {
+        $this->validator[] = $validator;
+
+        return $this;
+    }
+
+    /**
+     * Remove validator
+     *
+     * @param \AppBundle\Entity\TeamValidator $validator
+     */
+    public function removeValidator(\AppBundle\Entity\TeamValidator $validator)
+    {
+        $this->validator->removeElement($validator);
+    }
+
+    /**
+     * Get validator
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getValidator()
+    {
+        return $this->validator;
+    }
 }
