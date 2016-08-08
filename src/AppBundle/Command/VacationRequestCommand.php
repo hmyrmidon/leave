@@ -38,7 +38,7 @@ class VacationRequestCommand extends ContainerAwareCommand
             ->addOption('validate', null, InputOption::VALUE_OPTIONAL)
             ->addOption('user', 'u', InputOption::VALUE_OPTIONAL)
             ->addOption('add', null, InputOption::VALUE_OPTIONAL)
-            ->addOption('addwf', null, InputOption::VALUE_NONE)
+            ->addOption('addManager', null, InputOption::VALUE_OPTIONAL)
             ->addOption('addstep', null, InputOption::VALUE_NONE)
             ->addOption('addstatus', null, InputOption::VALUE_NONE)
             ->addOption('datediff', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, '', [])
@@ -63,8 +63,8 @@ class VacationRequestCommand extends ContainerAwareCommand
                 $this->save($add);
             }
         }
-        if ($input->getOption('addwf')) {
-            $this->addWorkflow();
+        if ($input->getOption('addManager')) {
+
         }
         if($input->getOption('datediff')) {
             $dates = $input->getOption('datediff');
@@ -95,16 +95,12 @@ class VacationRequestCommand extends ContainerAwareCommand
          */
         $srv = $this->getContainer()->get(VacationRequestManager::SERVICE_NAME);
         $vacation = $srv->save($vacation);
+        
         $event = new OnSubmitVacationRequestEvent($vacation);
         $this->getContainer()->get('event_dispatcher')->dispatch(VacationAvailableEvent::ON_SUBMIT_VACATION, $event);
 
         $this->output->writeln('vacation request saved!');
         $this->output->writeln(':)');
-    }
-
-    public function addWorkflow()
-    {
-        
     }
 
     public function dateDiff($date1, $date2)
@@ -113,6 +109,11 @@ class VacationRequestCommand extends ContainerAwareCommand
         $interval = $this->getContainer()->get(HolidayManager::SERVICE_NAME)->getDayCount($date1, $date2);
         $this->output->writeln('nombre de jours: ' . $interval);
         $this->output->writeln(':)');
+    }
+
+    public function addManager()
+    {
+        
     }
 
 }

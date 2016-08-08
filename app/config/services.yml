@@ -24,19 +24,20 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
-    app.wf_step_manager:
-        class: 'AppBundle\Manager\WorkflowStepManager'
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@router"
     app.holiday_manager:
         class: 'AppBundle\Manager\HolidayManager'
         arguments:
             - "@doctrine.orm.entity_manager"
-
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+    app.status_manager:
+        class: 'AppBundle\Manager\StatusManager'
     #Application's Event Listeners
     app.vacation_listener:
         class: 'AppBundle\Listener\VacationListener'
+        arguments:
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: "kernel.event_listener", event: "app.on_validate_event", method: "onValidate" }
             - { name: "kernel.event_listener", event: "app.on_submit_vacation_event", method: 'onSubmitRequest'}

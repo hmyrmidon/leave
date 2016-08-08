@@ -33,16 +33,14 @@ class User extends BaseUser
      * @ORM\OneToOne(targetEntity="Employee", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $employee;
-
-    /**
-     * @var TeamWorkflowModel $teamWf
-     * @ORM\OneToMany(targetEntity="TeamWorkflowModel", mappedBy="validator")
-     */
-    protected $teamWf;
     /**
      * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="validator")
      */
-    protected $validation;
+    protected $vacation;
+    /**
+     * @ORM\OneToMany(targetEntity="TeamValidator", mappedBy="validator")
+     */
+    protected $teamValidator;
 
     /**
      * @return \AppBundle\Entity\Employee
@@ -61,53 +59,35 @@ class User extends BaseUser
     }
 
     /**
-     * Add teamWf
-     *
-     * @param \AppBundle\Entity\TeamWorkflowModel $teamWf
-     *
-     * @return User
+     * @return mixed
      */
-    public function addTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
+    public function getVacation()
     {
-        $this->teamWf[] = $teamWf;
-
-        return $this;
+        return $this->vacation;
     }
 
     /**
-     * Remove teamWf
-     *
-     * @param \AppBundle\Entity\TeamWorkflowModel $teamWf
+     * @param mixed $vacation
      */
-    public function removeTeamWf(\AppBundle\Entity\TeamWorkflowModel $teamWf)
+    public function setVacation($vacation)
     {
-        $this->teamWf->removeElement($teamWf);
-    }
-
-    /**
-     * Get teamWf
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getTeamWf()
-    {
-        return $this->teamWf;
+        $this->vacation = $vacation;
     }
 
     /**
      * @return mixed
      */
-    public function getValidation()
+    public function getTeamValidator()
     {
-        return $this->validation;
+        return $this->teamValidator;
     }
 
     /**
-     * @param mixed $validation
+     * @param mixed $teamValidator
      */
-    public function setValidation($validation)
+    public function setTeamValidator($teamValidator)
     {
-        $this->validation = $validation;
+        $this->teamValidator = $teamValidator;
     }
     
 }
