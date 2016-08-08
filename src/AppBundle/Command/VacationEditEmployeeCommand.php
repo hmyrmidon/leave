@@ -17,6 +17,9 @@ class VacationEditEmployeeCommand extends Command
                 ->setDescription('Update an employee.')
                 ->setHelp("This command allows you to update an employee.")
                 ->addOption("id", null, \Symfony\Component\Console\Input\InputOption::VALUE_REQUIRED)
+                ->addArgument("username", InputArgument::REQUIRED)
+                ->addArgument("password", InputArgument::REQUIRED)
+                ->addArgument("email", InputArgument::REQUIRED)
                 ->addArgument("lastname", InputArgument::REQUIRED, 'The lastname of the employee.')
                 ->addArgument("firstname", InputArgument::REQUIRED, 'The firstname of the employee.')
                 ->addArgument("registrationNumber", InputArgument::REQUIRED, 'The number of registration of the employee.')
@@ -31,22 +34,25 @@ class VacationEditEmployeeCommand extends Command
         $userEmployee = $this->getContainer()->get(EmployeeManager::EMPLOYEE_MANAGER);
         $idEmployee = $input->getOption("id");
         $employeeEdit = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('AppBundle:Employee')->find($idEmployee);
+        $hdate              = $input->getArgument('hiringDate');
+        $lastname           = $input->getArgument('lastname');
+        $firstname          = $input->getArgument('firstname');
+        $registrationNumber = $input->getArgument('registrationNumber');
+        $maritalStatus      = $input->getArgument('maritalStatus');
+        $address            = $input->getArgument('address');
+        $employee = $userEmployee->editEmployee($employeeEdit, $lastname, $hdate, $registrationNumber, $maritalStatus, $address, $firstname);
 
-        $hiringDate = new \DateTime($input->getArgument('hiringDate')); 
-       
-        $user = $employeeEdit->getUser();
+        $team = $employee->getTeam();
+        $name = $team->getName(); dump($name);die;
+        
+        $param = new \stdClass();
+            $param->username = $input->getArgument('username');
+            $param->email    = $input->getArgument('email');
+            $param->password = crypt($input->getArgument('password'));
+            $param->employee = $employee;
 
-
-        $employeeEdit->setLastName($input->getArgument('lastname'));
-        $employeeEdit->setFirstName($input->getArgument('firstname'));
-        $employeeEdit->setRegistrationNumber($input->getArgument('registrationNumber'));
-        $employeeEdit->setHiringDate($hiringDate);
-        $employeeEdit->setMaritalStatus($input->getArgument('maritalStatus'));
-        $employeeEdit->setAddress($input->getArgument('address'));
-        $userEmployee->save($employeeEdit);
-
-        $event = new \AppBundle\Event\VacationEmployeeEvent($employeeEdit);
-        $this->getContainer()->get('event_dispatcher')->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME_UPDATE_USER, $event,$user);
+        $event = new \AppBundle\Event\VacationEmployeeEvent($param);
+        $this->getContainer()->get('event_dispatcher')->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME_UPDATE_USER, $event);
 
         $output->writeln('Employee successfully updated!');
     }

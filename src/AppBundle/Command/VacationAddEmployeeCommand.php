@@ -12,7 +12,7 @@ class VacationAddEmployeeCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('app:vacation:employee-create')
+            ->setName('app:vacation:create-employee')
             ->setDescription('Create new employee.')
             ->setHelp("This command allows you to create an employee.")
             ->addArgument("username", InputArgument::REQUIRED)
@@ -35,22 +35,20 @@ class VacationAddEmployeeCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $userEmployee = $this->getContainer()->get(\AppBundle\Manager\EmployeeManager::EMPLOYEE_MANAGER);
-        $employee     = new \AppBundle\Entity\Employee();
 
-        $hiringDate = new \DateTime($input->getArgument('hiringDate')); 
-        $employee->setLastName($input->getArgument('lastname'));
-        $employee->setFirstName($input->getArgument('firstname'));
-        $employee->setRegistrationNumber($input->getArgument('registrationNumber'));
-        $employee->setHiringDate($hiringDate);
-        $employee->setMaritalStatus($input->getArgument('maritalStatus'));
-        $employee->setAddress($input->getArgument('address'));
+        $hdate              = $input->getArgument('hiringDate');
+        $lastname           = $input->getArgument('lastname');
+        $firstname          = $input->getArgument('firstname');
+        $registrationNumber = $input->getArgument('registrationNumber');
+        $maritalStatus      = $input->getArgument('maritalStatus');
+        $address            = $input->getArgument('address');
 
-        $userEmployee->add($employee);
+        $employee = $userEmployee->addEmployee($lastname, $hdate, $registrationNumber, $maritalStatus, $address, $firstname);
 
         $param = new \stdClass();
             $param->username = $input->getArgument('username');
             $param->email    = $input->getArgument('email');
-            $param->password = $input->getArgument('password');
+            $param->password = crypt($input->getArgument('password'));
             $param->employee = $employee;
 
         $event = new \AppBundle\Event\VacationEmployeeEvent($param);

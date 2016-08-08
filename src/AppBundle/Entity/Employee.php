@@ -7,11 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use AppBundle\Entity\User;
 use AppBundle\Traits\BaseTrait;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * Class Employee
  * @package AppBundle\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
  * @ORM\Table(name="employee")
+ * @UniqueEntity(fields="registrationNumber", message="Ce numero matricul existe déjà..")
  * 
  */
 class Employee

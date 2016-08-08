@@ -41,7 +41,7 @@ class VacationEditUserCommand extends Command
         $userEdit->setLastName($input->getArgument('lastname'));
         $userEdit->setFirstName($input->getArgument('firstname'));
 
-        $user->add($userEdit);
+        $user->save($userEdit);
 
         $output->writeln('User successfully updated!');
 
