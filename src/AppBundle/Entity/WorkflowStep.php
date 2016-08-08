@@ -44,7 +44,7 @@ class WorkflowStep
      */
     protected $wfModelStep;
     /**
-     * @ORM\OneToMany(targetEntity="VacationRequestValidation", mappedBy="step")
+     * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="step")
      */
     protected $validation;
 

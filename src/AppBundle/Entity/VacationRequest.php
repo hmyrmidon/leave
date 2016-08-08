@@ -45,7 +45,7 @@ class VacationRequest
     protected $employee;
     /**
      * @var User $validator
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="validation")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="validation")
      */
     protected $validator;
     /**

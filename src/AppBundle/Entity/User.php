@@ -40,7 +40,7 @@ class User extends BaseUser
      */
     protected $teamWf;
     /**
-     * @ORM\OneToMany(targetEntity="VacationRequestValidation", mappedBy="validator")
+     * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="validator")
      */
     protected $validation;
 
