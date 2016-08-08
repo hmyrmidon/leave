@@ -43,7 +43,7 @@ class VacationEditEmployeeCommand extends Command
         $employeeEdit->setHiringDate($hiringDate);
         $employeeEdit->setMaritalStatus($input->getArgument('maritalStatus'));
         $employeeEdit->setAddress($input->getArgument('address'));
-        $userEmployee->edit($employeeEdit);
+        $userEmployee->save($employeeEdit);
 
         $event = new \AppBundle\Event\VacationEmployeeEvent($employeeEdit);
         $this->getContainer()->get('event_dispatcher')->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME_UPDATE_USER, $event,$user);

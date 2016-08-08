@@ -17,23 +17,27 @@ class WorkflowStatusRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getStatusBy($params=array())
     {
-        $query = 'SELECT s FROM AppBudle:WorkflowModelStep wf_mt 
-                           JOIN wf_mt.wfStatus s 
-                           JOIN wf_mt.validator u';
-        $dql = $this->_em->createQuery($query)->;
-//        $dql = $this->_em->createQueryBuilder()
-//                    ->addSelect('SELECT s FROM AppBudle:WorkflowModelStep wf_mt')
-//                    ->innerJoin('wf_mt.wfStatus', 's')
-//                    ->innerJoin('wf_mt.validator', 'u');
+        $query = 'SELECT wf_mt, s, st FROM AppBundle:WorkflowModelStep wf_mt 
+                           JOIN wf_mt.wfStatus s
+                           JOIN wf_mt.wfStep st
+                           JOIN wf_mt.validator u ';
         if(count($params) > 0) {
+            $conditions = array();
             if(array_key_exists('userid',$params)){
-                $dql->andWhere('u.id = :userid');
+                $conditions[] = 'u.id = :userid';
             }
             if(array_key_exists('modelid',$params)){
-                $dql->andWhere('wf_mt.id = :modelid');
+                $conditions[] = 'wf_mt.wfModel = :modelid';
+            }
+            if(array_key_exists('team', $params)){
+                $query .= 'JOIN AppBundle:TeamWorkflowModel tm';
+                $conditions[] = 'tm.team = :team';
+            }
+            if (count($conditions) > 0){
+                $query .= ' WHERE '. implode(' AND ', $conditions);
             }
         }
 
-        return $dql->setParameters($params)->getQuery()->getResult();
+        return $this->_em->createQuery($query)->setParameters($params)->getResult();
     }
 }

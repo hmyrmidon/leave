@@ -88,7 +88,7 @@ class Employee
      *
      * @var \Team
      * 
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Team", mappedBy="employee")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team", inversedBy="employee")
      * 
      */
     private $team;
@@ -207,7 +207,7 @@ class Employee
     /**
      * Get team
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \AppBundle\Entity\Team
      */
     public function getTeam()
     {

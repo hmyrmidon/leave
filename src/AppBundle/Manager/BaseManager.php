@@ -29,21 +29,12 @@ class BaseManager
      * 
      * @param type $entity
      */
-    public function add($entity)
+    public function save($entity)
     {
         $this->entityManager->persist($entity);
         $this->flushAndClear();
     }
-
-    /**
-     * 
-     * @param type $entity
-     */
-    public function edit($entity)
-    {
-        $this->entityManager->persist($entity);
-        $this->flushAndClear();
-    }
+    
 
     /**
      * 

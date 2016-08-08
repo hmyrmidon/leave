@@ -13,12 +13,13 @@ class VacationRequestManager extends BaseManager
     public function validate($vacation, $validator)
     {
         $validator = $this->entityManager->getRepository('AppBundle:User')->find($validator);
+        $vacc = $this->entityManager->getRepository('AppBundle:VacationRequest')->find($vacation);
         $params= array(
             'userid'=> $validator,
             'modelid'=>$vacation
         );
-        $status = $this->entityManager->getRepository('AppBundle:WorkflowStatus')->getStatusBy($params);
-
-        dump(array($vacation, $validator->getId(),$status));die;
+//        $status = $this->entityManager->getRepository('AppBundle:WorkflowStatus')->getStatusBy($params);
+        $result = $this->entityManager->getRepository('AppBundle:VacationRequest')->validate($vacc, $validator);
+        //$this->save();
     }
 }

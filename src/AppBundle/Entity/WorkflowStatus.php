@@ -33,6 +33,10 @@ class WorkflowStatus
      */
     protected $wfModelStep;
     /**
+     * @ORM\OneToMany(targetEntity="VacationRequestValidation", mappedBy="status")
+     */
+    protected $validation;
+    /**
      * @return int
      */
     public function getId()

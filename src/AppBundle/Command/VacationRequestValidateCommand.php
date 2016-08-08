@@ -26,7 +26,6 @@ class VacationRequestValidateCommand extends ContainerAwareCommand
         $vacationId = $params['vacationId'];
         $validator = $params['validator'];
         $this->getContainer()->get(VacationRequestManager::SERVICE_NAME)->validate($vacationId, $validator);
-
     }
 
 }
