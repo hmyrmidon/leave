@@ -41,12 +41,9 @@ class Team
 
     /**
      *
-     * @var \Employee
+     * @var \Team
      * 
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Employee", inversedBy="team")
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="employee_id", referencedColumnName="id")
-     * })
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Employee", mappedBy="team")
      * 
      */
     private $employee;
