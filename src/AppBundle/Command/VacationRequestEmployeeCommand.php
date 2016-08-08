@@ -20,9 +20,4 @@ class VacationRequestEmployeeCommand extends Command
        ;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) 
-    {
-        $vacationRequestEmployee = $this->getContainer()->get(\AppBundle\Manager\VacationRequestManager::SERVICE_NAME);
-        
-    }
 }

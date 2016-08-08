@@ -23,31 +23,37 @@ class VacationRequest
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @var \DateTime $startDate
      * @ORM\Column(name="start_date", type="datetime", nullable=false)
      */
     protected $startDate;
+
     /**
      * @var \DateTime $endDate
      * @ORM\Column(name="end_date", type="datetime", nullable=true)
      */
     protected $endDate;
+
     /**
      * @var string $reason
      * @ORM\Column(name="reason", type="text", nullable=true)
      */
     protected $reason;
+
     /**
      * @var Employee $employee
      * @ORM\ManyToOne(targetEntity="Employee", inversedBy="vacation")
      */
     protected $employee;
+
     /**
      * @var WorkflowStatus $status
      * @ORM\ManyToOne(targetEntity="Status", inversedBy="validation")
      */
     protected $status;
+
     /**
      * @var int $recovery
      * @ORM\Column(name="recovery", type="integer")

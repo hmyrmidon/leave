@@ -21,10 +21,12 @@ class TeamValidator
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="teamValidator")
      */
     protected $validator;
+
     /**
      * @ORM\ManyToOne(targetEntity="Team", inversedBy="validator")
      */
@@ -61,5 +63,4 @@ class TeamValidator
     {
         $this->team = $team;
     }
-
 }

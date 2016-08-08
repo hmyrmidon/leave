@@ -20,10 +20,12 @@ class VacationValidation
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
     /**
      * @ORM\ManyToOne(targetEntity="VacationRequest", inversedBy="id")
      */
     protected $vacation;
+
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="id")
      */
