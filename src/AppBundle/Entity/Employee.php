@@ -90,16 +90,14 @@ class Employee
      */
     private $user;
 
-    
+
     /**
      *
      * @var \Team
-     * 
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team", inversedBy="employee")
-     * @ORM\JoinColumns({
-     *      @ORM\JoinColumn(name="team_id", referencedColumnName="id")
-     * })
-     * 
+     *
+     * @ORM\ManyToOne(targetEntity="Team", inversedBy="employee")
+     * @ORM\JoinColumn(name="team_id", referencedColumnName="id")
+     *
      */
     private $team;
 
@@ -424,5 +422,26 @@ class Employee
     public function getVacation()
     {
         return $this->vacation;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->vacation = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Set team
+     *
+     * @param \AppBundle\Entity\Team $team
+     *
+     * @return Employee
+     */
+    public function setTeam(\AppBundle\Entity\Team $team = null)
+    {
+        $this->team = $team;
+
+        return $this;
     }
 }

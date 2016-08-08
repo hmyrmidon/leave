@@ -44,20 +44,15 @@ class VacationRequest
      */
     protected $employee;
     /**
-     * @var User $validator
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="validation")
-     */
-    protected $validator;
-    /**
-     * @var WorkflowStep $step
-     * @ORM\ManyToOne(targetEntity="WorkflowStep", inversedBy="validation")
-     */
-    protected $step;
-    /**
      * @var WorkflowStatus $status
-     * @ORM\ManyToOne(targetEntity="WorkflowStatus", inversedBy="validation")
+     * @ORM\ManyToOne(targetEntity="Status", inversedBy="validation")
      */
     protected $status;
+    /**
+     * @var int $recovery
+     * @ORM\Column(name="recovery", type="integer")
+     */
+    protected $recovery;
 
     /**
      * @return \DateTime
@@ -124,7 +119,7 @@ class VacationRequest
     }
 
     /**
-     * @return mixed
+     * @return User
      */
     public function getValidator()
     {
@@ -132,7 +127,7 @@ class VacationRequest
     }
 
     /**
-     * @param mixed $validator
+     * @param User $validator
      */
     public function setValidator($validator)
     {

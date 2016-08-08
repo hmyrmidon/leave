@@ -33,6 +33,8 @@ class BaseManager
     {
         $this->entityManager->persist($entity);
         $this->flushAndClear();
+
+        return $entity;
     }
 
     /**

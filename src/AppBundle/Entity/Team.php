@@ -34,19 +34,18 @@ class Team
     private $name;
 
     /**
-     * @var TeamWorkflowModel $teamWf
-     * @ORM\OneToMany(targetEntity="WorkflowModelStep", mappedBy="team")
-     */
-    protected $wfModelStep;
-
-    /**
      *
      * @var \Team
-     * 
+     *
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Employee", mappedBy="team")
-     * 
+     *
      */
     private $employee;
+
+    /**
+     * @ORM\OneToMany(targetEntity="TeamValidator", mappedBy="team")
+     */
+    protected $validator;
 
     /**
      * Get id
@@ -154,37 +153,37 @@ class Team
         return $this->updated;
     }
 
+
     /**
-     * Add wfModelStep
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->wfModelStep = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->employee = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add employee
      *
-     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     * @param \AppBundle\Entity\Employee $employee
      *
      * @return Team
      */
-    public function addWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    public function addEmployee(\AppBundle\Entity\Employee $employee)
     {
-        $this->wfModelStep[] = $wfModelStep;
+        $this->employee[] = $employee;
 
         return $this;
     }
 
     /**
-     * Remove wfModelStep
+     * Remove employee
      *
-     * @param \AppBundle\Entity\WorkflowModelStep $wfModelStep
+     * @param \AppBundle\Entity\Employee $employee
      */
-    public function removeWfModelStep(\AppBundle\Entity\WorkflowModelStep $wfModelStep)
+    public function removeEmployee(\AppBundle\Entity\Employee $employee)
     {
-        $this->wfModelStep->removeElement($wfModelStep);
-    }
-
-    /**
-     * Get wfModelStep
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWfModelStep()
-    {
-        return $this->wfModelStep;
+        $this->employee->removeElement($employee);
     }
 }

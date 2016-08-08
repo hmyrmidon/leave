@@ -9,35 +9,18 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
-
     app.user_manager:
         class: 'AppBundle\Manager\UserManager'
         arguments: 
             - "@doctrine.orm.entity_manager"
             - "@router"
-
-    app.employee_listner:
-        class: 'AppBundle\Listener\VacationEmployeeListener'
-        arguments:
-            - "@doctrine.orm.entity_manager"
-        tags: 
-            - { name : "kernel.event_listener" , event: "app.on_user_process", method: "onCreateEmployee"}
-#            - { name : "kernel.event_listener" , event: "app.on_user_update", method: "onUpdateEmployee"}
-#            - { name : "kernel.event_listener" , event: "app.on_user_remove", method: "onRemoveEmployee"}
-
     app.team_manager:
         class: 'AppBundle\Manager\TeamManager'
         arguments: 
             - "@doctrine.orm.entity_manager"
             - "@router"
-
     app.vacation_request_manager:
         class: 'AppBundle\Manager\VacationRequestManager'
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@router"
-    app.wf_step_manager:
-        class: 'AppBundle\Manager\WorkflowStepManager'
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
@@ -45,11 +28,24 @@ services:
         class: 'AppBundle\Manager\HolidayManager'
         arguments:
             - "@doctrine.orm.entity_manager"
-
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+    app.status_manager:
+        class: 'AppBundle\Manager\StatusManager'
     #Application's Event Listeners
-    app.event.listeners:
+    app.vacation_listener:
         class: 'AppBundle\Listener\VacationListener'
+        arguments:
+            - "@doctrine.orm.entity_manager"
         tags:
             - { name: "kernel.event_listener", event: "app.on_validate_event", method: "onValidate" }
             - { name: "kernel.event_listener", event: "app.on_submit_vacation_event", method: 'onSubmitRequest'}
-    
+    app.employee_listner:
+            class: 'AppBundle\Listener\VacationEmployeeListener'
+            arguments:
+                - "@doctrine.orm.entity_manager"
+            tags:
+                - { name : "kernel.event_listener" , event: "app.on_user_process", method: "onCreateEmployee"}
+    #            - { name : "kernel.event_listener" , event: "app.on_user_update", method: "onUpdateEmployee"}
+    #            - { name : "kernel.event_listener" , event: "app.on_user_remove", method: "onRemoveEmployee"}
