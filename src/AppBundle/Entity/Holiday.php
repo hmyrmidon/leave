@@ -14,9 +14,10 @@ use Doctrine\ORM\Mapping\Annotation as Gedmo;
  */
 class Holiday
 {
-    const EARLY = 0;
-    const MONTHLY = 1;
-    const WEEKLY = 2;
+    const F_EARLY = 0;
+    const F_MONTHLY = 1;
+    const F_WEEKLY = 2;
+
     use BaseTrait;
     /**
      * @var int $id
@@ -44,7 +45,7 @@ class Holiday
      * @var int $frequency
      * @ORM\Column(name="frequency", type="integer")
      */
-    protected $frequency = EARLY;
+    protected $frequency = self::F_EARLY;
     /**
      * @var string $label
      * @ORM\Column(name="label", type="string")

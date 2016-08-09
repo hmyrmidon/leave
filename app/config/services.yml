@@ -28,6 +28,7 @@ services:
         class: 'AppBundle\Manager\HolidayManager'
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@router"
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"

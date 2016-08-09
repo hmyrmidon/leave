@@ -49,12 +49,6 @@ class VacationRequest
     protected $employee;
 
     /**
-     * @var WorkflowStatus $status
-     * @ORM\ManyToOne(targetEntity="Status", inversedBy="validation")
-     */
-    protected $status;
-
-    /**
      * @var int $recovery
      * @ORM\Column(name="recovery", type="integer")
      */
