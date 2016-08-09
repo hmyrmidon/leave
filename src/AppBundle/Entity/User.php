@@ -33,10 +33,12 @@ class User extends BaseUser
      * @ORM\OneToOne(targetEntity="Employee", mappedBy="user", cascade={"persist", "remove"})
      */
     protected $employee;
+
     /**
      * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="validator")
      */
     protected $vacation;
+
     /**
      * @ORM\OneToMany(targetEntity="TeamValidator", mappedBy="validator")
      */

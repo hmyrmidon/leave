@@ -18,8 +18,6 @@ class VacationAddUserCommand extends Command
              ->addArgument("username", InputArgument::REQUIRED, 'The username of the user.')
              ->addArgument("email", InputArgument::REQUIRED, 'The email of the user.')
              ->addArgument("password", InputArgument::REQUIRED, 'The password of the user.')
-             ->addArgument("lastname", InputArgument::REQUIRED, 'The lastname of the user.')
-             ->addArgument("firstname", InputArgument::REQUIRED, 'The firstname of the user.')
         ;
     }
 
@@ -31,15 +29,11 @@ class VacationAddUserCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output) 
     {
         $user = $this->getContainer()->get(\AppBundle\Manager\UserManager::USER_MANAGER);
-        $newUser = new \AppBundle\Entity\User();
 
-        $newUser->setUsername($input->getArgument('username'));
-        $newUser->setEmail($input->getArgument('email'));
-        $newUser->setPassword($input->getArgument('password'));
-        $newUser->setLastName($input->getArgument('lastname'));
-        $newUser->setFirstName($input->getArgument('firstname'));
-
-        $user->add($newUser);
+        $username = $input->getArgument('username');
+        $email = $input->getArgument('email');
+        $password = $input->getArgument('password');
+        $newUser = $user->addUser($username, $email, $password);
 
         $output->writeln('User successfully generated!', $newUser->getUsername());
 
