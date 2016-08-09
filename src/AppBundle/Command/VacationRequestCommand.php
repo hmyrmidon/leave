@@ -39,7 +39,6 @@ class VacationRequestCommand extends ContainerAwareCommand
             ->addOption('user', 'u', InputOption::VALUE_OPTIONAL)
             ->addOption('add', null, InputOption::VALUE_OPTIONAL)
             ->addOption('addManager', null, InputOption::VALUE_OPTIONAL)
-            ->addOption('addstep', null, InputOption::VALUE_NONE)
             ->addOption('addstatus', null, InputOption::VALUE_NONE)
             ->addOption('datediff', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, '', [])
             ->setDescription('Perform vacation request');
