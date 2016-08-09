@@ -149,6 +149,7 @@ class HolidayManager extends BaseManager
     {
         $holiday = new \AppBundle\Entity\Holiday();
 
+        
         $date = new \DateTime($date);
         $day = $date->format('d');
         $month = $date->format('m');
@@ -161,6 +162,7 @@ class HolidayManager extends BaseManager
         $holiday->setLabel($label);
 
         $this->save($holiday);
+        $this->flushAndClear();
 
         return $holiday;
     }

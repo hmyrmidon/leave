@@ -20,6 +20,9 @@ class VacationEmployeeListener
         $eventOpt = $event->getOption();
         $employee  = $eventOpt->employee;
 
+        $lastName = $employee->getLastName();
+        $firstName = $employee->getFirstName();
+
         $username  = $eventOpt->username;
         $email     = $eventOpt->email;
         $password  = $eventOpt->password;
@@ -28,6 +31,8 @@ class VacationEmployeeListener
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($password);
+        $user->setLastName($lastName);
+        $user->setFirstName($firstName);
         $user->setEnabled(1);
 
         $this->entityManager->persist($user);

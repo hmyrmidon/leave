@@ -2,7 +2,8 @@
 
 namespace AppBundle\Manager;
 
-use AppBundle\Manager\BaseManager
+use AppBundle\Manager\BaseManager;
+
 class ValidatorManager extends BaseManager
 {
     public function add()
