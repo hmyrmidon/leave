@@ -15,6 +15,9 @@ use Doctrine\ORM\Mapping\Annotation as Gedmo;
  */
 class VacationRequest
 {
+    const PENDING_STATUS = 0;
+    const VALIDATE_STATUS = 1;
+    const DENIED_STATUS = 2;
     use BaseTrait;
     /**
      * @var int $id
@@ -44,15 +47,25 @@ class VacationRequest
 
     /**
      * @var Employee $employee
-     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="vacation")
+     * @ORM\ManyToOne(targetEntity="Employee", inversedBy="vacation", cascade={"persist"})
      */
     protected $employee;
+
+    /**
+     * @var int $status
+     * @ORM\Column(name="status", type="integer")
+     */
+    protected $status;
 
     /**
      * @var int $recovery
      * @ORM\Column(name="recovery", type="integer")
      */
     protected $recovery;
+    /**
+     * @ORM\OneToMany(targetEntity="VacationValidation", mappedBy="vacation")
+     */
+    protected $validation;
 
     /**
      * @return \DateTime
@@ -119,22 +132,6 @@ class VacationRequest
     }
 
     /**
-     * @return User
-     */
-    public function getValidator()
-    {
-        return $this->validator;
-    }
-
-    /**
-     * @param User $validator
-     */
-    public function setValidator($validator)
-    {
-        $this->validator = $validator;
-    }
-
-    /**
      * @return WorkflowStep
      */
     public function getStep()
@@ -166,4 +163,28 @@ class VacationRequest
         $this->status = $status;
     }
     
+
+    /**
+     * Set recovery
+     *
+     * @param integer $recovery
+     *
+     * @return VacationRequest
+     */
+    public function setRecovery($recovery)
+    {
+        $this->recovery = $recovery;
+
+        return $this;
+    }
+
+    /**
+     * Get recovery
+     *
+     * @return integer
+     */
+    public function getRecovery()
+    {
+        return $this->recovery;
+    }
 }

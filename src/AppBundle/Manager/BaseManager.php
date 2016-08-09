@@ -32,8 +32,7 @@ class BaseManager
     public function save($entity)
     {
         $this->entityManager->persist($entity);
-        $this->flushAndClear();
-
+        
         return $entity;
     }
 

@@ -11,8 +11,4 @@ use AppBundle\Entity\Employee;
  */
 class TeamRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getValidator()
-    {
-        $req = '';
-    }
 }

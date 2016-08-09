@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class TeamValidator
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ValidatorRepository")
  * @ORM\Table(name="team_manager")
  * @package AppBundle\Entity
  */
