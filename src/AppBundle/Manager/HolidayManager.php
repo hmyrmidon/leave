@@ -5,6 +5,7 @@ namespace AppBundle\Manager;
 
 use AppBundle\Entity\Holiday;
 use Doctrine\ORM\EntityManager;
+use AppBundle\Manager\BaseManager;
 use Symfony\Component\Validator\Constraints\DateTime;
 
 class HolidayManager extends BaseManager
@@ -14,16 +15,6 @@ class HolidayManager extends BaseManager
      */
     protected $_em;
     const SERVICE_NAME = 'app.holiday_manager';
-
-    /**
-     * HolidayManager constructor.
-     *
-     * @param EntityManager $_em
-     */
-    public function __construct(EntityManager $_em)
-    {
-        $this->_em = $_em;
-    }
 
     /**
      * @param int|null $year
@@ -152,5 +143,25 @@ class HolidayManager extends BaseManager
         }
 
         return $count;
+    }
+
+    public function addHoliday($date, $frequency = 0, $label = '') 
+    {
+        $holiday = new \AppBundle\Entity\Holiday();
+
+        $date = new \DateTime($date);
+        $day = $date->format('d');
+        $month = $date->format('m');
+        $year = $date->format('Y');
+
+        $holiday->setDay($day);
+        $holiday->setMonth($month);
+        $holiday->setYear($year);
+        $holiday->setFrequency($frequency);
+        $holiday->setLabel($label);
+
+        $this->save($holiday);
+
+        return $holiday;
     }
 }
