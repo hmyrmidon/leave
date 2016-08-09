@@ -22,12 +22,12 @@ class VacationValidation
     protected $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="VacationRequest", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="VacationRequest", inversedBy="validation")
      */
     protected $vacation;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="id")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="teamValidator")
      */
     protected $manager;
 

@@ -35,11 +35,6 @@ class User extends BaseUser
     protected $employee;
 
     /**
-     * @ORM\OneToMany(targetEntity="VacationRequest", mappedBy="validator")
-     */
-    protected $vacation;
-
-    /**
      * @ORM\OneToMany(targetEntity="TeamValidator", mappedBy="validator")
      */
     protected $teamValidator;

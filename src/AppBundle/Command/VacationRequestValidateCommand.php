@@ -1,9 +1,14 @@
 <?php
+/**
+ * Created by PhpStorm.
+ * User: joel
+ * Date: 09/08/16
+ * Time: 10:25
+ */
 
 namespace AppBundle\Command;
 
 
-use AppBundle\Event\OnSubmitVacationRequestEvent;
 use AppBundle\Event\OnValidateEvent;
 use AppBundle\Event\VacationAvailableEvent;
 use AppBundle\Manager\VacationRequestManager;
@@ -16,25 +21,24 @@ class VacationRequestValidateCommand extends ContainerAwareCommand
 {
     protected function configure()
     {
-        $this
-            ->setName('app:vacation:validate')
-            ->addArgument('vacationId', InputArgument::REQUIRED)
-            ->addArgument('validator', InputArgument::REQUIRED)
+        $this->setName('app:vacation:validate')
+            ->addArgument('vacation', null, InputArgument::REQUIRED)
+            ->addArgument('userId', null, InputArgument::REQUIRED)
             ->setDescription('Validate vacation request');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $params = $input->getArguments();
-        $vacationId = $params['vacationId'];
-        $validator = $params['validator'];
-        $vacation = $this->getContainer()->get(VacationRequestManager::SERVICE_NAME)->validate($vacationId, $validator);
-
-        $event = new OnSubmitVacationRequestEvent($vacation);
-        $this->getContainer()->get('event_dispatcher')->dispatch(VacationAvailableEvent::ON_SUBMIT_VACATION, $event);
+        $userId = $input->getArgument('userId');
+        $vacationId = $input->getArgument('vacation');
+        $vacation = $this->getContainer()->get('doctrine.orm.entity_manager')
+            ->getRepository('AppBundle:VacationRequest')->find($vacationId);
+        $submitVacation = $this->getContainer()->get(VacationRequestManager::SERVICE_NAME);
+        $submitVacation->validate($vacation, $userId);
 
         $event = new OnValidateEvent($vacation);
-        $this->getContainer()->get('event_dispatcher')->dispatch(VacationAvailableEvent::ON_VALIDATE, $event);
+        $this->getContainer()->get('event_dispatcher')
+            ->dispatch(VacationAvailableEvent::ON_VALIDATE, $event);
     }
 
 }

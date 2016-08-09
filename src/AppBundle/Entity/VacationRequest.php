@@ -62,6 +62,10 @@ class VacationRequest
      * @ORM\Column(name="recovery", type="integer")
      */
     protected $recovery;
+    /**
+     * @ORM\OneToMany(targetEntity="VacationValidation", mappedBy="vacation")
+     */
+    protected $validation;
 
     /**
      * @return \DateTime
@@ -125,22 +129,6 @@ class VacationRequest
     public function setEmployee($employee)
     {
         $this->employee = $employee;
-    }
-
-    /**
-     * @return User
-     */
-    public function getValidator()
-    {
-        return $this->validator;
-    }
-
-    /**
-     * @param User $validator
-     */
-    public function setValidator($validator)
-    {
-        $this->validator = $validator;
     }
 
     /**

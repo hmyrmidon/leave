@@ -45,18 +45,14 @@ class VacationListener
     public function onStatusChanged(){}
     public function onSubmitRequest(OnSubmitVacationRequestEvent $event)
     {
-        /**
-         * @var VacationRequest $vacation
-         */
         $vacation = $event->getVacation();
-        $validation = new VacationValidation();
-        $validation->setVacation($vacation);
-        $validation->setManager($vacation->getValidator());
-
-        $this->entityManager->persist($validation);
-        $this->entityManager->flush();
-        $this->entityManager->clear();
-
-        dump('email send to '.$vacation->getValidator());
+        $validator = $this->entityManager->createQuery('
+            SELECT e, u FROM AppBundle:Employee e 
+            JOIN e.team t
+            JOIN AppBundle:TeamValidator v
+            JOIN e.user u
+            WHERE e.id = :id
+        ')->setParameters(array('id'=>$vacation->getEmployee()));
+        dump('email send to '. $validator->getEmail());
     }
 }
