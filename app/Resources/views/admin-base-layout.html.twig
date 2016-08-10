@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block title %}<title>{% block title_content %}{% endblock title_content %}</title>{% endblock title %}
+    {% block title %}<title>{% block title_content %}GC{% endblock title_content %}</title>{% endblock title %}
     {% block stylesheet %}
         <!-- Bootstrap -->
         <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -21,9 +21,10 @@
         <link href="{{ asset('plugins/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
         <!-- JQVMap -->
         <link href="{{ asset('plugins/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>
-
         <!-- Custom Theme Style -->
         <link href="{{ asset('plugins/gentelella/build/css/custom.css') }}" rel="stylesheet">
+        <!-- Datatable bootstrap -->
+        <link rel="stylesheet" href="{{ asset('plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet">
     {% endblock stylesheet %}
 </head>
 {% block body %}
@@ -49,31 +50,26 @@
                             </li>
                             <li><a><i class="fa fa-user"></i> Utilisateurs<span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="index.html">Ajouter</a></li>
-                                    <li><a href="index2.html">Lister</a></li>
+                                    <li><a href="{{ path('app_user') }}">Lister</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-user-secret"></i> Employés<span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="form.html">Ajouter</a></li>
                                     <li><a href="form_advanced.html">Lister</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-group"></i> Equipes <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="form.html">Ajouter</a></li>
-                                    <li><a href="form_advanced.html">Lister</a></li>
+                                    <li><a href="{{ path('app_team') }}">Lister</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-table"></i> Demande de congés <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="form.html">Ajouter</a></li>
                                     <li><a href="form_advanced.html">Lister</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-calendar-check-o"></i> Jours fériés <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="form.html">Ajouter</a></li>
                                     <li><a href="form_advanced.html">Lister</a></li>
                                 </ul>
                             </li>
@@ -214,6 +210,8 @@
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}"></script>
 <!-- Bootstrap -->
+<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}"></script>
@@ -251,6 +249,7 @@
 
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('plugins/gentelella/build/js/custom.min.js') }}"></script>
+
 {% endblock javascript %}
 </body>
 {% endblock body %}

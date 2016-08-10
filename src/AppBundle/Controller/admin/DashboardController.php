@@ -1,7 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\admin;
-
+namespace AppBundle\Controller\Admin;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,7 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class DashboardController
  * @Route("/dashboard")
- * @package AppBundle\Controller\admin
+ * @package AppBundle\Controller\Admin
  */
 class DashboardController extends Controller
 {

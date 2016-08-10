@@ -15,6 +15,7 @@ class TeamManager extends BaseManager
         $team->setName($name);
 
         $this->save($team);
+        $this->flushAndClear();
 
         return $team;
     }

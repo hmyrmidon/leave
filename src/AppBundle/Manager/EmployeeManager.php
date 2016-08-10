@@ -21,6 +21,7 @@ class EmployeeManager extends BaseManager
         $employee->setAddress($address);
 
         $this->save($employee);
+        $this->flushAndClear();
 
         return $employee;
     }
@@ -36,6 +37,7 @@ class EmployeeManager extends BaseManager
         $employee->setAddress($address);
 
         $this->save($employee);
+        $this->flushAndClear();
 
         return $employee;
     }

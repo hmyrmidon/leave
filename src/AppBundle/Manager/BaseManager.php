@@ -32,7 +32,7 @@ class BaseManager
     public function save($entity)
     {
         $this->entityManager->persist($entity);
-        
+
         return $entity;
     }
 
