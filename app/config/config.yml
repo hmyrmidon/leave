@@ -6,7 +6,7 @@ imports:
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi:             ~
@@ -68,6 +68,18 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_user:
-    db_driver: orm
-    firewall_name: main
-    user_class: AppBundle\Entity\Employe
+    db_driver: %fos_user.firewall_db_driver%
+    firewall_name: %fos_user.firewall_name%
+    user_class: %fos_user.firewall_user_class%
+
+# StofDoctrineExtensions (Gedmo)
+stof_doctrine_extensions:
+    orm:
+        default:
+            timestampable: true,
+
+doctrine_migrations:
+    dir_name: "%kernel.root_dir%/DoctrineMigrations"
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
