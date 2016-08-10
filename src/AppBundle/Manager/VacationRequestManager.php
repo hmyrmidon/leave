@@ -6,19 +6,17 @@ use AppBundle\Entity\Team;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VacationRequest;
 use AppBundle\Entity\VacationValidation;
-use AppBundle\Event\OnSubmitVacationRequestEvent;
 use AppBundle\Manager\BaseManager;
-use Doctrine\ORM\Tools\Pagination\Paginator;
+use Doctrine\DBAL\DBALException;
 
 /**
  * Class VacationRequestManager
  * @package AppBundle\Manager
  */
-class VacationRequestManager extends BaseManager implements DatatableManagerInterface
+class VacationRequestManager extends BaseManager
 {
     const SERVICE_NAME = 'app.vacation_request_manager';
 
-//--------------------PUBLIC FUNCTIONS-----------------------------------
     /**
      * @param $params
      *
@@ -49,8 +47,12 @@ class VacationRequestManager extends BaseManager implements DatatableManagerInte
      */
     public function validate($vacation, $validator)
     {
-        $validator = $this->entityManager->getRepository('AppBundle:User')->find($validator);
-        $vacation  = $this->entityManager->getRepository('AppBundle:VacationRequest')->find($vacation);
+        $validator = $validator instanceof User
+            ? $validator
+            : $this->entityManager->getRepository('AppBundle:User')->find($validator);
+        $vacation  = $vacation instanceof VacationRequest
+            ? $vacation
+            : $this->entityManager->getRepository('AppBundle:VacationRequest')->find($vacation);
 
         $validation = new VacationValidation();
         $validation->setManager($validator);
@@ -90,75 +92,16 @@ class VacationRequestManager extends BaseManager implements DatatableManagerInte
         return $status;
     }
 
-    public function getAvailableColumns()
-    {
-        return [
-            [
-                'label'     => '',
-                'bSortable' => 0,
-                'sWidth'    => "10%",
-                'mData'     => '',
-            ],
-        ];
-    }
-
-//---------------------PRIVATE FUNCTIONS----------------------------------
     /**
-     * @param Paginator $entity
-     *
-     * @return array
+     * @param User $validator
      */
-    private function performDataSet($criteria, $currentPage = 0, $pageSize = 10)
+    public function performListData(User $validator)
     {
-        $parameters   = $this->getQueryParameters();
-        $orderColumns = $this->getOrderColumns();
-        $orderBy      = [1, 'ASC'];
-        $query        = $this->getListQuery($criteria, $orderBy, $currentPage, $pageSize);
-        $queries      = [
-            'query'      => $query,
-            'parameters' => $parameters,
-        ];
-        $entity       = $this->getListPaginateBy($queries, $currentPage, $pageSize);
-        $ResultSet    = array();
-        $totalRecords = $entity->count();
-        foreach ($entity as $item) {
-            $data = array();
-            array_push($ResultSet, $data);
+        try{
+            return $this->entityManager->getRepository('AppBundle:VacationRequest')->listNotValidateBy($validator);
+        } catch (DBALException $err){
+            dump($err->getMessage());die;
         }
-
-        return array(
-            'recordsTotal'    => $totalRecords,
-            'recordsFiltered' => $totalRecords,
-            'data'            => $ResultSet,
-        );
-    }
-
-    /**
-     * @return array
-     */
-    private function getQueryParameters()
-    {
-        return [];
-    }
-
-    /**
-     * @return array
-     */
-    private function getOrderColumns()
-    {
-        return [];
-    }
-
-    /**
-     * @param array $criteria
-     * @param array $orderBy
-     * @param int   $currentPage
-     * @param int   $pageSize
-     */
-    private function getListQuery($criteria, $orderBy, $currentPage = 0, $pageSize = 10)
-    {
-        $squery = "SELECT v FROM AppBundle:ValidationRequest v";
-
     }
 
 }

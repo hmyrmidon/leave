@@ -65,11 +65,7 @@
                                     <li><a href="form_advanced.html">Lister</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-table"></i> Demande de congés <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="form.html">Ajouter</a></li>
-                                    <li><a href="form_advanced.html">Lister</a></li>
-                                </ul>
+                            <li><a href="{{ path('app_vacation') }}"><i class="fa fa-table"></i> Demande de congés </a>
                             </li>
                             <li><a><i class="fa fa-calendar-check-o"></i> Jours fériés <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
@@ -251,6 +247,7 @@
 
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('plugins/gentelella/build/js/custom.min.js') }}"></script>
+<script src="{{ asset('datata') }}"></script>
 {% endblock javascript %}
 </body>
 {% endblock body %}

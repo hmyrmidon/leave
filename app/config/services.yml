@@ -29,11 +29,16 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
+    app.twig_extension:
+        class: 'AppBundle\Twig\ProjectExtension'
         arguments:
             - "@doctrine.orm.entity_manager"
-            - "@router"
-    app.status_manager:
-        class: 'AppBundle\Manager\StatusManager'
+            - services:
+                holiday: "@app.holiday_manager"
+                vacation: "@app.vacation_request_manager"
+        tags:
+            - { name: twig.extension }
+
     #Application's Event Listeners
     app.vacation_listener:
         class: 'AppBundle\Listener\VacationListener'
