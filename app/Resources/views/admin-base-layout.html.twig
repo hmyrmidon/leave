@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block title %}<title>{% block title_content %}GC{% endblock title_content %}</title>{% endblock title %}
+    {% block title %}<title>{% block title_content %}Gestion de congé{% endblock title_content %}</title>{% endblock title %}
     {% block stylesheet %}
         <!-- Bootstrap -->
         <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -63,10 +63,7 @@
                                     <li><a href="{{ path('app_team') }}">Lister</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-table"></i> Demande de congés <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="form_advanced.html">Lister</a></li>
-                                </ul>
+                            <li><a href="{{ path('app_vacation') }}"><i class="fa fa-table"></i> Demande de congés </a>
                             </li>
                             <li><a><i class="fa fa-calendar-check-o"></i> Jours fériés <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
