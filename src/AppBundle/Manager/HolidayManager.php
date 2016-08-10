@@ -13,7 +13,6 @@ class HolidayManager extends BaseManager
     /**
      * @var EntityManager $_em
      */
-    protected $_em;
     const SERVICE_NAME = 'app.holiday_manager';
 
     /**
@@ -23,7 +22,6 @@ class HolidayManager extends BaseManager
      */
     public function listAll($year = null)
     {
-        $holidays = array();
         if (is_null($year)) {
             $currentDate = new DateTime();
             $year        = $currentDate->format('Y');
@@ -35,13 +33,17 @@ class HolidayManager extends BaseManager
          */
         $easterDate = new \DateTime($currentYear . '-03-21');
         $easterDay  = easter_days($easterDate->format('Y'));
-        $list       = $this->_em->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($year);
         $easterDate->modify('+' . $easterDay . ' day')->format('Y-m-d');
+
+        $holidays = array();
+        $list       = $this->entityManager->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($year);
         foreach ($list as $lst) {
-            $date = sprintf('%d-%d-%d', $lst['year'], $lst['month'], $lst['day']);
-            array_push($holidays, $date);
+            $date = sprintf('%d-%d-%d', $lst->getYear(), $lst->getMonth(), $lst->getDay());
+            $date = new \DateTime($date);
+            array_push($holidays, $date->format('Y-m-d'));
         }
         array_push($holidays,
+            $easterDate->format('Y-m-d'),
             $easterDate->modify('+1 day')->format('Y-m-d'),
             $easterDate->modify('+38 day')->format('Y-m-d'),
             $easterDate->modify('+10 day')->format('Y-m-d'),
@@ -62,6 +64,7 @@ class HolidayManager extends BaseManager
     {
         $year     = $date->format('Y');
         $holidays = $this->listAll($year);
+
         return (in_array($date->format('Y-m-d'), $holidays) || in_array($date->format('N'), array(6, 7)));
     }
 
@@ -85,18 +88,6 @@ class HolidayManager extends BaseManager
         }
 
         return $dateEnd;
-    }
-
-    public function add(\DateTime $date, $frequency = Holiday::EARLY)
-    {
-        $date = $date->format('Y-m-d');
-        list($year, $month, $day) = preg_split('-', $date);
-        $holiday = new Holiday();
-        $holiday->setYear($year);
-        $holiday->setMonth($month);
-        $holiday->setDay($day);
-        $holiday->setFrequency($frequency);
-        $this->save($holiday);
     }
 
     /**
@@ -136,7 +127,9 @@ class HolidayManager extends BaseManager
     {
         $count = 0;
         $range = new \DatePeriod($dateSart, new \DateInterval('P1D'), $dateEnd);
+        $test = array();
         foreach ($range as $date) {
+            array_push($test, $date->format('Y-m-d'));
             if ($this->isHoliday($date)) {
                 $count++;
             }
@@ -166,4 +159,5 @@ class HolidayManager extends BaseManager
 
         return $holiday;
     }
+
 }
