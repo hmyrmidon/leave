@@ -34,12 +34,8 @@ class VacationRequestCommand extends ContainerAwareCommand
         $this
             ->setName('app:vacation:request-command')
             ->addOption('sendRequest', 's', InputOption::VALUE_OPTIONAL|InputOption::VALUE_IS_ARRAY, '', [])
-            ->addOption('listVacancies', null, InputOption::VALUE_OPTIONAL)
-            ->addOption('validate', null, InputOption::VALUE_OPTIONAL)
             ->addOption('user', 'u', InputOption::VALUE_OPTIONAL)
             ->addOption('add', null, InputOption::VALUE_OPTIONAL)
-            ->addOption('addManager', null, InputOption::VALUE_OPTIONAL)
-            ->addOption('addstatus', null, InputOption::VALUE_NONE)
             ->addOption('datediff', null, InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, '', [])
             ->setDescription('Perform vacation request');
     }
@@ -62,16 +58,9 @@ class VacationRequestCommand extends ContainerAwareCommand
                 $this->save($add);
             }
         }
-        if ($input->getOption('addManager')) {
-
-        }
         if($input->getOption('datediff')) {
             $dates = $input->getOption('datediff');
             $this->dateDiff($dates[0], $dates[1]);
-        }
-        if($input->getOption('vacancies')){
-            $params = $input->getOption('vacancies');
-            $this->getVacanciesRange($params);
         }
     }
 
