@@ -134,6 +134,7 @@ class HolidayManager extends BaseManager
     {
         $holiday = new \AppBundle\Entity\Holiday();
 
+        
         $date = new \DateTime($date);
         $day = $date->format('d');
         $month = $date->format('m');
