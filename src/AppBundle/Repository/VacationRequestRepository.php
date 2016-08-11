@@ -27,4 +27,9 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
 
         return $list;
     }
+
+    public function history($criteria)
+    {
+        return $this->_em->getRepository('AppBundle:VacationRequest')->findBy($criteria);
+    }
 }
