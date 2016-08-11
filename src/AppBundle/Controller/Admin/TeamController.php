@@ -43,9 +43,9 @@ class TeamController extends Controller
         $teamForm = $this->createForm(\AppBundle\Form\Type\TeamType::class, $team);
         $formHandler = new \AppBundle\Form\Handler\BaseHandler($teamForm, $request, $em);
         if ($formHandler->process()) {
-            $ogcUserManager = $this->get(\AppBundle\Manager\TeamManager::TEAM_MANAGER);
-            $ogcUserManager->save($team);
-            $ogcUserManager->flushAndClear();
+            $ogcTeamManager = $this->get(\AppBundle\Manager\TeamManager::TEAM_MANAGER);
+            $ogcTeamManager->save($team);
+            $ogcTeamManager->flushAndClear();
 
             $message = $this->get('translator')->trans('message.success.addTeam', array(), 'messages');
             $this->addFlash('success', $message);
@@ -71,9 +71,8 @@ class TeamController extends Controller
         $teamForm = $this->createForm(\AppBundle\Form\Type\TeamType::class, $team);
         $formHandler = new \AppBundle\Form\Handler\BaseHandler($teamForm, $request, $em);
         if ($formHandler->process()) {
-            $ogcUserManager = $this->get(\AppBundle\Manager\TeamManager::TEAM_MANAGER);
-            $ogcUserManager->save($team);
-            $ogcUserManager->flushAndClear();
+            $ogcTeamManager = $this->get(\AppBundle\Manager\TeamManager::TEAM_MANAGER);
+            $ogcTeamManager->editTeam($team);
 
             $message = $this->get('translator')->trans('message.success.updateTeam', array(), 'messages');
             $this->addFlash('success', $message);
@@ -89,15 +88,15 @@ class TeamController extends Controller
 
     /**
      * 
-     * @param Request $request
-     * @param \AppBundle\Controller\Admin\AppBundle\Entity\User $user
+     * @param \AppBundle\Entity\Team $team
      * @return type
+     * 
      * @Route("/delete/{id}", name="app_team_delete")
      */
     public function deleteAction(\AppBundle\Entity\Team $team)
     {
-        $ogcUserManager = $this->get(\AppBundle\Manager\TeamManager::TEAM_MANAGER);
-        $ogcUserManager->delete($team);
+        $ogcTeamManager = $this->get(\AppBundle\Manager\TeamManager::TEAM_MANAGER);
+        $ogcTeamManager->delete($team);
 
         $flashMessage = $this->get('translator')->trans('message.success.deleteTeam', array(), 'messages');
         $this->addFlash('success', $flashMessage);

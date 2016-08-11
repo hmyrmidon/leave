@@ -6,3 +6,6 @@ message:
         addTeam: l'équipe a bien été ajouté.
         updateTeam: l'équipe a bien été modifié.
         deleteTeam: l'équipe a bien été supprimé.
+        addEmployee: l'employé a bien été ajouté.
+        updateEmployee: l'employé a bien été modifié.
+        deleteEmployee: l'employé a bien été supprimé.

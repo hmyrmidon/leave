@@ -2,6 +2,7 @@
 {% block title_content %}
     {{ parent() }} - Utilisateur
 {% endblock title_content %}
+{% import ':flashMessages:fields-error.html.twig' as display_errors %}
 {% block page_content %}
     <div class="right_col" role="main">
         <div class="">
@@ -25,6 +26,8 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
+                            {{ display_errors.all_form_errors(form) }}
+                            <div class="flashbag">{% include ':flashMessages:flashbag_message.html.twig' %}</div>
                             <br />
                             {{ form_errors(form) }}
                             <form method="post" action="{{ path('app_team_edit', {'id': team.id}) }}" class="form-horizontal form-label-left" novalidate="novalidate">

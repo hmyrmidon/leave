@@ -9,12 +9,14 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Class User
  * @package AppBundle\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="user")
+ * @UniqueEntity(fields="username", message="Ce nom d'utilisateur existe déjà.")
  *
  */
 class User extends BaseUser
@@ -33,6 +35,7 @@ class User extends BaseUser
      *
      * @var string $last_name
      * @ORM\Column(name="last_name", type="string", length=255)
+     * @Assert\NotBlank(message="Remplissez le nom de l'utilisateur.")
      * 
      */
     protected $lastName;
@@ -41,6 +44,7 @@ class User extends BaseUser
      *
      * @var string $last_name
      * @ORM\Column(name="first_name", type="string", length=255)
+     * @Assert\NotBlank(message="Remplissez le prénom de l'utilisateur.")
      * 
      */
     protected $firstName;
@@ -62,6 +66,17 @@ class User extends BaseUser
      * @var string
      */
     protected $plainPassword;
+
+    /**
+     * 
+     * @Assert\NotBlank(message="message.form.notblank.email")
+     * @Assert\Email(
+     *      message = "message.form.email.notvalid",
+     *      checkMX = true
+     * )
+     * 
+     */
+    protected $email;
 
     /**
      * @return \AppBundle\Entity\Employee

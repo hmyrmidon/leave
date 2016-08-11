@@ -8,13 +8,14 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use AppBundle\Entity\User;
 use AppBundle\Traits\BaseTrait;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Class Employee
  * @package AppBundle\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\EmployeeRepository")
  * @ORM\Table(name="employee")
- * @UniqueEntity(fields="registrationNumber", message="Ce numero matricul existe déjà..")
+ * @UniqueEntity(fields="registrationNumber", message="Ce numero matricule existe déjà.")
  * 
  */
 class Employee
@@ -32,24 +33,29 @@ class Employee
     /**
      * @var string $lastName
      * @ORM\Column(name="last_name", type="string", length=100, nullable=false)
+     * @Assert\NotBlank(message="Remplissez le nom de l'employé.")
      */
     protected $lastName;
 
     /**
      * @var string $firstName
      * @ORM\Column(name="first_name", type="string", length=100, nullable=true)
+     * @Assert\NotBlank(message="Remplissez le prénoms de l'employé.")
      */
     protected $firstName;
 
     /**
      * @var string $registrationNumber
      * @ORM\Column(name="registration_number", type="string", length=10, nullable=false)
+     * @Assert\Type("digit", message="Valeur invalide, veuillez saisir des chiffres.")
+     * @Assert\NotBlank(message="Remplissez le numero de matricule de l'employé.")
      */
     protected $registrationNumber;
 
     /**
      * @var \DateTime
      * @ORM\Column(name="hiring_date", type="datetime", nullable=false)
+     * @Assert\NotBlank(message="Remplissez la date d'embauche de l'employé.")
      */
     protected $hiringDate;
 
@@ -64,6 +70,7 @@ class Employee
      *
      * @var string $address
      * @ORM\Column(name="address", type="string", length=50, nullable=false)
+     * @Assert\NotBlank(message="Remplissez l'adresse de l'employé.")
      */
     protected $address;
 
@@ -71,6 +78,7 @@ class Employee
      *
      * @var integer
      * @ORM\Column(name="number_children", type="integer", nullable=true)
+     * 
      */
     protected $nbChildren;
 
@@ -87,6 +95,7 @@ class Employee
      * @var \User
      * @ORM\OneToOne(targetEntity="User", inversedBy="employee", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * 
      */
     private $user;
 

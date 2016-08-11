@@ -3,6 +3,7 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Manager\BaseManager;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class EmployeeManager extends BaseManager
 {
@@ -22,6 +23,7 @@ class EmployeeManager extends BaseManager
 
         $this->save($employee);
         $this->flushAndClear();
+        
 
         return $employee;
     }
@@ -40,6 +42,19 @@ class EmployeeManager extends BaseManager
         $this->flushAndClear();
 
         return $employee;
+    }
+
+    public function addUser(\AppBundle\Entity\Employee $employee, $username, $email, $pass)
+    {
+        $dispatcher = new EventDispatcher();
+        $param = new \stdClass();
+            $param->username = $username;
+            $param->email    = $email;
+            $param->password = crypt($pass);
+            $param->employee = $employee;
+
+        $event = new \AppBundle\Event\VacationEmployeeEvent($param);
+        $dispatcher->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME_PROCESS_USER, $event);
     }
 
 }

@@ -15,18 +15,34 @@ class EmployeeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('username', \Symfony\Component\Form\Extension\Core\Type\TextType::class, array(
+                'mapped' => false
+            ))
+            ->add('password', \Symfony\Component\Form\Extension\Core\Type\PasswordType::class, array(
+                'mapped' => false
+            ))
+            ->add('email', \Symfony\Component\Form\Extension\Core\Type\EmailType::class, array(
+                'mapped' => false
+            ))
             ->add('lastName')
             ->add('firstName')
             ->add('registrationNumber')
-            ->add('hiringDate', 'datetime')
+            ->add('hiringDate', \Symfony\Component\Form\Extension\Core\Type\DateType::class, array(
+                'widget'         => 'single_text',
+                'format'         => 'dd/MM/yyyy',
+            ))
             ->add('maritalStatus')
             ->add('address')
             ->add('nbChildren')
-            ->add('birthDate', 'datetime')
-            ->add('created', 'datetime')
-            ->add('updated', 'datetime')
-            ->add('user')
-            ->add('team')
+            ->add('birthDate', \Symfony\Component\Form\Extension\Core\Type\DateType::class, array(
+                'widget'         => 'single_text',
+                'format'         => 'dd/MM/yyyy',
+            ))
+            ->add('team', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array(
+                'class'         => 'AppBundle:Team',
+                'choice_label'  => 'name',
+                'multiple'      => false,
+            ))
         ;
     }
     

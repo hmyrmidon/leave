@@ -2,6 +2,7 @@
 {% block title_content %}
     {{ parent() }} - Utilisateur
 {% endblock title_content %}
+{% import ':flashMessages:fields-error.html.twig' as display_errors %}
 {% block page_content %}
     <div class="right_col" role="main">
         <div class="">
@@ -16,19 +17,15 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Ajouter un équipe</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
+                            {{ display_errors.all_form_errors(form) }}
+                            <div class="flashbag">{% include ':flashMessages:flashbag_message.html.twig' %}</div>
                             <br />
                             {{ form_errors(form) }}
                             <form method="post" action="{{ path('app_team_create') }}" class="form-horizontal form-label-left" novalidate="novalidate">
-                                <div class="form-group">
+                                <div class="form-group {% if form.name.vars.errors|length %}has-error{% endif %}">
                                     {{ form_label(form.name, "Nom de l'équipe"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">

@@ -2,6 +2,7 @@
 {% block title_content %}
     {{ parent() }} - Utilisateur
 {% endblock title_content %}
+{% import ':flashMessages:fields-error.html.twig' as display_errors %}
 {% block page_content %}
     <div class="right_col" role="main">
         <div class="">
@@ -25,39 +26,40 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
+                            {{ display_errors.all_form_errors(form) }}
+                            <div class="flashbag">{% include ':flashMessages:flashbag_message.html.twig' %}</div>
                             <br />
-                            {{ form_errors(form) }}
                             <form method="post" action="{{ path('app_user_create') }}" class="fos_user_edition_register form-horizontal form-label-left" novalidate="novalidate">
 
-                                <div class="form-group">
+                                <div class="form-group {% if form.username.vars.errors|length %}has-error{% endif %}">
                                     {{ form_label(form.username, "Nom d'utilisateur"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if form.lastName.vars.errors|length %}has-error{% endif %}">
                                     {{ form_label(form.lastName, "Nom"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.lastName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if form.firstName.vars.errors|length %}has-error{% endif %}">
                                     {{ form_label(form.firstName, "Prénoms"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.firstName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if form.email.vars.errors|length %}has-error{% endif %}">
                                     {{ form_label(form.email, "Adresse e-mail"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group {% if form.plainPassword.vars.errors|length %}has-error{% endif %}">
                                     {{ form_label(form.plainPassword, "Mot de passe"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">

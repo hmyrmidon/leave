@@ -55,7 +55,7 @@
                             </li>
                             <li><a><i class="fa fa-user-secret"></i> Employ√©s<span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="form_advanced.html">Lister</a></li>
+                                    <li><a href="{{ path('app_employee') }}">Lister</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-group"></i> Equipes <span class="fa fa-chevron-down"></span></a>
@@ -69,7 +69,7 @@
                                     <li><a href="{{ path('app_vacation_history') }}">Historique de mes demandes</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-calendar-check-o"></i> Jours fÈriÈs <span class="fa fa-chevron-down"></span></a>
+                            <li><a><i class="fa fa-calendar-check-o"></i> Jours f√©ri√©s <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="form_advanced.html">Lister</a></li>
                                 </ul>
@@ -223,9 +223,8 @@
 <!-- DateJS -->
 <script src="{{ asset('plugins/DateJS/build/date.js') }}"></script>
 <!-- bootstrap-daterangepicker -->
-<script src="{{ asset('plugins/gentelella/js/moment/moment.min.js') }}"></script>
-<script src="{{ asset('plugins/gentelella/js/datepicker/daterangepicker.js') }}"></script>
-
+<script src="{{ asset('plugins/moment/moment.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('plugins/gentelella/build/js/custom.min.js') }}"></script>
 {% endblock javascript %}

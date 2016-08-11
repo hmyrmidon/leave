@@ -52,8 +52,6 @@ class BaseHandler
 
             return true;
         }
-        $error = $this->form->getErrors();
-        //dump($error);die;
         
           return false;
     }

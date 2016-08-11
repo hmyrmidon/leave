@@ -9,26 +9,31 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
+
     app.user_manager:
         class: 'AppBundle\Manager\UserManager'
         arguments: 
             - "@doctrine.orm.entity_manager"
             - "@router"
+
     app.team_manager:
         class: 'AppBundle\Manager\TeamManager'
         arguments: 
             - "@doctrine.orm.entity_manager"
             - "@router"
+
     app.vacation_request_manager:
         class: 'AppBundle\Manager\VacationRequestManager'
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
+
     app.holiday_manager:
         class: 'AppBundle\Manager\HolidayManager'
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
+
     app.twig_extension:
         class: 'AppBundle\Twig\ProjectExtension'
         arguments:
@@ -47,11 +52,12 @@ services:
         tags:
             - { name: "kernel.event_listener", event: "app.on_validate_event", method: "onValidate" }
             - { name: "kernel.event_listener", event: "app.on_submit_vacation_event", method: 'onSubmitRequest'}
+
     app.employee_listner:
             class: 'AppBundle\Listener\VacationEmployeeListener'
             arguments:
                 - "@doctrine.orm.entity_manager"
             tags:
                 - { name : "kernel.event_listener" , event: "app.on_user_process", method: "onCreateEmployee"}
-    #            - { name : "kernel.event_listener" , event: "app.on_user_update", method: "onUpdateEmployee"}
-    #            - { name : "kernel.event_listener" , event: "app.on_user_remove", method: "onRemoveEmployee"}
+                - { name : "kernel.event_listener" , event: "app.on_user_update", method: "onUpdateEmployee"}
+                - { name : "kernel.event_listener" , event: "app.on_user_remove", method: "onRemoveEmployee"}
