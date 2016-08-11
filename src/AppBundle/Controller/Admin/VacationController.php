@@ -68,7 +68,7 @@ class VacationController extends Controller
     public function createVacationAction()
     {
         $user = $this->getUser();
-
-        return $this->redirect('app_vacation_history');
+        $this->render(':admin/vacation:add.html.twig');
+//        return $this->redirect('app_vacation_history');
     }
 }
