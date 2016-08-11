@@ -38,7 +38,7 @@ class VacationController extends Controller
          */
         $user = $this->getUser();
         $employee = $user->getEmployee();
-        $history = $this->get('doctrine.orm.entity_manager')
+        $history = $this->getDoctrine()
             ->getRepository('AppBundle:VacationRequest')
             ->findBy([
             'employee' => $employee
@@ -59,5 +59,16 @@ class VacationController extends Controller
         }
 
         return $this->redirectToRoute('app_vacation');
+    }
+
+    /**
+     * createVacationAction
+     * @Route("/nouvelle-demande", name="app_vacation_create")
+     */
+    public function createVacationAction()
+    {
+        $user = $this->getUser();
+
+        return $this->redirect('app_vacation_history');
     }
 }

@@ -60,7 +60,7 @@
                                         <td>{{ item.reason }}</td>
                                         <td>{{ item.status|status|raw }}</td>
                                         <td>
-                                            {{ addButton('fa fa-check fa-lg', path('app_vacation_validate', {id: item.id}), 'activate', 'success')|raw }}
+                                            {{ addButton('fa fa-check fa-lg', path('app_vacation_validate', {id: item.id}), 'activate', 'btn btn-success btn-flat btn-xs')|raw }}
                                         </td>
                                     </tr>
                                 {% endfor %}

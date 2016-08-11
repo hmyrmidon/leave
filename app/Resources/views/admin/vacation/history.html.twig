@@ -21,10 +21,9 @@
                 <div class="x_panel">
                     <div class="x_title">
                         <h2>Historique des mes demandes <span class="badge bg-green" style="color: white">{{ list|length }}</span></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li><a class=""></a>
-                            </li>
-                        </ul>
+                        <div class="box-tool pull-right">
+                            {{ addButton('fa fa-plus', path('app_vacation_history'), 'Nouvelle demande', 'btn btn-success btn-xs')|raw }}
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
@@ -79,11 +78,7 @@
     <script>
         var datatable = $('#datatable-responsive')
         datatable.dataTable({
-                                'order': [[ 1, 'asc' ]],
-                                'columnDefs': [
-                                    { orderable: false, targets: [0] },
-                                    { orderable: false, targets: [$('#datatable-responsive th').length-1] }
-                                ]
+                                'order': [[ 0, 'desc' ]],
                             });
         $datatable.on('draw.dt', function() {
             $('input').iCheck({

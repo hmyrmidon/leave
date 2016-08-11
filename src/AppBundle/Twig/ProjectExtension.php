@@ -74,8 +74,8 @@ class ProjectExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function addButton($icon, $url, $label, $btntype)
+    public function addButton($icon, $url, $label, $btnClass)
     {
-        return sprintf('<a href="%s" class="btn btn-%s btn-flat btn-xs" title="%s"><i class="%s"></i></a>', $url, $btntype, $label, $icon);
+        return sprintf('<a href="%s" class="%s" title="%s"><i class="%s"></i></a>', $url, $btnClass, $label, $icon);
     }
 }
