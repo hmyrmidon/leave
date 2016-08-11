@@ -151,5 +151,4 @@ class HolidayManager extends BaseManager
 
         return $holiday;
     }
-
 }

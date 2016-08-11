@@ -21,8 +21,8 @@ class VacationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('startDate', DateType::class, ['required'=>true])
-            ->add('endDate', DateType::class, ['required'=>true])
+            ->add('startDate', DateTimeType::class, ['required'=>true, 'widget'=> 'single_text', 'format'=>'dd/MM/yyyy'])
+            ->add('returnDate', DateType::class, ['required' =>true, 'widget' => 'single_text', 'format' =>'dd/MM/yyyy'])
             ->add('reason', TextType::class, ['required'=>false]);
     }
 

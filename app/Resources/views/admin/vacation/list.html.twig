@@ -4,7 +4,8 @@
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('plugins/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}">
 {% endblock stylesheet %}
@@ -20,19 +21,23 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Liste des demandes à valider <span class="badge bg-green" style="color: white">{{ vacations|length }}</span></h2>
+                        <h2>Liste des demandes à valider <span class="badge bg-green"
+                                                               style="color: white">{{ vacations|length }}</span></h2>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
                         {% for label, flashes in app.session.flashbag.all %}
                             <div class="callout callout-{{ label }} alert alert-{{ label }} alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                                <button type="button" class="close" data-dismiss="alert"
+                                        aria-hidden="true">&times;</button>
                                 {% for flash in flashes %}
                                     <p>{{ flash|trans({}, 'messages') }}</p>
                                 {% endfor %}
                             </div>
                         {% endfor %}
-                        <table id="datatable-responsive" class="table table-striped dt-responsive nowrap bulk_action jambo_table" cellspacing="0" width="100%">
+                        <table id="datatable-responsive"
+                               class="table table-striped dt-responsive nowrap bulk_action jambo_table" cellspacing="0"
+                               width="100%">
                             <thead>
                             <tr>
                                 <th><input type="checkbox" id="check-all" class="flat"></th>
@@ -45,25 +50,28 @@
                                 <th>Motif</th>
                                 <th>Statut</th>
                                 <th></th>
+                                <th class="bulk-actions" colspan="7">
+                                    <a class="antoo" style="color:#fff; font-weight:500;"> Sélectionnés ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
-                                {% for item in vacations %}
-                                    <tr>
-                                        <td><input type="checkbox" class="flat" name="table_records"></td>
-                                        <td>{{ item.employee.lastname }}</td>
-                                        <td>{{ item.employee.firstName }}</td>
-                                        <td>{{ item.employee.team.name }}</td>
-                                        <td>{{ item.startDate|date('d/m/Y') }}</td>
-                                        <td>{{ item.endDate|date('d/m/Y') }}</td>
-                                        <td>{{ item.startDate|dayCount(item.endDate) }}</td>
-                                        <td>{{ item.reason }}</td>
-                                        <td>{{ item.status|status|raw }}</td>
-                                        <td>
-                                            {{ addButton('fa fa-check fa-lg', path('app_vacation_validate', {id: item.id}), 'activate', 'btn btn-success btn-flat btn-xs')|raw }}
-                                        </td>
-                                    </tr>
-                                {% endfor %}
+                            {% for item in vacations %}
+                                <tr>
+                                    <td><input type="checkbox" class="flat" name="table_records"></td>
+                                    <td>{{ item.employee.lastname }}</td>
+                                    <td>{{ item.employee.firstName }}</td>
+                                    <td>{{ item.employee.team.name }}</td>
+                                    <td>{{ item.startDate|date('d/m/Y') }}</td>
+                                    <td>{{ item.returnDate|date('d/m/Y') }}</td>
+                                    <td>{{ item.startDate|dayCount(item.returnDate) }}</td>
+                                    <td>{{ item.reason }}</td>
+                                    <td>{{ item.status|status|raw }}</td>
+                                    <td>
+                                        {{ addButton('fa fa-check fa-lg', path('app_vacation_validate', {id: item.id}), 'activate', 'btn btn-success btn-flat btn-xs')|raw }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -82,19 +90,25 @@
     <script src="{{ asset('plugins/datatables.net-responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables.net-scroller/js/dataTables.scroller.min.js') }}"></script>
     <script src="{{ asset('plugins/datatables.net-responsive-bs/js/responsive.bootstrap.js') }}"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="{{ asset('plugins/gentelella/build/js/custom.min.js') }}"></script>
     <script>
         var datatable = $('#datatable-responsive')
         datatable.dataTable({
-             'order': [[ 1, 'asc' ]],
-             'columnDefs': [
-                 { orderable: false, targets: [0] },
-                 { orderable: false, targets: [$('#datatable-responsive th').length-1] }
-             ]
-        });
-        $datatable.on('draw.dt', function() {
+                                'language': {
+                                    'url': '//cdn.datatables.net/plug-ins/1.10.11/i18n/French.json'
+                                },
+                                'info': false,
+                                'order': [[1, 'asc']],
+                                'columnDefs': [
+                                    {orderable: false, targets: [0]},
+                                    {orderable: false, targets: [$('#datatable-responsive th').length - 1]}
+                                ]
+                            });
+        $datatable.on('draw.dt', function () {
             $('input').iCheck({
-                checkboxClass: 'icheckbox_flat-green'
-            });
+                                  checkboxClass: 'icheckbox_flat-green'
+                              });
         });
     </script>
 {% endblock javascript %}

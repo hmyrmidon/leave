@@ -3872,7 +3872,6 @@ ul.notifications {
 /** /PNotify **/
 /** bootstrap-daterangepicker **/
 .daterangepicker.dropdown-menu {
-  font-size: 13px;
   padding: 0;
   overflow: hidden; }
 

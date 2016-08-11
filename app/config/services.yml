@@ -38,7 +38,11 @@ services:
                 vacation: "@app.vacation_request_manager"
         tags:
             - { name: twig.extension }
-
+    #Application custom validators
+    app.validator.date_range:
+        class: 'AppBundle\Validator\Constraints\ConstraintsVacationDateValidator'
+        tags:
+            - { name: "validator.constraint_validator" }
     #Application's Event Listeners
     app.vacation_listener:
         class: 'AppBundle\Listener\VacationListener'

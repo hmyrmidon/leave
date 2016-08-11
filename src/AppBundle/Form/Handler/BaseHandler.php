@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form\Handler;
 
+use AppBundle\Entity\User;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -44,10 +45,11 @@ class BaseHandler
     /**
      * @return bool
      */
-    public function process()
+    public function process(User $user)
     {
         $this->form->handleRequest($this->request);
-        if ($this->request->isMethod('post') && $this->form->isValid()) {
+        //dump($this->form->getData());die;
+        if ($this->request->isMethod('post') && $this->form->isValid() && $user->getEmployee()) {
             $this->entity = $this->form->getData();
 
             return true;

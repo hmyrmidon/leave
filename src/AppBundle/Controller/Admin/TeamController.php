@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Manager\TeamManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,7 +44,7 @@ class TeamController extends Controller
         $teamForm = $this->createForm(\AppBundle\Form\Type\TeamType::class, $team);
         $formHandler = new \AppBundle\Form\Handler\BaseHandler($teamForm, $request, $em);
         if ($formHandler->process()) {
-            $ogcUserManager = $this->get('app.team_manager');
+            $ogcUserManager = $this->get(TeamManager::TEAM_MANAGER);
             $ogcUserManager->save($team);
             $ogcUserManager->flushAndClear();
 

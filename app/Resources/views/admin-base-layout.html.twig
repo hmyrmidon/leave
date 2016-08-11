@@ -209,7 +209,7 @@
 {% endblock container %}
 {% block javascript %}
 <!-- jQuery -->
-<script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('plugins/jquery/dist/jquery.js') }}"></script>
 <!-- Bootstrap -->
 <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
@@ -223,11 +223,11 @@
 <!-- DateJS -->
 <script src="{{ asset('plugins/DateJS/build/date.js') }}"></script>
 <!-- bootstrap-daterangepicker -->
-<script src="{{ asset('plugins/gentelella/js/moment/moment.min.js') }}"></script>
-<script src="{{ asset('plugins/gentelella/js/datepicker/daterangepicker.js') }}"></script>
+<script src="{{ asset('plugins/moment/moment.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
 
 <!-- Custom Theme Scripts -->
-<script src="{{ asset('plugins/gentelella/build/js/custom.min.js') }}"></script>
+<script src="{{ asset('plugins/gentelella/build/js/custom.js') }}"></script>
 {% endblock javascript %}
 </body>
 {% endblock body %}

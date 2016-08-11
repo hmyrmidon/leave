@@ -4,8 +4,11 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\User;
 use AppBundle\Entity\VacationRequest;
+use AppBundle\Form\Handler\BaseHandler;
+use AppBundle\Form\Type\VacationType;
 use AppBundle\Manager\VacationRequestManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -65,10 +68,20 @@ class VacationController extends Controller
      * createVacationAction
      * @Route("/nouvelle-demande", name="app_vacation_create")
      */
-    public function createVacationAction()
+    public function createVacationAction(Request $request)
     {
         $user = $this->getUser();
-        $this->render(':admin/vacation:add.html.twig');
-//        return $this->redirect('app_vacation_history');
+        $entityManager = $this->getDoctrine()->getManager();
+        $vacation = new VacationRequest();
+        $form = $this->createForm(VacationType::class, $vacation);
+        $handler = new BaseHandler($form, $request, $entityManager);
+        if($handler->process($user)){
+            $srv = $this->get(VacationRequestManager::SERVICE_NAME);
+            $srv->saveVacation($vacation, $user->getEmployee());
+            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('message.success.add_vacation', [], 'messages'));
+
+            return $this->redirectToRoute('app_vacation_history');
+        }
+        return $this->render(':admin/vacation:add.html.twig', ['form'=>$form->createView()]);
     }
 }

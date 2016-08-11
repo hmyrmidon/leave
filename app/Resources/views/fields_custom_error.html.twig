@@ -1,0 +1,53 @@
+{% macro all_form_errors(form) %}
+    {% set is_global = is_global|default(1) %}
+    {% if not form.vars.valid or app.session.flashbag.get('error')|length > 0 %}
+        <div class="callout callout-danger alert alert-danger col-lg-12 text-left alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <p>{{ 'message.error.form'|trans({}, 'messages') }}</p>
+            <ul>
+                {% for flashMessage in app.session.flashbag.get('error') %}
+                    <li>{{ flashMessage|trans({}, 'messages') }}</li>
+                {% endfor %}
+                {% if form_errors(form) is not empty %}
+                    {% for error in form.vars.errors %}
+                        <li>{{ error.message|trans({}, 'messages') }}</li>
+                    {% endfor %}
+                {% endif %}
+                {% for children in form.children %}
+                    {% if children.children|length > 0 %}
+                        {% set nbChildError = 0 %}
+                        {% for child in children.children %}
+                            {% if form_errors(child) != "" %}
+                                <li>{{ form_errors(child)|striptags|trans({'%field%': ('label.'~form_label(child)|striptags|lower|trim)|trans({}, 'label')}, 'messages') }}</li>
+                                {% set nbChildError = nbChildError + 1 %}
+                            {% endif %}
+                        {% endfor %}
+                        {% if nbChildError == 0 and not children.vars.valid and form_errors(children) != "" %}
+                            <li>{{ form_errors(children)|striptags|trans({'%field%': ('label.'~form_label(children)|striptags|lower|trim)|trans({}, 'label')}, 'messages') }}</li>
+                        {% endif %}
+                    {% else %}
+                        {% if (children.vars.valid is defined and not children.vars.valid) and form_errors(children) != "" %}
+                            {% if children.vars.errors|length > 1 %}
+                                {% set nbChildError = 0 %}
+                                {% for error in children.vars.errors %}
+                                    {% if nbChildError == 0 %}
+                                        <li>{{ error.getMessage()|trans({'%field%': ('label.'~form_label(children)|striptags|lower|trim)|trans({}, 'label')}, 'messages') }}</li>
+                                    {% endif %}
+                                    {% set nbChildError = 1 %}
+                                {% endfor %}
+                            {% else %}
+                                <li>{{ form_errors(children)|striptags|trans({'%field%': ('label.'~form_label(children)|striptags|lower|trim)|trans({}, 'label')}, 'messages') }}</li>
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+{% endmacro %}
+
+{% block form_label %}
+    {% if required %}
+        <span class="required" title="{{ 'error.field.required'|trans({}, 'messages') }}">*</span>
+    {% endif %}
+{% endblock %}
