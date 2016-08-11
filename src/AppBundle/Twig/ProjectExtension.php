@@ -53,13 +53,13 @@ class ProjectExtension extends \Twig_Extension
         $element = '';
         switch ($value){
             case VacationRequest::VALIDATE_STATUS:
-                $element = '<i class="fa fa-check-square fa-lg green"></i>';
+                $element = '<i class="fa fa-check fa-lg green"></i>';
                 break;
             case VacationRequest::DENIED_STATUS:
-                $element = '<i class="fa fa-minus-square-o fa-lg red"></i>';
+                $element = '<i class="fa fa-close fa-lg red"></i>';
                 break;
             default:
-                $element = '<i class="fa fa-spin fa-refresh fa-lg green"></i>';
+                $element = '<i class="fa fa-spin fa-refresh fa-lg purple"></i>';
                 break;
         }
 
@@ -74,8 +74,8 @@ class ProjectExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function addButton($icon, $url, $label, $btntype)
+    public function addButton($icon, $url, $label, $btnClass)
     {
-        return sprintf('<a href="%s" class="btn btn-%s btn-flat btn-xs" title="%s"><i class="%s"></i></a>', $url, $btntype, $label, $icon);
+        return sprintf('<a href="%s" class="%s" title="%s"><i class="%s"></i></a>', $url, $btnClass, $label, $icon);
     }
 }

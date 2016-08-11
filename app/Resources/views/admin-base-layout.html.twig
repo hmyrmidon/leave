@@ -63,7 +63,11 @@
                                     <li><a href="{{ path('app_team') }}">Lister</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{ path('app_vacation') }}"><i class="fa fa-table"></i> Demande de congÃ©s </a>
+                            <li><a><i class="fa fa-table"></i> Demande de congÃ©s </a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{ path('app_vacation') }}">Liste Ã  valider</a></li>
+                                    <li><a href="{{ path('app_vacation_history') }}">Historique de mes demandes</a></li>
+                                </ul>
                             </li>
                             <li><a><i class="fa fa-calendar-check-o"></i> Jours fériés <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
@@ -212,45 +216,18 @@
 <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 <!-- FastClick -->
 <script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}"></script>
-<!-- NProgress -->
-{#<script src="{{ asset('plugins/nprogress/nprogress.js') }}"></script>#}
-<!-- Chart.js -->
-{#<script src="{{ asset('plugins/Chart.js/dist/Chart.min.js') }}"></script>#}
-<!-- gauge.js -->
-{#<script src="{{ asset('plugins/gauge.js/dist/gauge.min.js') }}"></script>#}
 <!-- bootstrap-progressbar -->
 <script src="{{ asset('plugins/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
 <!-- iCheck -->
 <script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-<!-- Skycons -->
-{#<script src="{{ asset('plugins/skycons/skycons.js') }}"></script>#}
-<!-- Flot -->
-{#<script src="{{ asset('plugins/Flot/jquery.flot.js') }}"></script>#}
-{#<script src="{{ asset('plugins/Flot/jquery.flot.pie.js') }}"></script>#}
-{#<script src="{{ asset('plugins/Flot/jquery.flot.time.js') }}"></script>#}
-{#<script src="{{ asset('plugins/Flot/jquery.flot.stack.js') }}"></script>#}
-{#<script src="{{ asset('plugins/Flot/jquery.flot.resize.js') }}"></script>#}
-{#<!-- Flot plugins -->#}
-{#<script src="{{ asset('plugins/flot.orderbars/js/jquery.flot.orderBars.js') }}"></script>#}
-{#<script src="{{ asset('plugins/flot-spline/js/jquery.flot.spline.min.js') }}"></script>#}
-{#<script src="{{ asset('plugins/flot.curvedlines/curvedLines.js') }}"></script>#}
 <!-- DateJS -->
 <script src="{{ asset('plugins/DateJS/build/date.js') }}"></script>
-<!-- JQVMap -->
-{#<script src="{{ asset('plugins/jqvmap/dist/jquery.vmap.js') }}"></script>#}
-{#<script src="{{ asset('plugins/jqvmap/dist/maps/jquery.vmap.world.js') }}"></script>#}
-{#<script src="{{ asset('plugins/jqvmap/examples/js/jquery.vmap.sampledata.js') }}"></script>#}
 <!-- bootstrap-daterangepicker -->
 <script src="{{ asset('plugins/gentelella/js/moment/moment.min.js') }}"></script>
 <script src="{{ asset('plugins/gentelella/js/datepicker/daterangepicker.js') }}"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('plugins/gentelella/build/js/custom.min.js') }}"></script>
-<<<<<<< HEAD
-<script src="{{ asset('datata') }}"></script>
-=======
-
->>>>>>> origin/feature/feat-gestion-conges-employee
 {% endblock javascript %}
 </body>
 {% endblock body %}

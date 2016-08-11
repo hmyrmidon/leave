@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller\Admin;
 
+use AppBundle\Entity\User;
 use AppBundle\Entity\VacationRequest;
 use AppBundle\Manager\VacationRequestManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,7 +25,26 @@ class VacationController extends Controller
     {
         $validator = $this->getUser();
         $vacations = $this->get(VacationRequestManager::SERVICE_NAME)->performListData($validator);
-        return $this->render(':vacation:list.html.twig', array('vacations'=>$vacations));
+        return $this->render(':admin/vacation:list.html.twig', array('vacations'=>$vacations));
+    }
+
+    /**
+     * @Route("/mes-historiques", name="app_vacation_history")
+     */
+    public function history()
+    {
+        /**
+         * @var User $user
+         */
+        $user = $this->getUser();
+        $employee = $user->getEmployee();
+        $history = $this->getDoctrine()
+            ->getRepository('AppBundle:VacationRequest')
+            ->findBy([
+            'employee' => $employee
+        ]);
+
+        return $this->render(':admin/vacation:history.html.twig', ['list' => $history]);
     }
 
     /**
@@ -39,5 +59,16 @@ class VacationController extends Controller
         }
 
         return $this->redirectToRoute('app_vacation');
+    }
+
+    /**
+     * createVacationAction
+     * @Route("/nouvelle-demande", name="app_vacation_create")
+     */
+    public function createVacationAction()
+    {
+        $user = $this->getUser();
+
+        return $this->redirect('app_vacation_history');
     }
 }

@@ -104,4 +104,9 @@ class VacationRequestManager extends BaseManager
         }
     }
 
+    public function performHistory()
+    {
+        
+    }
+
 }
