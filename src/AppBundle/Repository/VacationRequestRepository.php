@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+
 use AppBundle\Entity\Status;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VacationRequest;
@@ -13,8 +14,17 @@ use AppBundle\Entity\VacationRequest;
  */
 class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function validate(VacationRequest $vacation, User $validator)
+    public function listNotValidateBy(User $validator)
     {
-        
+        $query = "SELECT v, vd, u FROM AppBundle:VacationRequest v 
+                          JOIN v.validation vd 
+                          JOIN vd.manager u 
+                          WHERE u.id = :uid AND v.status = :status";
+
+        $list = $this->_em->createQuery($query)
+                  ->setParameters(['uid' => $validator->getId(), 'status' => VacationRequest::PENDING_STATUS])
+                  ->getResult();
+
+        return $list;
     }
 }

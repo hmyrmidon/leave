@@ -50,4 +50,5 @@ class BaseManager
     {
         $this->entityManager->flush();
     }
+
 }

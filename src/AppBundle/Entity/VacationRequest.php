@@ -187,4 +187,21 @@ class VacationRequest
     {
         return $this->recovery;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getValidation()
+    {
+        return $this->validation;
+    }
+
+    /**
+     * @param mixed $validation
+     */
+    public function setValidation($validation)
+    {
+        $this->validation = $validation;
+    }
+    
 }

@@ -6,8 +6,8 @@ use AppBundle\Entity\Team;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VacationRequest;
 use AppBundle\Entity\VacationValidation;
-use AppBundle\Event\OnSubmitVacationRequestEvent;
 use AppBundle\Manager\BaseManager;
+use Doctrine\DBAL\DBALException;
 
 /**
  * Class VacationRequestManager
@@ -24,9 +24,9 @@ class VacationRequestManager extends BaseManager
      */
     public function saveVacation($params)
     {
-        $employee = $this->entityManager->getRepository('AppBundle:Employee')->find($params['employee']);
+        $employee  = $this->entityManager->getRepository('AppBundle:Employee')->find($params['employee']);
         $startDate = new \DateTime($params['startDate']);
-        $endDate = new \DateTime($params['endDate']);
+        $endDate   = new \DateTime($params['endDate']);
 
         $vacation = new VacationRequest();
         $vacation->setEmployee($employee);
@@ -47,17 +47,21 @@ class VacationRequestManager extends BaseManager
      */
     public function validate($vacation, $validator)
     {
-        $validator = $this->entityManager->getRepository('AppBundle:User')->find($validator);
-        $vacation  = $this->entityManager->getRepository('AppBundle:VacationRequest')->find($vacation);
+        $validator = $validator instanceof User
+            ? $validator
+            : $this->entityManager->getRepository('AppBundle:User')->find($validator);
+        $vacation  = $vacation instanceof VacationRequest
+            ? $vacation
+            : $this->entityManager->getRepository('AppBundle:VacationRequest')->find($vacation);
 
         $validation = new VacationValidation();
         $validation->setManager($validator);
         $validation->setVacation($vacation);
         $this->save($validation);
-        
-        $employee  = $vacation->getEmployee();
-        $team      = $employee->getTeam();
-        $status    = $this->performStatus($team, $vacation);
+
+        $employee = $vacation->getEmployee();
+        $team     = $employee->getTeam();
+        $status   = $this->performStatus($team, $vacation);
         $vacation->setStatus($status);
         $this->save($vacation);
 
@@ -74,16 +78,30 @@ class VacationRequestManager extends BaseManager
      */
     public function performStatus(Team $team, VacationRequest $vacation)
     {
-        $teamResult = $this->entityManager->getRepository('AppBundle:TeamValidator')->findBy(array('team'=>$team));
+        $teamResult       = $this->entityManager->getRepository('AppBundle:TeamValidator')
+                                                ->findBy(array('team' => $team));
         $vacationValidate = $this->entityManager->getRepository('AppBundle:VacationValidation')->findBy(array(
-            'vacation' => $vacation
+            'vacation' => $vacation,
         ));
 
         $status = VacationRequest::PENDING_STATUS;
-        if(count($teamResult) == count($vacationValidate)) {
+        if (count($teamResult) == count($vacationValidate)) {
             $status = VacationRequest::VALIDATE_STATUS;
         }
 
         return $status;
     }
+
+    /**
+     * @param User $validator
+     */
+    public function performListData(User $validator)
+    {
+        try{
+            return $this->entityManager->getRepository('AppBundle:VacationRequest')->listNotValidateBy($validator);
+        } catch (DBALException $err){
+            dump($err->getMessage());die;
+        }
+    }
+
 }

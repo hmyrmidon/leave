@@ -28,20 +28,12 @@ class HolidayManager extends BaseManager
         }
         $currentDate = new \DateTime();
         $currentYear = $currentDate->format('Y');
-        /**
-         * @var \DateTime $easterDate
-         */
         $easterDate = new \DateTime($currentYear . '-03-21');
         $easterDay  = easter_days($easterDate->format('Y'));
         $easterDate->modify('+' . $easterDay . ' day')->format('Y-m-d');
 
-        $holidays = array();
-        $list       = $this->entityManager->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($year);
-        foreach ($list as $lst) {
-            $date = sprintf('%d-%d-%d', $lst->getYear(), $lst->getMonth(), $lst->getDay());
-            $date = new \DateTime($date);
-            array_push($holidays, $date->format('Y-m-d'));
-        }
+        $holidays = $this->entityManager->getRepository('AppBundle:Holiday')->getArrayAvailableHolidays($year);
+
         array_push($holidays,
             $easterDate->format('Y-m-d'),
             $easterDate->modify('+1 day')->format('Y-m-d'),
