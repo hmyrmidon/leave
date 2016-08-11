@@ -2,6 +2,9 @@
 {% block title_content %}
     {{ parent() }} - Utilisateur
 {% endblock title_content %}
+{% block modal_body_content %}
+    {{ 'message.confirm.delete.team'|trans({}, 'messages') }}
+{% endblock modal_body_content %}
 {% block page_content %}
     <div class="right_col" role="main">
         <div class="">
@@ -48,25 +51,6 @@
             </div>
         </div>
     </div>
-    {% block modal %}
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog modal-sm" style="width: 400px">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <button type="button" class="close" data-dismiss="modal">×</button><br/>
-                        <p>Voulez vous vraiment supprimer cet équipe<span></span> ?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <form>
-                            <button class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-times"></i></button>
-                            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endblock modal %}
 {% endblock page_content %}
 {% block javascript %}
     {{ parent() }}
@@ -82,14 +66,6 @@
                 { "targets": "no-sort", "orderable": false }
             ],
             "scrollX" : false
-            });
-            $(document).on('click', ".btn-delete", function(e){
-                var url = $(this).attr('data-url');
-                var text = $(this).attr('data-text');
-                $('#myModal .modal-footer form').attr('action', url);
-                $('#myModal .modal-body span').text(text);
-                $("#myModal").modal({backdrop: true});
-                return false;
             });
         });
     </script>

@@ -1,0 +1,30 @@
+label:
+    vacation:
+        start_date: Date de début
+        return_date: Date de retour
+        reason: Motif
+        day_count: Nombre de jours prises
+        status: Statut
+        sended_date: Date de la demande
+    employee:
+        lastname: Nom
+        firstname: Prénoms
+    team:
+        name: Equipe
+    title:
+        history: Historique de mes demandes
+        new_vacation_request: Nouvelle demande
+        vacation_request: Demande de congés
+        list_to_validate: Liste des demandes à valider
+        team: Equipes
+        employee: Employées
+        user: Utilisateurs
+        dashboard: Tableau de bord
+        to_validate: Liste à valider
+        holiday: Jours fériés
+
+    edit_profil: Modifier le profile
+    app.name: Gestion de congé
+    logout: Déconnecter
+    cancel: Annuler
+    save: Enregistrer

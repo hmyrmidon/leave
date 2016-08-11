@@ -27,6 +27,7 @@ class ProjectExtension extends \Twig_Extension
         return [
             new \Twig_SimpleFilter('dayCount', [$this, 'dateDiff']),
             new \Twig_SimpleFilter('status', [$this, 'status']),
+            new \Twig_SimpleFilter('delete', [$this, 'addDeleteButtonByStatus']),
         ];
     }
 
@@ -74,8 +75,17 @@ class ProjectExtension extends \Twig_Extension
      *
      * @return string
      */
-    public function addButton($icon, $url, $label, $btnClass)
+    public function addButton($icon, $url, $label, $btnClass, $extraParams='')
     {
-        return sprintf('<a href="%s" class="%s" title="%s"><i class="%s"></i></a>', $url, $btnClass, $label, $icon);
+        return sprintf('<a href="%s" class="%s" title="%s" %s><i class="%s"></i></a>', $url, $btnClass, $label, $extraParams, $icon);
+    }
+
+    public function addDeleteButtonByStatus($status, $btnExtraParam)
+    {
+        if($status == VacationRequest::PENDING_STATUS){
+            return $this->addButton('fa fa-times', '#', 'Supprimer',
+                'btn btn-danger btn-xs btn-delete',
+                $btnExtraParam);
+        }
     }
 }

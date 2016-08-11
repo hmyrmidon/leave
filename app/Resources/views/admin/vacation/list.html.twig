@@ -13,7 +13,7 @@
     <div class="right_col" role="main">
         <div class="page-title">
             <div class="title_left">
-                <h3>Demande de congés</h3>
+                <h3>{{ 'label.title.vacation_request'|trans({}, 'label') }}</h3>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -21,7 +21,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Liste des demandes à valider <span class="badge bg-green"
+                        <h2>{{ 'label.title.list_to_validate'|trans({}, 'label') }} <span class="badge bg-green"
                                                                style="color: white">{{ vacations|length }}</span></h2>
                         <div class="clearfix"></div>
                     </div>
@@ -41,14 +41,14 @@
                             <thead>
                             <tr>
                                 <th><input type="checkbox" id="check-all" class="flat"></th>
-                                <th>Nom</th>
-                                <th>Prénoms</th>
-                                <th>Equipe</th>
-                                <th>Date de début</th>
-                                <th>Date de retour</th>
-                                <th>Nombre de jour</th>
-                                <th>Motif</th>
-                                <th>Statut</th>
+                                <th>{{ 'label.employee.lastname'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.employee.firstname'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.team.name'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.start_date'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.return_date'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.day_count'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.reason'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.status'|trans({}, 'label') }}</th>
                                 <th></th>
                                 <th class="bulk-actions" colspan="7">
                                     <a class="antoo" style="color:#fff; font-weight:500;"> Sélectionnés ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>

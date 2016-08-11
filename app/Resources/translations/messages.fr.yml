@@ -1,0 +1,12 @@
+message:
+    error:
+        required_field: Ce champs est requis
+        form: Le formulaire contient des erreurs
+        date_not_empty: Date invalide
+    confirm:
+        delete:
+            element: Voulez vous vraiment supprimer cet élément
+            team: Voulez vous vraiment supprimer cet équipe
+    success:
+        delete:
+            vacation: La demande a été supprimer

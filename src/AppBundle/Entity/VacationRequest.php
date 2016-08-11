@@ -33,14 +33,14 @@ class VacationRequest
     /**
      * @var \DateTime $startDate
      * @ORM\Column(name="start_date", type="datetime", nullable=false)
-     * @Assert\NotBlank(message="error.date.not.empty")
+     * @Assert\NotBlank(message="messages.error.date_not_empty")
      */
     protected $startDate;
 
     /**
      * @var \DateTime $returnDate
      * @ORM\Column(name="end_date", type="datetime", nullable=false)
-     * @Assert\NotBlank(message="error.date.not.empty")
+     * @Assert\NotBlank(message="messages.error.date_not_empty")
      */
     protected $returnDate;
 

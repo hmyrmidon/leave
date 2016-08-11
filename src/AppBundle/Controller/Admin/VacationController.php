@@ -84,4 +84,17 @@ class VacationController extends Controller
         }
         return $this->render(':admin/vacation:add.html.twig', ['form'=>$form->createView()]);
     }
+
+    /**
+     * @Route("/delete/{id}", name="app_vacation_delete")
+     * @param VacationRequest $vacation
+     */
+    public function deleteAction(VacationRequest $vacation)
+    {
+        if($this->get(VacationRequestManager::SERVICE_NAME)->delete($vacation)){
+            $this->get('session')->getFlashBag()->set('success', $this->get('translator')->trans('messages.success.delete.vacation', [], 'messages'));
+        }
+
+        return $this->redirectToRoute('app_vacation_history');
+    }
 }
