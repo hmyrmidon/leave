@@ -34,7 +34,7 @@ class VacationController extends Controller
     /**
      * @Route("/mes-historiques", name="app_vacation_history")
      */
-    public function history()
+    public function historyAction()
     {
         /**
          * @var User $user

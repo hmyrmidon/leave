@@ -23,7 +23,7 @@ class HolidayManager extends BaseManager
     public function listAll($year = null)
     {
         if (is_null($year)) {
-            $currentDate = new DateTime();
+            $currentDate = new \DateTime();
             $year        = $currentDate->format('Y');
         }
         $currentDate = new \DateTime();
@@ -32,18 +32,29 @@ class HolidayManager extends BaseManager
         $easterDay  = easter_days($easterDate->format('Y'));
         $easterDate->modify('+' . $easterDay . ' day')->format('Y-m-d');
 
-        $holidays = $this->entityManager->getRepository('AppBundle:Holiday')->getArrayAvailableHolidays($year);
+        list($holidays, $list) = $this->getArrayAvailableHolidays($year);
 
+        $easterSunday = $easterDate;
+        $easterMonday = $easterDate->modify('+1 day');
+        $ascensionDay = $easterDate->modify('+38 day');
+        $whitSunday = $easterDate->modify('+10 day');
+        $whitMondday = $easterDate->modify('+1 day');
         array_push($holidays,
-            $easterDate->format('Y-m-d'),
-            $easterDate->modify('+1 day')->format('Y-m-d'),
-            $easterDate->modify('+38 day')->format('Y-m-d'),
-            $easterDate->modify('+10 day')->format('Y-m-d'),
-            $easterDate->modify('+1 day')->format('Y-m-d')
+            $easterSunday,
+            $easterMonday,
+            $ascensionDay,
+            $whitSunday,
+            $whitMondday
         );
+        $list['easter_sunday'] = $easterSunday;
+        $list['easter_monday'] = $easterMonday;
+        $list['ascension_day'] = $ascensionDay;
+        $list['whit_sunday'] = $whitSunday;
+        $list['whit_mondday'] = $whitMondday;
+
         sort($holidays);
 
-        return $holidays;
+        return array($holidays, $list);
     }
 
     /**
@@ -57,7 +68,7 @@ class HolidayManager extends BaseManager
         $year     = $date->format('Y');
         $holidays = $this->listAll($year);
 
-        return (in_array($date->format('Y-m-d'), $holidays) || in_array($date->format('N'), array(6, 7)));
+        return (in_array($date, $holidays) || in_array($date->format('N'), array(6, 7)));
     }
 
     /**
@@ -150,5 +161,38 @@ class HolidayManager extends BaseManager
         $this->flushAndClear();
 
         return $holiday;
+    }
+
+    /**
+     * @param int $year
+     *
+     * @return array
+     */
+    public function getArrayAvailableHolidays($year)
+    {
+        $holidays = array();
+        $list       = $this->entityManager->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($year);
+        $current = new \DateTime();
+        $days = array();
+        /**
+         * @var Holiday $lst
+         */
+        foreach ($list as $lst) {
+            switch ($lst->getFrequency()){
+                case Holiday::F_EARLY:
+                    $date = sprintf('%d-%d-%d', $current->format('Y') , $lst->getMonth(), $lst->getDay());
+                    break;
+                case Holiday::F_MONTHLY:
+                    break;
+                default:
+                    $date = sprintf('%d-%d-%d', $lst->getYear(), $current->format('m'), $lst->getDay());
+                    break;
+            }
+            $date = new \DateTime($date);
+            $days[str_replace(' ', '_', $lst->getLabel())] = $date;
+            array_push($holidays, $date);
+        }
+
+        return array($holidays, $days);
     }
 }
