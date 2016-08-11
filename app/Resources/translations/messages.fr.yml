@@ -1,0 +1,8 @@
+message:
+    success:
+        addUser: l'utilisateur à bien été ajouté.
+        updateUser: l'utilisateur à bien été modifié.
+        deleteUser: l'utilisateur à bien été supprimé.
+        addTeam: l'équipe a bien été ajouté.
+        updateTeam: l'équipe a bien été modifié.
+        deleteTeam: l'équipe a bien été supprimé.

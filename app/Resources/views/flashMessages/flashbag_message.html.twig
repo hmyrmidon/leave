@@ -1,0 +1,8 @@
+{% for label, flashes in app.session.flashbag.all %}
+    <div class="callout callout-{{ label }} alert alert-{{ label }} alert-dismissable">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {% for flash in flashes %}
+            <p>{{ flash|trans({}, 'commun') }}</p>
+        {% endfor %}
+    </div>
+{% endfor %}

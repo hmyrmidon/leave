@@ -43,11 +43,11 @@ class UserController extends BaseController
         $formUser  = $this->createForm(\AppBundle\Form\Type\CreateUserType::class, $user);
         $formHandler = new \AppBundle\Form\Handler\BaseHandler($formUser, $request, $em);
         if ($formHandler->process()) {
-            $ogcUserManager = $this->get('app.user_manager');
+            $ogcUserManager = $this->get(\AppBundle\Manager\UserManager::USER_MANAGER);
             $ogcUserManager->save($user);
             $ogcUserManager->flushAndClear();
 
-            $flashMessage = $this->get('translator')->trans('message.success.addUser', array(), 'commun');
+            $flashMessage = $this->get('translator')->trans('message.success.addUser', array(), 'messages');
             $this->addFlash('success', $flashMessage);
 
             return $this->redirectToRoute('app_user');
@@ -70,11 +70,11 @@ class UserController extends BaseController
         $formUser  = $this->createForm(\AppBundle\Form\Type\CreateUserType::class, $user);
         $formHandler = new \AppBundle\Form\Handler\BaseHandler($formUser, $request, $em);
         if ($formHandler->process()) {
-            $ogcUserManager = $this->get('app.user_manager');
+            $ogcUserManager = $this->get(\AppBundle\Manager\UserManager::USER_MANAGER);
             $ogcUserManager->save($user);
             $ogcUserManager->flushAndClear();
 
-            $flashMessage = $this->get('translator')->trans('message.success.addUser', array(), 'commun');
+            $flashMessage = $this->get('translator')->trans('message.success.updateUser', array(), 'messages');
             $this->addFlash('success', $flashMessage);
 
             return $this->redirectToRoute('app_user');
@@ -95,10 +95,10 @@ class UserController extends BaseController
      */
     public function deleteAction(\AppBundle\Entity\User $user)
     {
-        $ogcUserManager = $this->get('app.user_manager');
+        $ogcUserManager = $this->get(\AppBundle\Manager\UserManager::USER_MANAGER);
         $ogcUserManager->delete($user);
 
-        $flashMessage = $this->get('translator')->trans('message.success.deleteUser', array(), 'commun');
+        $flashMessage = $this->get('translator')->trans('message.success.deleteUser', array(), 'messages');
         $this->addFlash('success', $flashMessage);
 
         return $this->redirect($this->generateUrl('app_user'));
