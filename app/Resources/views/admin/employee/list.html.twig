@@ -1,1 +1,110 @@
+{% extends '::admin-base-layout.html.twig' %}
+{% block title_content %}
+    {{ parent() }} - Utilisateur
+{% endblock title_content %}
+{% block page_content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Employés</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Liste des employés</h2>
+                                <div class="box-tools pull-right">
+                                    {{ addButton('fa fa-plus fa-lg', path('app_employee_create'), '', 'btn btn-success btn-flat btn-xs')|raw }}
+                                </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="flashbag">{% include '::flashbag_message.html.twig' %}</div>
+                            <br />
+                                <table id="employee-list" class="table table-striped dt-responsive jambo_table" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom</th>
+                                            <th>Prénoms</th>
+                                            <th>Matricule</th>
+                                            <th>Date d'embauche</th>
+                                            <th>Adresse</th>
+                                            <th>Equipe</th>
+                                            <th class="no-sort">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for employee in employees %}
+                                            <tr>
+                                                <td>{{employee.lastName}}</td>
+                                                <td>{{employee.firstName}}</td>
+                                                <td>{{employee.registrationNumber}}</td>
+                                                <td>{{employee.hiringDate|date('d/m/Y')}}</td>
+                                                <td>{{employee.address}}</td>
+                                                <td>{{employee.team.name}}</td>
+                                                <td>
+                                                    {{ addButton('fa fa-edit fa-lg', path('app_employee_edit', {'id': employee.id}), '', 'btn btn-dark btn-flat btn-xs')|raw }}
+                                                    {{ addButton('fa fa-times fa-lg','#', '', 
+                                                                 'btn-delete btn btn-danger btn-flat btn-xs', 
+                                                                 'data-url="'~path('app_employee_delete', {'id': employee.id})~'" data-text="" data-toggle="tooltip" data-placement="left"')|raw }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block modal %}
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-sm" style="width: 400px">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button type="button" class="close" data-dismiss="modal">×</button><br/>
+                        <p>Voulez vous vraiment supprimer cet employé<span></span> ?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <form>
+                            <button class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                            <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock modal %}
+{% endblock page_content %}
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('#employee-list').dataTable({
+            "language": {
+                        "url": '//cdn.datatables.net/plug-ins/1.10.11/i18n/French.json'
+                    },
+            "info": false,
+            "order": [],
+            "columnDefs": [
+                { "targets": "no-sort", "orderable": false }
+            ],
+            "scrollX" : false
+            });
+            $(document).on('click', ".btn-delete", function(e){
+                var url = $(this).attr('data-url');
+                var text = $(this).attr('data-text');
+                $('#myModal .modal-footer form').attr('action', url);
+                $('#myModal .modal-body span').text(text);
+                $("#myModal").modal({backdrop: true});
+                return false;
+            });
+        });
+    </script>
+{% endblock javascript %}
 

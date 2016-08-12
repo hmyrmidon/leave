@@ -6,6 +6,8 @@ use AppBundle\Traits\BaseTrait;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Team
@@ -13,6 +15,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TeamRepository")
  * @ORM\Table(name="team")
  * @package AppBundle\Entity
+ *  @UniqueEntity(fields="name", message="Ce nom d'équipe existe déjà.")
+ * 
  */
 class Team
 {
@@ -30,6 +34,7 @@ class Team
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Assert\NotBlank(message="Remplissez le nom de l'équipe.")
      */
     private $name;
 

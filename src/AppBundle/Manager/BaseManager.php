@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 class BaseManager 
 {
-    
     /**
      * @var EntityManagerInterface $entityManager
      */

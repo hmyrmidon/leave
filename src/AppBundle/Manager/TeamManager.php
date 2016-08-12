@@ -19,4 +19,15 @@ class TeamManager extends BaseManager
 
         return $team;
     }
+
+    public function editTeam(\AppBundle\Entity\Team $team)
+    {
+        $name = $team->getName();
+        $team->setName($name);
+
+        $this->save($team);
+        $this->flushAndClear();
+
+        return $team;
+    }
 }

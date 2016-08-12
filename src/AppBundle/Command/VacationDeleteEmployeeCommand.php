@@ -25,12 +25,10 @@ class VacationDeleteEmployeeCommand extends Command
         $idEmployee = $input->getOption("id");
         $employeeDelete = $this->getContainer()->get('doctrine.orm.entity_manager')->getRepository('AppBundle:Employee')->find($idEmployee);
 
-        $user = $employeeDelete->getUser();
-
         $userEmployee->delete($employeeDelete);
 
         $event = new \AppBundle\Event\VacationEmployeeEvent($employeeDelete);
-        $this->getContainer()->get('event_dispatcher')->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME_REMOVE_USER, $event,$user);
+        $this->getContainer()->get('event_dispatcher')->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME_REMOVE_USER, $event);
 
         $output->writeln('Employee successfully removed!');
     }

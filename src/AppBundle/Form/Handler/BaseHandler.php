@@ -53,7 +53,6 @@ class BaseHandler
 
             return true;
         }
-        $error = $this->form->getErrors();
         
           return false;
     }

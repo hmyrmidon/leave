@@ -1,0 +1,128 @@
+{% extends '::admin-base-layout.html.twig' %}
+{% block title_content %}
+    {{ parent() }} - Utilisateur
+{% endblock title_content %}
+{% import '::fields-error.html.twig' as display_errors %}
+{% block page_content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Employé</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Modifier un employé</h2>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            {{ display_errors.all_form_errors(form) }}
+                            <div class="flashbag">{% include '::flashbag_message.html.twig' %}</div>
+                            <br />
+                            <form method="post" action="{{ path('app_employee_edit', {'id': employee.id}) }}" class="form-horizontal form-label-left" novalidate="novalidate">
+                                <div class="form-group {% if form.lastName.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.lastName, "Nom"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.lastName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group {% if form.firstName.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.firstName, "Prénoms"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.firstName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group {% if form.birthDate.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.birthDate, "Date de naissance"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.birthDate, { 'attr': {'class': 'form-control col-md-7 col-xs-12 datepicker'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group {% if form.registrationNumber.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.registrationNumber, "Matricule"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.registrationNumber, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group {% if form.hiringDate.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.hiringDate, "Date de début du contrat"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.hiringDate, { 'attr': {'class': 'form-control col-md-7 col-xs-12 datepicker'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group {% if form.maritalStatus.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.maritalStatus, "Situation matrimonial"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.maritalStatus, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group {% if form.nbChildren.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.nbChildren, "Nombre d'enfant"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.nbChildren, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group {% if form.address.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.address, "Adresse"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.address, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                    </div>
+                                </div>
+                                <div class="form-group {% if form.team.vars.errors|length %}has-error{% endif %}">
+                                    {{ form_label(form.team, "Equipe"|trans({}, 'FOSUserBundle'), 
+                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        {{ form_widget(form.team, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                    </div>
+                                </div>
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-9">
+                                        <a href="{{ path('app_employee') }}" class="btn btn-primary">Annuler</a>
+                                        <button type="submit" class="btn btn-success">Enregistrer</button>
+                                    </div>
+                                </div>
+                                {{ form_widget(form._token) }}
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function(){
+            $('.datepicker').daterangepicker({
+                singleDatePicker: true,
+                calender_style: "picker_2",
+                locale: {
+                applyLabel: 'Submit',
+                cancelLabel: 'Clear',
+                fromLabel: 'From',
+                toLabel: 'To',
+                customRangeLabel: 'Custom',
+                daysOfWeek: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
+                monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+                firstDay: 1,
+                format: 'DD/MM/YYYY'
+              }
+              });
+        });
+    </script>
+{% endblock javascript %}
+
