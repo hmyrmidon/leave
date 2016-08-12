@@ -28,6 +28,7 @@ class ProjectExtension extends \Twig_Extension
             new \Twig_SimpleFilter('dayCount', [$this, 'dateDiff']),
             new \Twig_SimpleFilter('status', [$this, 'status']),
             new \Twig_SimpleFilter('delete', [$this, 'addDeleteButtonByStatus']),
+            new \Twig_SimpleFilter('format_number', [$this, 'formatNumber']),
         ];
     }
 
@@ -87,5 +88,10 @@ class ProjectExtension extends \Twig_Extension
                 'btn btn-danger btn-xs btn-delete',
                 $btnExtraParam);
         }
+    }
+
+    public function formatNumber($value, $format)
+    {
+        return vsprintf($format, $value);
     }
 }

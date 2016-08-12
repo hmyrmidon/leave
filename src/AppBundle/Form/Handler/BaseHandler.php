@@ -45,17 +45,15 @@ class BaseHandler
     /**
      * @return bool
      */
-    public function process(User $user)
+    public function process()
     {
         $this->form->handleRequest($this->request);
-        //dump($this->form->getData());die;
-        if ($this->request->isMethod('post') && $this->form->isValid() && $user->getEmployee()) {
+        if ($this->request->isMethod('post') && $this->form->isValid()) {
             $this->entity = $this->form->getData();
 
             return true;
         }
         $error = $this->form->getErrors();
-        //dump($error);die;
         
           return false;
     }

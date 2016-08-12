@@ -5,6 +5,7 @@ namespace AppBundle\Controller\Admin;
 use AppBundle\Entity\User;
 use AppBundle\Entity\VacationRequest;
 use AppBundle\Form\Handler\BaseHandler;
+use AppBundle\Form\Handler\VacationHandler;
 use AppBundle\Form\Type\VacationType;
 use AppBundle\Manager\VacationRequestManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -74,7 +75,7 @@ class VacationController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $vacation = new VacationRequest();
         $form = $this->createForm(VacationType::class, $vacation);
-        $handler = new BaseHandler($form, $request, $entityManager);
+        $handler = new VacationHandler($form, $request, $entityManager);
         if($handler->process($user)){
             $srv = $this->get(VacationRequestManager::SERVICE_NAME);
             $srv->saveVacation($vacation, $user->getEmployee());

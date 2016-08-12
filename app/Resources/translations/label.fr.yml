@@ -22,6 +22,12 @@ label:
         dashboard: Tableau de bord
         to_validate: Liste à valider
         holiday: Jours fériés
+    holiday:
+        easter_day: Pâques
+        easter_monday: Lundi des pâques
+        ascension_day: ascension
+        whit_sunday: Pentecôte
+        whit_monday: Lundi de pentecôte
 
     edit_profil: Modifier le profile
     app.name: Gestion de congé

@@ -24,37 +24,14 @@ class HolidayManager extends BaseManager
     {
         if (is_null($year)) {
             $currentDate = new \DateTime();
-            $year        = $currentDate->format('Y');
+            $currentYear        = $currentDate->format('Y');
+        }else{
+            $currentYear = $year;
         }
-        $currentDate = new \DateTime();
-        $currentYear = $currentDate->format('Y');
-        $easterDate = new \DateTime($currentYear . '-03-21');
-        $easterDay  = easter_days($easterDate->format('Y'));
-        $easterDate->modify('+' . $easterDay . ' day')->format('Y-m-d');
+        $list       = $this->entityManager->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($currentYear);
+        $static = $this->getStaticDates($currentYear);
 
-        list($holidays, $list) = $this->getArrayAvailableHolidays($year);
-
-        $easterSunday = $easterDate;
-        $easterMonday = $easterDate->modify('+1 day');
-        $ascensionDay = $easterDate->modify('+38 day');
-        $whitSunday = $easterDate->modify('+10 day');
-        $whitMondday = $easterDate->modify('+1 day');
-        array_push($holidays,
-            $easterSunday,
-            $easterMonday,
-            $ascensionDay,
-            $whitSunday,
-            $whitMondday
-        );
-        $list['easter_sunday'] = $easterSunday;
-        $list['easter_monday'] = $easterMonday;
-        $list['ascension_day'] = $ascensionDay;
-        $list['whit_sunday'] = $whitSunday;
-        $list['whit_mondday'] = $whitMondday;
-
-        sort($holidays);
-
-        return array($holidays, $list);
+        return array_merge($list, $static);
     }
 
     /**
@@ -66,7 +43,7 @@ class HolidayManager extends BaseManager
     public function isHoliday(\DateTime $date)
     {
         $year     = $date->format('Y');
-        $holidays = $this->listAll($year);
+        $holidays = $this->getArrayAvailableHolidays($year);
 
         return (in_array($date, $holidays) || in_array($date->format('N'), array(6, 7)));
     }
@@ -170,10 +147,15 @@ class HolidayManager extends BaseManager
      */
     public function getArrayAvailableHolidays($year)
     {
+        if (is_null($year)) {
+            $currentDate = new \DateTime();
+            $year        = $currentDate->format('Y');
+        }else{
+            $currentYear = $year;
+        }
         $holidays = array();
-        $list       = $this->entityManager->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($year);
+        $list       = $this->entityManager->getRepository('AppBundle:Holiday')->getAvalaibleFromYear($currentYear);
         $current = new \DateTime();
-        $days = array();
         /**
          * @var Holiday $lst
          */
@@ -189,10 +171,58 @@ class HolidayManager extends BaseManager
                     break;
             }
             $date = new \DateTime($date);
-            $days[str_replace(' ', '_', $lst->getLabel())] = $date;
             array_push($holidays, $date);
         }
 
-        return array($holidays, $days);
+        $easterDate = new \DateTime($currentYear . '-03-21');
+        $easterDay  = easter_days($easterDate->format('Y'));
+        $easterDate->modify('+' . $easterDay . ' day')->format('Y-m-d');
+        array_push($holidays,
+            $easterDate->format('Y-m-d'),
+            $easterDate->modify('+1 day')->format('Y-m-d'),
+            $easterDate->modify('+38 day')->format('Y-m-d'),
+            $easterDate->modify('+10 day')->format('Y-m-d'),
+            $easterDate->modify('+1 day')->format('Y-m-d')
+        );
+
+        return $holidays;
     }
+
+    public function getStaticDates($year)
+    {
+        $holidays = [];
+        if (is_null($year)) {
+            $currentDate = new \DateTime();
+            $year        = $currentDate->format('Y');
+        }
+        $currentDate = new \DateTime();
+        $currentYear = $currentDate->format('Y');
+        $easterDate = new \DateTime($currentYear . '-03-21');
+        $easterDay  = easter_days($easterDate->format('Y'));
+        $easterDate->modify('+' . $easterDay . ' day')->format('Y-m-d');
+
+        array_push($holidays,
+            $this->createVirtualHoliday($easterDate, 'Pâques'),
+            $this->createVirtualHoliday($easterDate->modify('+1 day'), 'Lundi des Pâques'),
+            $this->createVirtualHoliday($easterDate->modify('+38 day'), 'Ascension'),
+            $this->createVirtualHoliday($easterDate->modify('+10 day'), 'Pentecôte'),
+            $this->createVirtualHoliday($easterDate->modify('+1 day'), 'Lundi de Pentecôte')
+        );
+
+        return $holidays;
+
+    }
+
+    private function createVirtualHoliday($datetime, $label='')
+    {
+        $date = new Holiday();
+        $date->setDay($datetime->format('d'));
+        $date->setMonth($datetime->format('m'));
+        $date->setYear($datetime->format('Y'));
+        $date->setFrequency(Holiday::F_EARLY);
+        $date->setLabel($label);
+
+        return $date;
+    }
+
 }
