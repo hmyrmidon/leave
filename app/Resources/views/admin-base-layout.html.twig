@@ -69,10 +69,7 @@
                                     <li><a href="{{ path('app_vacation_history') }}">{{ 'label.title.history'|trans({}, 'label') }}</a></li>
                                 </ul>
                             </li>
-                            <li><a><i class="fa fa-calendar-check-o"></i> {{ 'label.title.holiday'|trans({}, 'label') }} <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="{{ path('app_holiday') }}">Lister</a></li>
-                                </ul>
+                            <li><a href="{{ path('app_holiday') }}"><i class="fa fa-calendar-check-o"></i> {{ 'label.title.holiday'|transchoice(1, {}, 'label') }} </a>
                             </li>
                         </ul>
                     </div>

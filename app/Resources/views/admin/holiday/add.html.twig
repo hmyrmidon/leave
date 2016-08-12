@@ -18,7 +18,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>{{ 'label.title.new_vacation_requestt'|trans({}, 'label') }}</h2>
+                            <h2>{{ 'label.new'|transchoice(0,{}, 'label') }} {{ 'label.title.holiday'|transchoice(0, {}, 'label')|lower }}</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
@@ -26,14 +26,14 @@
                             {{ display_errors.all_form_errors(form) }}
                             <form method="post" action="{{ path('app_holiday_add') }}" class="form-horizontal form-label-left" novalidate="novalidate">
                                 <div class="form-group {% if form_errors(form.date) %}has-error{% endif %}">
-                                    {{ form_label(form.date, "label.vacation.start_date"|trans({}, 'label'),
+                                    {{ form_label(form.date, "label.holiday.date"|trans({}, 'label'),
                                     { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.date, { 'attr': {'class': 'datepicker form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form_errors(form.label) %}has-error{% endif %}">
-                                    {{ form_label(form.label, "label.vacation.reason"|trans({}, 'label'),
+                                    {{ form_label(form.label, "label.holiday.label"|trans({}, 'label'),
                                     { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.label, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}

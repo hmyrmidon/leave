@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class HolidayType extends AbstractType
@@ -18,7 +20,7 @@ class HolidayType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('date', DateType::class, ['mapped'=>false, 'widget'=> 'single_text', 'format'=>'dd/MM/yyyy'])
+            ->add('date', DateType::class, ['required'=>true, 'widget'=> 'single_text', 'format'=>'dd/MM/yyyy'])
             ->add('label', TextType::class, ['required' => false]);
     }
 

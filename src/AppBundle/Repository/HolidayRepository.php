@@ -18,7 +18,7 @@ class HolidayRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getAvalaibleFromYear($year)
     {
-        $query = 'SELECT d FROM AppBundle:Holiday d WHERE d.year = :year';
+        $query = 'SELECT d FROM AppBundle:Holiday d WHERE YEAR(d.date) = :year';
         $list = $this->_em->createQuery($query)
         ->execute(array('year'=>$year));
 

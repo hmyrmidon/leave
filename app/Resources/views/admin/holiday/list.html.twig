@@ -1,9 +1,9 @@
 {% extends '::admin-base-layout.html.twig' %}
 {% block title_content %}
-    {{ parent() }} - Jour fériés
+    {{ parent() }} - {{ 'label.title.holiday'|transchoice(1,{}, 'label') }}
 {% endblock title_content %}
 {% block modal_body_content %}
-    {{ 'message.confirm.delete.team'|trans({}, 'messages') }}
+    {{ 'message.confirm.delete.holiday'|trans({}, 'messages') }}
 {% endblock modal_body_content %}
 {% block page_content %}
     <div class="right_col" role="main">
@@ -19,17 +19,18 @@
                     <div class="x_panel">
                         <div class="x_title">
                             <h2>Liste des jour fériés</h2>
-                            {#<div class="box-tools pull-right">#}
-                                {#<a href="{{ path('') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></a>#}
-                            {#</div>#}
+                            <div class="box-tools pull-right">
+                                <a href="{{ path('app_holiday_add') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></a>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
                             <br />
+                            {% include '::flash_messages_layout.html.twig' %}
                             <table class="datatable table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
                                 <thead>
                                 <tr>
-                                    <th>{{ 'label.title.holiday'|trans({}, 'label') }}</th>
+                                    <th>{{ 'label.title.holiday'|transchoice(1, {}, 'label') }}</th>
                                     <th>{{ 'libellé'|trans({}, 'label') }}</th>
                                     <th class="no-sort">Action</th>
                                 </tr>
@@ -37,11 +38,11 @@
                                 <tbody>
                                 {% for holiday in list %}
                                     <tr>
-                                        <td>{{holiday.day|format_number('%02d')~'/'~holiday.month|format_number('%02d')~'/'~holiday.year}}</td>
+                                        <td>{{holiday.date|date('d/m/Y')}}</td>
                                         <td>{{holiday.label}}</td>
                                         <td>
                                             {% if holiday.id is not null %}
-                                                {{ addButton('fa fa-times', '#', 'Supprimer','btn btn-delete btn-flat btn-danger btn-xs', 'data-url="'~path('app_vacation_delete', {id:holiday.id})~'" data-toggle="tooltip" data-placement="left" data-text=""')|raw }}
+                                                {{ addButton('fa fa-times', '#', 'Supprimer','btn btn-delete btn-flat btn-danger btn-xs', 'data-url="'~path('app_holiday_delete', {id:holiday.id})~'" data-toggle="tooltip" data-placement="left" data-text=""')|raw }}
                                             {% endif %}
                                         </td>
                                     </tr>

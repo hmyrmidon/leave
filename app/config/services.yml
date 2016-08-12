@@ -29,6 +29,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
+            - "@translator.default"
     app.twig_extension:
         class: 'AppBundle\Twig\ProjectExtension'
         arguments:

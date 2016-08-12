@@ -27,20 +27,11 @@ class Holiday
      */
     protected $id;
     /**
-     * @var int $day
-     * @ORM\Column(name="day", type="integer")
+     * @var int $date
+     * @ORM\Column(name="date", type="datetime")
      */
-    protected $day;
-    /**
-     * @var int $month
-     * @ORM\Column(name="month", type="integer")
-     */
-    protected $month;
-    /**
-     * @var int $year
-     * @ORM\Column(name="year", type="integer")
-     */
-    protected $year;
+    protected $date;
+
     /**
      * @var int $frequency
      * @ORM\Column(name="frequency", type="integer")
@@ -53,51 +44,19 @@ class Holiday
     protected $label;
 
     /**
-     * @return int
+     * @return \DateTime
      */
-    public function getDay()
+    public function getDate()
     {
-        return $this->day;
+        return $this->date;
     }
 
     /**
-     * @param int $day
+     * @param \DateTime $date
      */
-    public function setDay($day)
+    public function setDate($date)
     {
-        $this->day = $day;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMonth()
-    {
-        return $this->month;
-    }
-
-    /**
-     * @param int $month
-     */
-    public function setMonth($month)
-    {
-        $this->month = $month;
-    }
-
-    /**
-     * @return int
-     */
-    public function getYear()
-    {
-        return $this->year;
-    }
-
-    /**
-     * @param int $year
-     */
-    public function setYear($year)
-    {
-        $this->year = $year;
+        $this->date = $date;
     }
 
     /**
