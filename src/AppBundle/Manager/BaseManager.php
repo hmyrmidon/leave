@@ -43,6 +43,8 @@ class BaseManager
     {
         $this->entityManager->remove($entity);
         $this->flushAndClear();
+
+        return true;
     }
 
     public function flushAndClear()

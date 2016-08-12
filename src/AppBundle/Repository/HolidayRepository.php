@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Holiday;
 
 /**
  * HolidayRepository
@@ -17,28 +18,11 @@ class HolidayRepository extends \Doctrine\ORM\EntityRepository
      */
     public function getAvalaibleFromYear($year)
     {
-        $query = 'SELECT d FROM AppBundle:Holiday d WHERE d.year = :year';
+        $query = 'SELECT d FROM AppBundle:Holiday d WHERE YEAR(d.date) = :year';
         $list = $this->_em->createQuery($query)
         ->execute(array('year'=>$year));
 
         return $list;
     }
-
-    /**
-     * @param int $year
-     *
-     * @return array
-     */
-    public function getArrayAvailableHolidays($year)
-    {
-        $holidays = array();
-        $list       = $this->getAvalaibleFromYear($year);
-        foreach ($list as $lst) {
-            $date = sprintf('%d-%d-%d', $lst->getYear(), $lst->getMonth(), $lst->getDay());
-            $date = new \DateTime($date);
-            array_push($holidays, $date->format('Y-m-d'));
-        }
-
-        return $holidays;
-    }
+    
 }

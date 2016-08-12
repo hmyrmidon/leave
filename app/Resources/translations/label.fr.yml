@@ -1,0 +1,41 @@
+label:
+    vacation:
+        start_date: Date de début
+        return_date: Date de retour
+        reason: Motif
+        day_count: Nombre de jours prises
+        status: Statut
+        sended_date: Date de la demande
+    employee:
+        lastname: Nom
+        firstname: Prénoms
+    team:
+        name: Equipe
+    title:
+        history: Historique de mes demandes
+        new_vacation_request: Nouvelle demande
+        vacation_request: Demande de congés
+        list_to_validate: Liste des demandes à valider
+        team: Equipes
+        employee: Employées
+        user: Utilisateurs
+        dashboard: Tableau de bord
+        to_validate: Liste à valider
+        holiday: "{0}Jour férié|{1}Jours fériés"
+        holiday_list: Liste des jours fériés
+    holiday:
+        easter_day: Pâques
+        easter_monday: Lundi des pâques
+        ascension_day: Ascension
+        whit_sunday: Pentecôte
+        whit_monday: Lundi de pentecôte
+        date: Date
+        label: Description
+
+    edit_profil: Modifier le profile
+    app.name: Gestion de congé
+    logout: Déconnecter
+    new: "{0}Nouveau|{1}Nouvelle"
+    edit: Modifier
+    cancel: Annuler
+    save: Enregistrer

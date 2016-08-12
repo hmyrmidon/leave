@@ -6,12 +6,15 @@ use AppBundle\Traits\BaseTrait;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Annotation as Gedmo;
+use AppBundle\Validator\Constraints as AppAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class VacationRequest
  * @package AppBundle\Entity
  * @ORM\Entity(repositoryClass="AppBundle\Repository\VacationRequestRepository")
  * @ORM\Table(name="vacation_request")
  * @ORM\HasLifecycleCallbacks()
+ * @AppAssert\ConstraintsVacationDate()
  */
 class VacationRequest
 {
@@ -30,14 +33,16 @@ class VacationRequest
     /**
      * @var \DateTime $startDate
      * @ORM\Column(name="start_date", type="datetime", nullable=false)
+     * @Assert\NotBlank(message="messages.error.date_not_empty")
      */
     protected $startDate;
 
     /**
-     * @var \DateTime $endDate
-     * @ORM\Column(name="end_date", type="datetime", nullable=true)
+     * @var \DateTime $returnDate
+     * @ORM\Column(name="end_date", type="datetime", nullable=false)
+     * @Assert\NotBlank(message="messages.error.date_not_empty")
      */
-    protected $endDate;
+    protected $returnDate;
 
     /**
      * @var string $reason
@@ -86,18 +91,20 @@ class VacationRequest
     /**
      * @return \DateTime
      */
-    public function getEndDate()
+    public function getReturnDate()
     {
-        return $this->endDate;
+        return $this->returnDate;
     }
 
     /**
-     * @param \DateTime $endDate
+     * @param \DateTime $returnDate
      */
-    public function setEndDate($endDate)
+    public function setReturnDate($returnDate)
     {
-        $this->endDate = $endDate;
+        $this->returnDate = $returnDate;
     }
+
+
 
     /**
      * @return string

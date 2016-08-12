@@ -1,10 +1,17 @@
 {% extends '::admin-base-layout.html.twig' %}
 
+{% block title_content %}
+    {{ parent() }} - {{ 'label.title.history'|trans({}, 'label') }}
+{% endblock title_content %}
+{% block modal_body_content %}
+    {{ 'messages.confirm.delete.element'|trans({}, 'messages') }}
+{% endblock modal_body_content %}
 {% block stylesheet %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('plugins/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables.net-buttons-bs/css/buttons.bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('plugins/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables.net-responsive-bs/css/responsive.bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datatables.net-scroller-bs/css/scroller.bootstrap.min.css') }}">
 {% endblock stylesheet %}
@@ -12,7 +19,7 @@
     <div class="right_col" role="main">
         <div class="page-title">
             <div class="title_left">
-                <h3>Demande de congés</h3>
+                <h3>{{ 'label.title.vacation_request'|trans({}, 'label') }}</h3>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -20,30 +27,27 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>Historique des mes demandes <span class="badge bg-green" style="color: white">{{ list|length }}</span></h2>
+                        <h2>{{ 'label.title.history'|trans({}, 'label') }}<span class="badge bg-green"
+                                                              style="color: white">{{ list|length }}</span></h2>
                         <div class="box-tool pull-right">
-                            {{ addButton('fa fa-plus', path('app_vacation_history'), 'Nouvelle demande', 'btn btn-success btn-xs')|raw }}
+                            {{ addButton('fa fa-plus', path('app_vacation_create'), 'Nouvelle demande', 'btn btn-success btn-xs')|raw }}
                         </div>
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        {% for label, flashes in app.session.flashbag.all %}
-                            <div class="callout callout-{{ label }} alert alert-{{ label }} alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                {% for flash in flashes %}
-                                    <p>{{ flash|trans({}, 'messages') }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                        <table id="datatable-responsive" class="table table-striped dt-responsive nowrap bulk_action jambo_table" cellspacing="0" width="100%">
+                        {% include '::flashbag_message.html.twig'%}
+                        <table id="datatable-responsive"
+                               class="table table-striped dt-responsive nowrap bulk_action jambo_table" cellspacing="0"
+                               width="100%">
                             <thead>
                             <tr class="">
-                                <th>Date de la demande</th>
-                                <th>Date de début</th>
-                                <th>Date de retour</th>
-                                <th>Motifs</th>
-                                <th>Nombre de jour</th>
-                                <th>Statut</th>
+                                <th>{{ 'label.vacation.sended_date'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.start_date'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.return_date'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.reason'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.day_count'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.status'|trans({}, 'label') }}</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -51,10 +55,11 @@
                                 <tr>
                                     <td>{{ item.created|date('d/m/Y') }}</td>
                                     <td>{{ item.startDate|date('d/m/Y') }}</td>
-                                    <td>{{ item.endDate|date('d/m/Y') }}</td>
+                                    <td>{{ item.returnDate|date('d/m/Y') }}</td>
                                     <td>{{ item.reason }}</td>
-                                    <td>{{ item.startDate|dayCount(item.endDate) }}</td>
-                                    <td>{{ item.status|status|raw }}</td>
+                                    <td>{{ item.startDate|dayCount(item.returnDate) }}</td>
+                                    <td><span class="hidden">{{ item.status }}</span>{{ item.status|status|raw }}</td>
+                                    <td>{{ item.status|delete('data-url="'~path('app_vacation_delete', {id:item.id})~'" data-toggle="tooltip" data-placement="left" data-text=""')|raw }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -78,9 +83,16 @@
     <script>
         var datatable = $('#datatable-responsive')
         datatable.dataTable({
-                                'order': [[ 0, 'desc' ]],
+                                'language': {
+                                    'url': '//cdn.datatables.net/plug-ins/1.10.11/i18n/French.json'
+                                },
+                                'info': false,
+                                'order': [[0, 'desc']],
+                                'columnDefs': [
+                                    {orderable: false, targets: [$('#datatable-responsive th').length - 1]}
+                                ]
                             });
-        $datatable.on('draw.dt', function() {
+        datatable.on('draw.dt', function () {
             $('input').iCheck({
                                   checkboxClass: 'icheckbox_flat-green'
                               });

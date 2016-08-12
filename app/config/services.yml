@@ -35,7 +35,7 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
-
+            - "@translator.default"
     app.twig_extension:
         class: 'AppBundle\Twig\ProjectExtension'
         arguments:
@@ -43,8 +43,14 @@ services:
             - services:
                 holiday: "@app.holiday_manager"
                 vacation: "@app.vacation_request_manager"
+                dispatcher: "@event_dispatcher"
         tags:
             - { name: twig.extension }
+    #Application custom validators
+    app.validator.date_range:
+        class: 'AppBundle\Validator\Constraints\ConstraintsVacationDateValidator'
+        tags:
+            - { name: "validator.constraint_validator" }
 
     app.mailer_manager:
         class: 'AppBundle\Manager\MailerManager'

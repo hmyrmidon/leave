@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {% block title %}<title>{% block title_content %}Gestion de congé{% endblock title_content %}</title>{% endblock title %}
+    {% block title %}<title>{% block title_content %}{{ 'label.app.name'|trans({}, 'label') }}{% endblock title_content %}</title>{% endblock title %}
     {% block stylesheet %}
         <!-- Bootstrap -->
         <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -25,209 +25,173 @@
         <link href="{{ asset('plugins/gentelella/build/css/custom.css') }}" rel="stylesheet">
         <!-- Datatable bootstrap -->
         <link rel="stylesheet" href="{{ asset('plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet">
+        {# Custom css color#}
+        <link rel="stylesheet" href="{{ asset('admin/css/colors.css') }}" rel="stylesheet">
     {% endblock stylesheet %}
 </head>
 {% block body %}
-<body class="nav-md">
-{% block container %}
-<div class="container body">
-    {% block main_content %}
-    <div class="main_container">
-        {% block sidebar %}
-            <div class="col-md-3 left_col">
-            <div class="left_col scroll-view">
-                <div class="navbar nav_title" style="border: 0;">
-                    <a href="#" class="site_title"><i class="glyphicon glyphicon-leaf" ></i> <span>Gestion de congé</span></a>
-                </div>
+    <body class="nav-md">
+    {% block container %}
+        <div class="container body">
+            {% block main_content %}
+                <div class="main_container">
+                    {% block sidebar %}
+                        <div class="col-md-3 left_col">
+                            <div class="left_col scroll-view">
+                                <div class="navbar nav_title" style="border: 0;">
+                                    <a href="#" class="site_title"><i class="glyphicon glyphicon-leaf" ></i> <span>Gestion de congأ©</span></a>
+                                </div>
 
-                <div class="clearfix"></div>
+                                <div class="clearfix"></div>
 
-                <!-- sidebar menu -->
-                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
-                    <div class="menu_section">
-                        <ul class="nav side-menu">
-                            <li><a><i class="fa fa-th-large"></i> Tableau de bord </a>
-                            </li>
-                            <li><a><i class="fa fa-user"></i> Utilisateurs<span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="{{ path('app_user') }}">Lister</a></li>
-                                </ul>
-                            </li>
-                            <li><a><i class="fa fa-user-secret"></i> Employés<span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="{{ path('app_employee') }}">Lister</a></li>
-                                </ul>
-                            </li>
-                            <li><a><i class="fa fa-group"></i> Equipes <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="{{ path('app_team') }}">Lister</a></li>
-                                </ul>
-                            </li>
-                            <li><a><i class="fa fa-table"></i> Demande de congés </a>
-                                <ul class="nav child_menu">
-                                    <li><a href="{{ path('app_vacation') }}">Liste à valider</a></li>
-                                    <li><a href="{{ path('app_vacation_history') }}">Historique de mes demandes</a></li>
-                                </ul>
-                            </li>
-                            <li><a><i class="fa fa-calendar-check-o"></i> Jours fériés <span class="fa fa-chevron-down"></span></a>
-                                <ul class="nav child_menu">
-                                    <li><a href="form_advanced.html">Lister</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- /sidebar menu -->
+                                <!-- sidebar menu -->
+                                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                                    <div class="menu_section">
+                                        <ul class="nav side-menu">
+                                            <li><a><i class="fa fa-th-large"></i> {{ 'label.title.dashboard'|trans({}, 'label') }} </a>
+                                            </li>
+                                            <li><a><i class="fa fa-user"></i> {{ 'label.title.user'|trans({}, 'label') }}<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="{{ path('app_user') }}">Lister</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a><i class="fa fa-user-secret"></i> {{ 'label.title.employee'|trans({}, 'label') }}<span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="{{ path('app_employee') }}.html">Lister</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a><i class="fa fa-group"></i> {{ 'label.title.team'|trans({}, 'label') }} <span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="{{ path('app_team') }}">Lister</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a><i class="fa fa-table"></i> {{ 'label.title.vacation_request'|trans({}, 'label') }} <span class="fa fa-chevron-down"></span></a>
+                                                <ul class="nav child_menu">
+                                                    <li><a href="{{ path('app_vacation') }}">{{ 'label.title.to_validate'|trans({}, 'label') }}</a></li>
+                                                    <li><a href="{{ path('app_vacation_history') }}">{{ 'label.title.history'|trans({}, 'label') }}</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="{{ path('app_holiday') }}"><i class="fa fa-calendar-check-o"></i> {{ 'label.title.holiday'|transchoice(1, {}, 'label') }} </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- /sidebar menu -->
 
-                <!-- /menu footer buttons -->
-                <div class="sidebar-footer hidden-small">
-                    <a data-toggle="tooltip" data-placement="top" title="Settings">
-                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Lock">
-                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                    </a>
-                    <a data-toggle="tooltip" data-placement="top" title="Logout">
-                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                    </a>
-                </div>
-                <!-- /menu footer buttons -->
-            </div>
-        </div>
-        {% endblock sidebar %}
-        {% block top_navigation %}
-            <!-- top navigation -->
-            <div class="top_nav">
-                <div class="nav_menu">
-                    <nav>
-                        <div class="nav toggle">
-                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                                <!-- /menu footer buttons -->
+                                <div class="sidebar-footer hidden-small">
+                                    <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Logout">
+                                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                                <!-- /menu footer buttons -->
+                            </div>
                         </div>
+                    {% endblock sidebar %}
+                    {% block top_navigation %}
+                        <!-- top navigation -->
+                        <div class="top_nav">
+                            <div class="nav_menu">
+                                <nav>
+                                    <div class="nav toggle">
+                                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                                    </div>
 
-                        <ul class="nav navbar-nav navbar-right">
-                            <li class="">
-                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="images/img.jpg" alt="">{{ app.user.username }}
-                                    <span class=" fa fa-angle-down"></span>
-                                </a>
-                                <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                    <li><a href="javascript:;"> Profile</a></li>
-                                    <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
-                                </ul>
-                            </li>
-
-                            <li role="presentation" class="dropdown">
-                                <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">6</span>
-                                </a>
-                                <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                            <span>
-                              <span>John Smith</span>
-                              <span class="time">3 mins ago</span>
-                            </span>
-                            <span class="message">
-                              Film festivals used to be do-or-die moments for movie makers. They were where...
-                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                            <span>
-                              <span>John Smith</span>
-                              <span class="time">3 mins ago</span>
-                            </span>
-                            <span class="message">
-                              Film festivals used to be do-or-die moments for movie makers. They were where...
-                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                            <span>
-                              <span>John Smith</span>
-                              <span class="time">3 mins ago</span>
-                            </span>
-                            <span class="message">
-                              Film festivals used to be do-or-die moments for movie makers. They were where...
-                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                            <span>
-                              <span>John Smith</span>
-                              <span class="time">3 mins ago</span>
-                            </span>
-                            <span class="message">
-                              Film festivals used to be do-or-die moments for movie makers. They were where...
-                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <div class="text-center">
-                                            <a>
-                                                <strong>See All Alerts</strong>
-                                                <i class="fa fa-angle-right"></i>
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li class="">
+                                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <img src="images/img.jpg" alt="">{{ app.user.username }}
+                                                <span class=" fa fa-angle-down"></span>
                                             </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </nav>
+                                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                                <li><a href="javascript:;">{{ 'label.edit_profil'|trans({}, 'label') }}</a></li>
+                                                <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out pull-right"></i>{{ 'label.logout'|trans({}, 'label') }}</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- /top navigation -->
+                    {% endblock top_navigation %}
+                    {% block page_content %}
+                        <!-- page content -->
+                        <!-- /page content -->
+                    {% endblock page_content %}
+                    {% block footer %}
+                        <!-- footer content -->
+                        <footer>
+                            <div class="pull-right">
+                                Gestion de congأ© - آ©2016 <a href="http://www.bocasay.com">Bocasay_</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </footer>
+                        <!-- /footer content -->
+                    {% endblock footer %}
                 </div>
-            </div>
-            <!-- /top navigation -->
-        {% endblock top_navigation %}
-        {% block page_content %}
-            <!-- page content -->
-            <!-- /page content -->
-        {% endblock page_content %}
-        {% block footer %}
-            <!-- footer content -->
-            <footer>
-                <div class="pull-right">
-                    Gestion de congé - ©2016 <a href="http://www.bocasay.com">Bocasay_</a>
-                </div>
-                <div class="clearfix"></div>
-            </footer>
-            <!-- /footer content -->
-        {% endblock footer %}
-    </div>
-    {% endblock main_content %}
-</div>
-{% endblock container %}
-{% block javascript %}
-<!-- jQuery -->
-<script src="{{ asset('plugins/jquery/dist/jquery.min.js') }}"></script>
-<!-- Bootstrap -->
-<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-<script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-<!-- FastClick -->
-<script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}"></script>
-<!-- bootstrap-progressbar -->
-<script src="{{ asset('plugins/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
-<!-- iCheck -->
-<script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
-<!-- DateJS -->
-<script src="{{ asset('plugins/DateJS/build/date.js') }}"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="{{ asset('plugins/moment/moment.js') }}"></script>
-<script src="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-<!-- Custom Theme Scripts -->
-<script src="{{ asset('plugins/gentelella/build/js/custom.min.js') }}"></script>
-{% endblock javascript %}
-</body>
+                {% block modal %}
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog modal-sm" style="width: 400px">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">أ—</button><br/>
+                                    <p><i class="fa fa-warning fa-lg bocasay_yellow"></i> {% block modal_body_content %}{% endblock modal_body_content %}<span></span> ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form>
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock modal %}
+            {% endblock main_content %}
+        </div>
+    {% endblock container %}
+    {% block javascript %}
+        <!-- jQuery -->
+        <script src="{{ asset('plugins/jquery/dist/jquery.js') }}"></script>
+        <!-- Bootstrap -->
+        <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+        <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <!-- FastClick -->
+        <script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="{{ asset('plugins/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+        <!-- iCheck -->
+        <script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+        <!-- DateJS -->
+        <script src="{{ asset('plugins/DateJS/build/date.js') }}"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="{{ asset('plugins/moment/moment.js') }}"></script>
+        <script src="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+        <!-- Custom Theme Scripts -->
+        <script src="{{ asset('plugins/gentelella/build/js/custom.js') }}"></script>
+        <script type="text/javascript">
+            $(document).on('click', ".btn-delete, .btn-edit", function(e){
+                var url = $(this).attr('data-url');
+                var text = $(this).attr('data-text');
+                $('#myModal .modal-footer form').attr('action', url);
+                $('#myModal .modal-body span').text(text);
+                $("#myModal").modal({backdrop: true});
+                return false;
+            });
+        </script>
+    {% endblock javascript %}
+    </body>
 {% endblock body %}
 </html>

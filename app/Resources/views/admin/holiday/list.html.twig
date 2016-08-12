@@ -1,0 +1,78 @@
+{% extends '::admin-base-layout.html.twig' %}
+{% block title_content %}
+    {{ parent() }} - {{ 'label.title.holiday'|transchoice(1,{}, 'label') }}
+{% endblock title_content %}
+{% block modal_body_content %}
+    {{ 'message.confirm.delete.holiday'|trans({}, 'messages') }}
+{% endblock modal_body_content %}
+{% block page_content %}
+    <div class="right_col" role="main">
+        <div class="">
+            <div class="page-title">
+                <div class="title_left">
+                    <h3>Jours fériés</h3>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>{{ 'label.title.holiday_list'|trans({}, 'label') }} <span class="badge bg-green" style="color: white">{{ list|length }}</span></h2>
+                            <div class="box-tools pull-right">
+                                <a href="{{ path('app_holiday_add') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <br />
+                            {% include '::flashbag_message.html.twig' %}
+                            <table class="datatable table table-striped table-bordered dt-responsive jambo_table" cellspacing="0" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>{{ 'label.title.holiday'|transchoice(1, {}, 'label') }}</th>
+                                    <th>{{ 'label.holiday.label'|trans({}, 'label') }}</th>
+                                    <th class="no-sort">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for holiday in list %}
+                                    <tr>
+                                        <td>{{holiday.date|date('d/m/Y')}}</td>
+                                        <td>{{holiday.label}}</td>
+                                        <td>
+                                            {% if holiday.id is not null %}
+                                                {{ addButton('fa fa-edit', path('app_holiday_edit', {id:holiday.id}), 'Edition','btn btn-edit btn-flat btn-dark btn-xs', '')|raw }}
+                                                {{ addButton('fa fa-times', '#', 'Supprimer','btn btn-delete btn-flat btn-danger btn-xs', 'data-url="'~path('app_holiday_delete', {id:holiday.id})~'" data-toggle="tooltip" data-placement="left" data-text=""')|raw }}
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock page_content %}
+{% block javascript %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.datatable').dataTable({
+                                          "language": {
+                                              "url": '//cdn.datatables.net/plug-ins/1.10.11/i18n/French.json'
+                                          },
+                                          "info": false,
+                                          "order": [],
+                                          "columnDefs": [
+                                              { "targets": "no-sort", "orderable": false }
+                                          ],
+                                          "scrollX" : false
+                                      });
+        });
+    </script>
+{% endblock javascript %}
+
