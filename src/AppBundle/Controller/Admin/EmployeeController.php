@@ -40,17 +40,18 @@ class EmployeeController extends Controller
     {
         $em       = $this->getDoctrine()->getManager();
         $employee = new \AppBundle\Entity\Employee();
-        $formData = $request->request->get('employee');
+        $formData = $request->request->get('employee'); 
         $username = $formData['username'];
         $email    = $formData['email'];
         $password = $formData['password'];
+        $role     = $formData['roles'];
         $employeeForm = $this->createForm(\AppBundle\Form\Type\EmployeeType::class, $employee);
         $formHandler = new \AppBundle\Form\Handler\BaseHandler($employeeForm, $request, $em);
         if ($formHandler->process()) {
             $ogcEmployeeManager = $this->get(\AppBundle\Manager\EmployeeManager::EMPLOYEE_MANAGER);
             $ogcEmployeeManager->save($employee);
             $ogcEmployeeManager->flushAndClear();
-            $ogcEmployeeManager->addUser($employee, $username, $email, $password); 
+            $ogcEmployeeManager->addUser($employee, $username, $email, $password, $role); 
 
             $message = $this->get('translator')->trans('message.success.add.employee', array(), 'messages');
             $this->addFlash('success', $message);
@@ -73,10 +74,9 @@ class EmployeeController extends Controller
      */
     public function editAction(Request $request, \AppBundle\Entity\Employee $employee)
     {
-        $em       = $this->getDoctrine()->getManager();
-        $user     = $employee->getUser();
+        $em           = $this->getDoctrine()->getManager();
         $employeeForm = $this->createForm(\AppBundle\Form\Type\EmployeeType::class, $employee);
-        $formHandler = new \AppBundle\Form\Handler\BaseHandler($employeeForm, $request, $em);
+        $formHandler  = new \AppBundle\Form\Handler\BaseHandler($employeeForm, $request, $em);
         if ($formHandler->process()) {
             $ogcEmployeeManager = $this->get(\AppBundle\Manager\EmployeeManager::EMPLOYEE_MANAGER);
             $ogcEmployeeManager->save($employee);
@@ -90,7 +90,7 @@ class EmployeeController extends Controller
         }
 
         return $this->render('admin/employee/edit.html.twig', array(
-            'form'   => $employeeForm->createView(),
+            'form'     => $employeeForm->createView(),
             'employee' => $employee
         ));
     }

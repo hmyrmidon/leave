@@ -58,12 +58,13 @@ class EmployeeManager extends BaseManager
         return $employee;
     }
 
-    public function addUser(\AppBundle\Entity\Employee $employee, $username, $email, $pass)
+    public function addUser(\AppBundle\Entity\Employee $employee, $username, $email, $pass, $role)
     {
         $param = new \stdClass();
             $param->username = $username;
             $param->email    = $email;
             $param->password = crypt($pass);
+            $param->roles     = ($role);
             $param->employee = $employee;
 
         $event = new \AppBundle\Event\VacationEmployeeEvent($param); 

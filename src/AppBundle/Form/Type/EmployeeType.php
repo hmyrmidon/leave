@@ -24,6 +24,15 @@ class EmployeeType extends AbstractType
             ->add('email', \Symfony\Component\Form\Extension\Core\Type\EmailType::class, array(
                 'mapped' => false
             ))
+            ->add('roles', \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class, array(
+                'choices'     => array(
+                    'Admin'       => 'ROLE_ADMIN',
+                    'Utilisateur' => 'ROLE_CLIENT',
+                    'Validateur'  => 'ROLE_VALIDATEUR',
+                ),
+                'placeholder' => 'Selectionnez',
+                'mapped'      => false
+            ))
             ->add('lastName')
             ->add('firstName')
             ->add('registrationNumber')
