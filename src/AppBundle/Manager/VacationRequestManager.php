@@ -95,9 +95,4 @@ class VacationRequestManager extends BaseManager
         return $this->entityManager->getRepository('AppBundle:VacationRequest')->listNotValidateBy($validator);
     }
 
-    public function performHistory()
-    {
-        
-    }
-
 }
