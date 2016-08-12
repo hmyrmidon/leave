@@ -35,15 +35,7 @@
                         <div class="clearfix"></div>
                     </div>
                     <div class="x_content">
-                        {% for label, flashes in app.session.flashbag.all %}
-                            <div class="callout callout-{{ label }} alert alert-{{ label }} alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert"
-                                        aria-hidden="true">&times;</button>
-                                {% for flash in flashes %}
-                                    <p>{{ flash|trans({}, 'messages') }}</p>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
+                        {% include '::flashbag_message.html.twig'%}
                         <table id="datatable-responsive"
                                class="table table-striped dt-responsive nowrap bulk_action jambo_table" cellspacing="0"
                                width="100%">
@@ -66,7 +58,7 @@
                                     <td>{{ item.returnDate|date('d/m/Y') }}</td>
                                     <td>{{ item.reason }}</td>
                                     <td>{{ item.startDate|dayCount(item.returnDate) }}</td>
-                                    <td>{{ item.status|status|raw }}</td>
+                                    <td><span class="hidden">{{ item.status }}</span>{{ item.status|status|raw }}</td>
                                     <td>{{ item.status|delete('data-url="'~path('app_vacation_delete', {id:item.id})~'" data-toggle="tooltip" data-placement="left" data-text=""')|raw }}</td>
                                 </tr>
                             {% endfor %}
