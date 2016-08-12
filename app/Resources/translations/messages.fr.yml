@@ -1,11 +1,14 @@
 message:
     success:
-        addUser: l'utilisateur à bien été ajouté.
-        updateUser: l'utilisateur à bien été modifié.
-        deleteUser: l'utilisateur à bien été supprimé.
-        addTeam: l'équipe a bien été ajouté.
-        updateTeam: l'équipe a bien été modifié.
-        deleteTeam: l'équipe a bien été supprimé.
-        addEmployee: l'employé a bien été ajouté.
-        updateEmployee: l'employé a bien été modifié.
-        deleteEmployee: l'employé a bien été supprimé.
+        add:
+            user: l'utilisateur à bien été ajouté.
+            team: l'équipe a bien été ajouté.
+            employee: l'employé a bien été ajouté.
+        update:
+            user: l'utilisateur à bien été modifié.
+            team: l'équipe a bien été modifié.
+            employee: l'employé a bien été modifié.
+        delete:
+            user: l'utilisateur à bien été supprimé.
+            team: l'équipe a bien été supprimé.
+            employee: l'employé a bien été supprimé.
