@@ -65,6 +65,6 @@ class UserManager extends BaseManager
             'pass'            => $pass,
             'firstConnection' => $url
         );
-        $this->mailerManager->sendMessage($from, $to, $subject, $template, $body); dump('test');die;
+        $this->mailerManager->sendMessage($from, $to, $subject, $template, $body);
     }
 }
