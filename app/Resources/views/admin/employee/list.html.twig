@@ -22,9 +22,9 @@
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <div class="flashbag">{% include ':flashMessages:flashbag_message.html.twig' %}</div>
+                            <div class="flashbag">{% include '::flashbag_message.html.twig' %}</div>
                             <br />
-                                <table id="team-list" class="table table-striped dt-responsive jambo_table" cellspacing="0" width="100%">
+                                <table id="employee-list" class="table table-striped dt-responsive jambo_table" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>Nom</th>
@@ -85,7 +85,7 @@
     {{ parent() }}
     <script>
         $(document).ready(function() {
-            $('#user-list').dataTable({
+            $('#employee-list').dataTable({
             "language": {
                         "url": '//cdn.datatables.net/plug-ins/1.10.11/i18n/French.json'
                     },

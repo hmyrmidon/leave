@@ -47,6 +47,9 @@ class UserController extends BaseController
             $ogcUserManager->save($user);
             $ogcUserManager->flushAndClear();
 
+            $pass     = $user->getPlainPassword();
+            $ogcUserManager->sendEmailOnCreateUser($user,$pass);
+
             $flashMessage = $this->get('translator')->trans('message.success.addUser', array(), 'messages');
             $this->addFlash('success', $flashMessage);
 

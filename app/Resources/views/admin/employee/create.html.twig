@@ -2,7 +2,7 @@
 {% block title_content %}
     {{ parent() }} - Utilisateur
 {% endblock title_content %}
-{% import ':flashMessages:fields-error.html.twig' as display_errors %}
+{% import '::fields-error.html.twig' as display_errors %}
 {% block page_content %}
     <div class="right_col" role="main">
         <div class="">
@@ -21,7 +21,7 @@
                         </div>
                         <div class="x_content">
                             {{ display_errors.all_form_errors(form) }}
-                            <div class="flashbag">{% include ':flashMessages:flashbag_message.html.twig' %}</div>
+                            <div class="flashbag">{% include '::flashbag_message.html.twig' %}</div>
                             <br />
                             <form method="post" action="{{ path('app_employee_create') }}" class="form-horizontal form-label-left" novalidate="novalidate">
                                 <div class="form-group {% if form.username.vars.errors|length %}has-error{% endif %}">

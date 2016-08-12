@@ -50,7 +50,7 @@ class EmployeeController extends Controller
             $ogcEmployeeManager = $this->get(\AppBundle\Manager\EmployeeManager::EMPLOYEE_MANAGER);
             $ogcEmployeeManager->save($employee);
             $ogcEmployeeManager->flushAndClear();
-            $ogcEmployeeManager->addUSer($employee, $username, $email, $password);
+            $ogcEmployeeManager->addUser($employee, $username, $email, $password); 
 
             $message = $this->get('translator')->trans('message.success.addEmployee', array(), 'messages');
             $this->addFlash('success', $message);
@@ -75,23 +75,13 @@ class EmployeeController extends Controller
     {
         $em       = $this->getDoctrine()->getManager();
         $user     = $employee->getUser();
-        $username = $user->getUsername();
-        $email    = $user->getEmail();
-        $password = $user->getPassword();
         $employeeForm = $this->createForm(\AppBundle\Form\Type\EmployeeType::class, $employee);
         $formHandler = new \AppBundle\Form\Handler\BaseHandler($employeeForm, $request, $em);
         if ($formHandler->process()) {
             $ogcEmployeeManager = $this->get(\AppBundle\Manager\EmployeeManager::EMPLOYEE_MANAGER);
             $ogcEmployeeManager->save($employee);
             $ogcEmployeeManager->flushAndClear();
-
-            $param = new \stdClass();
-                    $param->username = $username;
-                    $param->email    = $email;
-                    $param->password = crypt($password);
-                    $param->employee = $employee;
-            $event = new \AppBundle\Event\VacationEmployeeEvent($param);
-            $this->get('event_dispatcher')->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME_PROCESS_USER, $event, $user);
+            $ogcEmployeeManager->editUser($employee);
 
             $message = $this->get('translator')->trans('message.success.updateEmployee', array(), 'messages');
             $this->addFlash('success', $message);
@@ -115,7 +105,7 @@ class EmployeeController extends Controller
     public function deleteAction(\AppBundle\Entity\Employee $employee)
     {
         $ogcEmployeeManager = $this->get(\AppBundle\Manager\EmployeeManager::EMPLOYEE_MANAGER);
-            $ogcEmployeeManager->delete($employee);
+        $ogcEmployeeManager->delete($employee);
 
         $flashMessage = $this->get('translator')->trans('message.success.deleteEmployee', array(), 'messages');
         $this->addFlash('success', $flashMessage);
