@@ -18,7 +18,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Liste des jour fériés</h2>
+                            <h2>{{ 'label.title.holiday_list'|trans({}, 'label') }} <span class="badge bg-green" style="color: white">{{ list|length }}</span></h2>
                             <div class="box-tools pull-right">
                                 <a href="{{ path('app_holiday_add') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></a>
                             </div>
@@ -31,7 +31,7 @@
                                 <thead>
                                 <tr>
                                     <th>{{ 'label.title.holiday'|transchoice(1, {}, 'label') }}</th>
-                                    <th>{{ 'libellé'|trans({}, 'label') }}</th>
+                                    <th>{{ 'label.holiday.label'|trans({}, 'label') }}</th>
                                     <th class="no-sort">Action</th>
                                 </tr>
                                 </thead>
