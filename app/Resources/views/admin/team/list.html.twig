@@ -20,13 +20,13 @@
                         <div class="x_title">
                             <h2>Liste des équipes</h2>
                                 <div class="box-tools pull-right">
-                                    <a href="{{ path('app_team_create') }}" class="btn btn-success btn-xs"><i class="fa fa-plus"></i></a>
+                                    {{ addButton('fa fa-plus fa-lg', path('app_team_create'), '', 'btn btn-success btn-flat btn-xs')|raw }}
                                 </div>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
                             <br />
-                                <table id="team-list" class="table table-striped table-bordered dt-responsive" cellspacing="0" width="100%">
+                                <table id="team-list" class="table table-striped dt-responsive jambo_table" cellspacing="0" width="100%">
                                     <thead>
                                         <tr>
                                             <th>Nom de l'équipe</th>
@@ -38,8 +38,10 @@
                                             <tr>
                                                 <td>{{team.name}}</td>
                                                 <td>
-                                                    <a href="{{ path('app_team_edit', {'id': team.id}) }}" class="btn btn-dark btn-xs"><i class="fa fa-edit"></i></a>
-                                                    <a href="#" data-url="{{ path('app_team_delete', {'id': team.id}) }}"  data-text="" data-toggle="tooltip" data-placement="left" class="btn-delete btn btn-danger btn-xs"><i class="fa fa-times"></i></a>
+                                                    {{ addButton('fa fa-edit fa-lg', path('app_team_edit', {'id': team.id}), '', 'btn btn-dark btn-flat btn-xs')|raw }}
+                                                    {{ addButton('fa fa-times fa-lg','#', '', 
+                                                                 'btn-delete btn btn-danger btn-flat btn-xs', 
+                                                                 'data-url="'~path('app_team_delete', {'id': team.id})~'" data-text="" data-toggle="tooltip" data-placement="left"')|raw }}
                                                 </td>
                                             </tr>
                                         {% endfor %}
