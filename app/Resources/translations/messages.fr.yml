@@ -3,6 +3,8 @@ message:
         required_field: Ce champs est requis
         form: Le formulaire contient des erreurs
         date_not_empty: Date invalide
+        vacation:
+            already_validated_by: Vous avez déjà validé cette demande a été validé
     confirm:
         delete:
             element: Voulez-vous vraiment supprimer cet élément

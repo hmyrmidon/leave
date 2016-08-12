@@ -16,15 +16,26 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
 {
     public function listNotValidateBy(User $validator)
     {
-        $query = "SELECT v, vd, u FROM AppBundle:VacationRequest v 
-                          JOIN v.validation vd 
-                          JOIN vd.manager u 
-                          WHERE u.id = :uid AND v.status = :status";
+//        $query = "SELECT * FROM vacation_request v
+//                            INNER JOIN employee e ON e.id = v.employee_id
+//                            INNER JOIN team t ON t.id = e.team_id
+//                            INNER JOIN team_manager tm on t.id = tm.team_id
+//                            INNER JOIN `user` u ON tm.validator_id = u.id
+//                            WHERE u.id = :uid AND v.status = :status AND v.id NOT IN (
+//                              SELECT vs.vacation_id FROM vacation_validation vs WHERE vs.manager_id = :uid
+//                            )";
+
+        $query = "SELECT v, e, t, u FROM AppBundle:VacationRequest v 
+                          JOIN v.employee e 
+                          JOIN e.team t
+                          JOIN t.validator u
+                          WHERE u.validator = :uid AND v.status = :status AND v.id NOT IN (
+                            SELECT vc.id FROM AppBundle:VacationValidation vs JOIN vs.vacation vc WHERE vs.manager = :uid
+                          ) ";
 
         $list = $this->_em->createQuery($query)
                   ->setParameters(['uid' => $validator->getId(), 'status' => VacationRequest::PENDING_STATUS])
                   ->getResult();
-
         return $list;
     }
 
