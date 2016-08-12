@@ -35,5 +35,6 @@ label:
     app.name: Gestion de congé
     logout: Déconnecter
     new: "{0}Nouveau|{1}Nouvelle"
+    edit: Modifier
     cancel: Annuler
     save: Enregistrer

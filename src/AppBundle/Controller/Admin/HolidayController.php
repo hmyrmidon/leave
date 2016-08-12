@@ -64,9 +64,42 @@ class HolidayController extends Controller
     {
         $date = $holiday->getDate()->format('d/m/Y');
         if ($this->get('app.holiday_manager')->delete($holiday)) {
-            $this->get('session')->getFlashBag()->set('success', $this->get('translator')
-                                                                      ->trans('message.success.delete.holiday', ['%date%' => $date], 'messages'));
+            $this->get('session')
+                 ->getFlashBag()
+                 ->set(
+                     'success',
+                     $this->get('translator')->trans('message.success.delete.holiday',
+                     ['%date%' => $date],
+                     'messages')
+                 );
         }
         return $this->redirectToRoute('app_holiday');
+    }
+
+    /**
+     * @Route("/edit/{id}", name="app_holiday_edit", requirements={"id":"\d+"})
+     * @param $holiday
+     *
+     */
+    public function editAction(Request $request, Holiday $holiday)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $form          = $this->createForm(HolidayType::class, $holiday);
+        $handler       = new BaseHandler($form, $request, $entityManager);
+        if ($handler->process()) {
+            $holiday = $this->get(HolidayManager::SERVICE_NAME)->saveHoliday($holiday);
+            $this->get('session')->getFlashBag()
+                 ->set('success',
+                     $this
+                         ->get('translator')
+                         ->trans(
+                             'message.success.edit.holiday',
+                             [],
+                             'messages')
+                 );
+
+            return $this->redirectToRoute('app_holiday');
+        }
+        return $this->render('admin/holiday/edit.html.twig', ['form' => $form->createView(), 'holiday'=>$holiday]);
     }
 }

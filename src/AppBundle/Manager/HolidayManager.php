@@ -170,7 +170,7 @@ class HolidayManager extends BaseManager
         foreach ($holidayList as $lst) {
             switch ($lst->getFrequency()){
                 case Holiday::F_EARLY:
-                    $cdate = $lst->getDate()->format('Y-m-d');
+                    $cdate = $lst->getDate();
                     $date = $cdate->setDate(intval($currentYear),intval($cdate->format('m')),intval($cdate->format('d')));
                     break;
                 default:

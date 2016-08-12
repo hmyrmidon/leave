@@ -37,6 +37,7 @@ services:
             - services:
                 holiday: "@app.holiday_manager"
                 vacation: "@app.vacation_request_manager"
+                dispatcher: "@event_dispatcher"
         tags:
             - { name: twig.extension }
     #Application custom validators

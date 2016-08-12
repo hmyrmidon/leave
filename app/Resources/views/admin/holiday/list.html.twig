@@ -42,6 +42,7 @@
                                         <td>{{holiday.label}}</td>
                                         <td>
                                             {% if holiday.id is not null %}
+                                                {{ addButton('fa fa-edit', path('app_holiday_edit', {id:holiday.id}), 'Edition','btn btn-edit btn-flat btn-dark btn-xs', '')|raw }}
                                                 {{ addButton('fa fa-times', '#', 'Supprimer','btn btn-delete btn-flat btn-danger btn-xs', 'data-url="'~path('app_holiday_delete', {id:holiday.id})~'" data-toggle="tooltip" data-placement="left" data-text=""')|raw }}
                                             {% endif %}
                                         </td>

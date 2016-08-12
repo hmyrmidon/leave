@@ -25,6 +25,8 @@
         <link href="{{ asset('plugins/gentelella/build/css/custom.css') }}" rel="stylesheet">
         <!-- Datatable bootstrap -->
         <link rel="stylesheet" href="{{ asset('plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet">
+        {# Custom css color#}
+        <link rel="stylesheet" href="{{ asset('admin/css/colors.css') }}" rel="stylesheet">
     {% endblock stylesheet %}
 </head>
 {% block body %}
@@ -143,7 +145,7 @@
                 <div class="modal-content">
                     <div class="modal-body">
                         <button type="button" class="close" data-dismiss="modal">×</button><br/>
-                        <p>{% block modal_body_content %}{% endblock modal_body_content %}<span></span> ?</p>
+                        <p><i class="fa fa-warning fa-lg bocasay_yellow"></i> {% block modal_body_content %}{% endblock modal_body_content %}<span></span> ?</p>
                     </div>
                     <div class="modal-footer">
                         <form>
@@ -180,7 +182,7 @@
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('plugins/gentelella/build/js/custom.js') }}"></script>
     <script type="text/javascript">
-        $(document).on('click', ".btn-delete", function(e){
+        $(document).on('click', ".btn-delete, .btn-edit", function(e){
             var url = $(this).attr('data-url');
             var text = $(this).attr('data-text');
             $('#myModal .modal-footer form').attr('action', url);

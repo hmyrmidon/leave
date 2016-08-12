@@ -5,12 +5,15 @@ message:
         date_not_empty: Date invalide
     confirm:
         delete:
-            element: Voulez vous vraiment supprimer cet élément
-            team: Voulez vous vraiment supprimer cet équipe
-            holiday: Voulez vous que cette date ne figure plus dans la liste des jours fériés
+            element: Voulez-vous vraiment supprimer cet élément
+            team: Voulez-vous vraiment supprimer cet équipe
+            holiday: Voulez-vous que cette date ne figure plus dans la liste des jours fériés
+        cancel: Voulez-vous vraiment annuler les modifications
     success:
         delete:
             vacation: La demande a été supprimer
             holiday: La date du "%date%" a été supprimé de la liste des jours férié
         create:
             holiday: "{1}La date %date% a été enregistré comme jour férié|[2,Inf[Les dates %date% ont été enregistré comme jour férié"
+        edit:
+            holiday: Vos modifications ont été pris en charge

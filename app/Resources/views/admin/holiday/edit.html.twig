@@ -4,7 +4,9 @@
 {% block title_content %}
     {{ parent() }} - {{ 'label.title.holiday'|transchoice(1, {}, 'label') }}
 {% endblock title_content %}
-
+{% block modal_body_content %}
+    {{ 'message.confirm.cancel'|trans({}, 'messages') }}
+{% endblock modal_body_content %}
 {% block page_content %}
     <div class="right_col" role="main">
         <div class="">
@@ -18,13 +20,13 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>{{ 'label.new'|transchoice(0,{}, 'label') }} {{ 'label.title.holiday'|transchoice(0, {}, 'label')|lower }}</h2>
+                            <h2>{{ 'label.edit'|transchoice(0,{}, 'label') }} {{ 'label.title.holiday'|transchoice(0, {}, 'label')|lower }}</h2>
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
                             <br />
                             {{ display_errors.all_form_errors(form) }}
-                            <form method="post" action="{{ path('app_holiday_add') }}" class="form-horizontal form-label-left" novalidate="novalidate">
+                            <form method="post" action="{{ path('app_holiday_edit', {id:holiday.id}) }}" class="form-horizontal form-label-left" novalidate="novalidate">
                                 <div class="form-group {% if form_errors(form.date) %}has-error{% endif %}">
                                     {{ form_label(form.date, "label.holiday.date"|trans({}, 'label'),
                                     { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
@@ -42,6 +44,7 @@
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-9">
+                                        <a href="#" class="btn btn-primary btn-edit" data-url="{{ path('app_holiday') }}" data-toggle="tooltip" data-placement="left" data-text="">{{ 'label.cancel'|trans({}, 'label') }}</a>
                                         <button type="submit" class="btn btn-success">{{ 'label.save'|trans({}, 'label') }}</button>
                                     </div>
                                 </div>
