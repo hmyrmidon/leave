@@ -48,7 +48,7 @@ class TeamController extends Controller
             $ogcTeamManager->save($team);
             $ogcTeamManager->flushAndClear();
 
-            $message = $this->get('translator')->trans('message.success.addTeam', array(), 'messages');
+            $message = $this->get('translator')->trans('message.success.add.team', array(), 'messages');
             $this->addFlash('success', $message);
 
             return $this->redirectToRoute('app_team');
@@ -75,7 +75,7 @@ class TeamController extends Controller
             $ogcTeamManager = $this->get(\AppBundle\Manager\TeamManager::TEAM_MANAGER);
             $ogcTeamManager->editTeam($team);
 
-            $message = $this->get('translator')->trans('message.success.updateTeam', array(), 'messages');
+            $message = $this->get('translator')->trans('message.success.update.team', array(), 'messages');
             $this->addFlash('success', $message);
 
             return $this->redirectToRoute('app_team');
@@ -99,7 +99,7 @@ class TeamController extends Controller
         $ogcTeamManager = $this->get(\AppBundle\Manager\TeamManager::TEAM_MANAGER);
         $ogcTeamManager->delete($team);
 
-        $flashMessage = $this->get('translator')->trans('message.success.deleteTeam', array(), 'messages');
+        $flashMessage = $this->get('translator')->trans('message.success.delete.team', array(), 'messages');
         $this->addFlash('success', $flashMessage);
 
         return $this->redirect($this->generateUrl('app_team'));

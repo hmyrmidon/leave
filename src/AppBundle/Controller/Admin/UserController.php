@@ -50,7 +50,7 @@ class UserController extends BaseController
             $pass     = $user->getPlainPassword();
             $ogcUserManager->sendEmailOnCreateUser($user,$pass);
 
-            $flashMessage = $this->get('translator')->trans('message.success.addUser', array(), 'messages');
+            $flashMessage = $this->get('translator')->trans('message.success.add.user', array(), 'messages');
             $this->addFlash('success', $flashMessage);
 
             return $this->redirectToRoute('app_user');
@@ -77,7 +77,7 @@ class UserController extends BaseController
             $ogcUserManager->save($user);
             $ogcUserManager->flushAndClear();
 
-            $flashMessage = $this->get('translator')->trans('message.success.updateUser', array(), 'messages');
+            $flashMessage = $this->get('translator')->trans('message.success.update.user', array(), 'messages');
             $this->addFlash('success', $flashMessage);
 
             return $this->redirectToRoute('app_user');
@@ -101,7 +101,7 @@ class UserController extends BaseController
         $ogcUserManager = $this->get(\AppBundle\Manager\UserManager::USER_MANAGER);
         $ogcUserManager->delete($user);
 
-        $flashMessage = $this->get('translator')->trans('message.success.deleteUser', array(), 'messages');
+        $flashMessage = $this->get('translator')->trans('message.success.delete.user', array(), 'messages');
         $this->addFlash('success', $flashMessage);
 
         return $this->redirect($this->generateUrl('app_user'));

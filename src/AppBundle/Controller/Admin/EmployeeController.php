@@ -52,7 +52,7 @@ class EmployeeController extends Controller
             $ogcEmployeeManager->flushAndClear();
             $ogcEmployeeManager->addUser($employee, $username, $email, $password); 
 
-            $message = $this->get('translator')->trans('message.success.addEmployee', array(), 'messages');
+            $message = $this->get('translator')->trans('message.success.add.employee', array(), 'messages');
             $this->addFlash('success', $message);
 
             return $this->redirectToRoute('app_employee');
@@ -83,7 +83,7 @@ class EmployeeController extends Controller
             $ogcEmployeeManager->flushAndClear();
             $ogcEmployeeManager->editUser($employee);
 
-            $message = $this->get('translator')->trans('message.success.updateEmployee', array(), 'messages');
+            $message = $this->get('translator')->trans('message.success.update.employee', array(), 'messages');
             $this->addFlash('success', $message);
 
             return $this->redirectToRoute('app_employee');
@@ -107,7 +107,7 @@ class EmployeeController extends Controller
         $ogcEmployeeManager = $this->get(\AppBundle\Manager\EmployeeManager::EMPLOYEE_MANAGER);
         $ogcEmployeeManager->delete($employee);
 
-        $flashMessage = $this->get('translator')->trans('message.success.deleteEmployee', array(), 'messages');
+        $flashMessage = $this->get('translator')->trans('message.success.delete.employee', array(), 'messages');
         $this->addFlash('success', $flashMessage);
 
         return $this->redirect($this->generateUrl('app_employee'));
