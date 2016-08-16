@@ -25,91 +25,91 @@
                             <br />
                             <form method="post" action="{{ path('app_employee_create') }}" class="form-horizontal form-label-left" novalidate="novalidate">
                                 <div class="form-group {% if form.username.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.username, "Nom d'utilisateur"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.username, "label.employee.username"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'nom d\'utilisateur', 'maxlength': 10} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.lastName.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.lastName, "Nom"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.lastName, "label.employee.lastname"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.lastName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {{ form_widget(form.lastName, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'nom', 'maxlength': 50} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.firstName.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.firstName, "Prénoms"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.firstName, "label.employee.firstname"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.firstName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {{ form_widget(form.firstName, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'prénoms', 'maxlength': 50} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.birthDate.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.birthDate, "Date de naissance"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.birthDate, "label.employee.birthdate"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.birthDate, { 'attr': {'class': 'form-control col-md-7 col-xs-12 datepicker'} }) }}
+                                        {{ form_widget(form.birthDate, { 'attr': {'class': 'form-control col-md-7 col-xs-12 datepicker', 'placeholder': 'Date de naissance', 'maxlength': 50} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.email.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.email, "Adresse e-mail"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.email, "label.employee.email"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'adresse e-mail', 'maxlength': 30} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.password.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.password, "Mot de passe"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.password, "label.employee.password"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.password, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {{ form_widget(form.password, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'mot de passe', 'maxlength': 20} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.registrationNumber.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.registrationNumber, "Matricule"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.registrationNumber, "label.employee.registration.number"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.registrationNumber, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {{ form_widget(form.registrationNumber, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'matricule', 'maxlength': 5} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.hiringDate.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.hiringDate, "Date de début du contrat"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.hiringDate, "label.employee.hiring.date"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.hiringDate, { 'attr': {'class': 'form-control col-md-7 col-xs-12 datepicker'} }) }}
+                                        {{ form_widget(form.hiringDate, { 'attr': {'class': 'form-control col-md-7 col-xs-12 datepicker', 'placeholder': 'date d\'embauche', 'maxlength': 10} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.maritalStatus.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.maritalStatus, "Situation matrimonial"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.maritalStatus, "label.employee.marital.status"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.maritalStatus, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.nbChildren.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.nbChildren, "Nombre d'enfant"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.nbChildren, "label.employee.number.child"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.nbChildren, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {{ form_widget(form.nbChildren, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'nombre d\'enfant', 'maxlength': 4} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.address.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.address, "Adresse"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.address, "label.employee.address"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.address, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {{ form_widget(form.address, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'adresse', 'maxlength': 50} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.team.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.team, "Equipe"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.team, "label.employee.team"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.team, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.roles.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.roles, "Rôle"|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.roles, "label.employee.role"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.roles, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}

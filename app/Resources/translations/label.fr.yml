@@ -7,8 +7,23 @@ label:
         status: Statut
         sended_date: Date de la demande
     employee:
+        username: Nom d'utilisateur
         lastname: Nom
         firstname: Prénoms
+        birthdate: Date de naissance
+        email: Addresse e-mail
+        password: Mot de passe
+        registration:
+            number: Matricule
+        hiring:
+            date: Date de début du contrat
+        marital:
+            status: Situation matrimonial
+        number:
+            child: Nombre d'enfant
+        address: Adresse
+        team: Equipe
+        role: Rôle
     team:
         name: Equipe
     title:

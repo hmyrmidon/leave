@@ -2,8 +2,8 @@
 
 namespace AppBundle\Form\Handler;
 
-
 use AppBundle\Entity\User;
+use AppBundle\Form\Handler\BaseHandler;
 
 class VacationHandler extends BaseHandler
 {

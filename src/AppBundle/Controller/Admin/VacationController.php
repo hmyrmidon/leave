@@ -53,7 +53,7 @@ class VacationController extends Controller
 
     /**
      * @Route("/valider/{id}", name="app_vacation_validate")
-     * @param VacationRequest $id
+     * 
      */
     public function validateAction(VacationRequest $vacation)
     {
@@ -77,8 +77,8 @@ class VacationController extends Controller
         $form = $this->createForm(VacationType::class, $vacation);
         $handler = new VacationHandler($form, $request, $entityManager);
         if($handler->process($user)){
-            $srv = $this->get(VacationRequestManager::SERVICE_NAME);
-            $srv->saveVacation($vacation, $user->getEmployee());
+            $ogcVacationRequestManager = $this->get(VacationRequestManager::SERVICE_NAME);
+            $ogcVacationRequestManager->saveVacation($vacation, $user->getEmployee());
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('message.success.add_vacation', [], 'messages'));
 
             return $this->redirectToRoute('app_vacation_history');

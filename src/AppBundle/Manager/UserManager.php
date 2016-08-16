@@ -53,7 +53,6 @@ class UserManager extends BaseManager
 
     public function sendEmailOnCreateUser(\AppBundle\Entity\User $user, $pass)
     {
-       
         $url      = $this->route->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         $from     = self::FROM;
         $to       = $user->getEmail();

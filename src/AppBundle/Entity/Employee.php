@@ -20,6 +20,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Employee
 {
+    const MS_DIVORCED = 0;
+    const MS_CELIBATARY = 1;
+    const MS_MARRIED = 2;
+
     use BaseTrait;
 
     /**
