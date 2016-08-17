@@ -75,8 +75,8 @@ class VacationController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $vacation = new VacationRequest();
         $form = $this->createForm(VacationType::class, $vacation);
-        $handler = new VacationHandler($form, $request, $entityManager);
-        if($handler->process($user)){
+        $handler = new VacationHandler($form, $request, $entityManager, $user);
+        if($handler->process()){
             $srv = $this->get(VacationRequestManager::SERVICE_NAME);
             $srv->saveVacation($vacation, $user->getEmployee());
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('message.success.add_vacation', [], 'messages'));
