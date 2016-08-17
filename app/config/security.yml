@@ -47,3 +47,7 @@ security:
     access_control:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/dashboard, role: [ROLE_ADMIN, ROLE_CLIENT, ROLE_VALIDATEUR] }
+        - { path: ^/user, role: [ROLE_ADMIN] }
+        - { path: ^/employee, role: [ROLE_ADMIN] }
+        - { path: ^/team, role: [ROLE_ADMIN] }
+        - { path: ^/jours-feries, role: [ROLE_ADMIN] }

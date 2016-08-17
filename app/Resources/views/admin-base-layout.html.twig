@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     {% block title %}<title>{% block title_content %}{{ 'label.app.name'|trans({}, 'label') }}{% endblock title_content %}</title>{% endblock title %}
+    <link href="{{ asset('admin/img/ico.JPG') }}" type="image/jpg" rel="shortcut icon">
     {% block stylesheet %}
         <!-- Bootstrap -->
         <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">

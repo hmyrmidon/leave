@@ -4,6 +4,16 @@ parameters:
 #    parameter_name: value
 
 services:
+    app.mailer_manager:
+        class: 'AppBundle\Manager\MailerManager'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+            - "@mailer"
+            - "@templating"
+            - "@translator.default"
+        scope: request
+
     app.employee_manager:
         class: 'AppBundle\Manager\EmployeeManager'
         arguments:
@@ -36,6 +46,7 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@router"
             - "@translator.default"
+
     app.twig_extension:
         class: 'AppBundle\Twig\ProjectExtension'
         arguments:
@@ -46,19 +57,12 @@ services:
                 dispatcher: "@event_dispatcher"
         tags:
             - { name: twig.extension }
+
     #Application custom validators
     app.validator.date_range:
         class: 'AppBundle\Validator\Constraints\ConstraintsVacationDateValidator'
         tags:
             - { name: "validator.constraint_validator" }
-
-    app.mailer_manager:
-        class: 'AppBundle\Manager\MailerManager'
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@router"
-            - "@templating"
-            - "@mailer"
 
     #Application's Event Listeners
     app.vacation_listener:

@@ -55,7 +55,6 @@ class BaseHandler
           return false;
     }
 
-    
     /**
      * @return Entity
      */

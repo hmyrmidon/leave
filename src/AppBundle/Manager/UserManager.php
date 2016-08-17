@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use AppBundle\Manager\MailerManager;
 
-
 class UserManager extends BaseManager
 {
     const USER_MANAGER = 'app.user_manager';
@@ -53,7 +52,6 @@ class UserManager extends BaseManager
 
     public function sendEmailOnCreateUser(\AppBundle\Entity\User $user, $pass)
     {
-        $url      = $this->route->generate('fos_user_registration_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         $from     = self::FROM;
         $to       = $user->getEmail();
         $subject  = 'email de première connection';
@@ -61,8 +59,7 @@ class UserManager extends BaseManager
         $body     = array(
             'name'            => $user->getUsername(),
             'email'           => $to,
-            'pass'            => $pass,
-            'firstConnection' => $url
+            'pass'            => $pass
         );
         $this->mailerManager->sendMessage($from, $to, $subject, $template, $body);
     }

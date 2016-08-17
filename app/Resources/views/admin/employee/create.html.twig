@@ -91,7 +91,7 @@
                                     {{ form_label(form.nbChildren, "label.employee.number.child"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.nbChildren, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'nombre d\'enfant', 'maxlength': 4} }) }}
+                                        {{ form_widget(form.nbChildren, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': "nombre d'enfant", 'maxlength': 4} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.address.vars.errors|length %}has-error{% endif %}">
