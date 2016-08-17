@@ -24,6 +24,15 @@ class EmployeeType extends AbstractType
             ->add('email', \Symfony\Component\Form\Extension\Core\Type\EmailType::class, array(
                 'mapped' => false
             ))
+            ->add('roles', \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class, array(
+                'choices'     => array(
+                    'Admin'       => 'ROLE_ADMIN',
+                    'Utilisateur' => 'ROLE_CLIENT',
+                    'Validateur'  => 'ROLE_VALIDATEUR',
+                ),
+                'placeholder' => 'Selectionnez le rôle de l\'employé',
+                'mapped'      => false
+            ))
             ->add('lastName')
             ->add('firstName')
             ->add('registrationNumber')
@@ -31,12 +40,20 @@ class EmployeeType extends AbstractType
                 'widget'         => 'single_text',
                 'format'         => 'dd/MM/yyyy',
             ))
-            ->add('maritalStatus')
+            ->add('maritalStatus', \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class, array(
+                'choices'         => array(
+                    'Divorcé'     => 0,
+                    'Célibataire' => 1,
+                    'Marrié'      => 2
+                ),
+                'placeholder' => 'Selectionnez la situation matriminial de l\'employé',
+            ))
             ->add('address')
             ->add('nbChildren')
             ->add('birthDate', \Symfony\Component\Form\Extension\Core\Type\DateType::class, array(
                 'widget'         => 'single_text',
                 'format'         => 'dd/MM/yyyy',
+                'placeholder'    => 'Selectionnez',
             ))
             ->add('team', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array(
                 'class'         => 'AppBundle:Team',

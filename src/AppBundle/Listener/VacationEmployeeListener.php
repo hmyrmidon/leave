@@ -26,11 +26,20 @@ class VacationEmployeeListener
         $username  = $eventOpt->username;
         $email     = $eventOpt->email;
         $password  = $eventOpt->password;
+        $role      = $eventOpt->roles; 
 
         $user = new \AppBundle\Entity\User(); 
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($password);
+        if ($role === "ROLE_ADMIN") {
+            $user->setRoles(['ROLE_ADMIN']);
+        } elseif ($role === "ROLE_CLIENT") {
+            $user->setRoles(['ROLE_CLIENT']);
+        } else {
+            $user->setRoles(['ROLE_VALIDATEUR']);
+        }
+
         $user->setLastName($lastName);
         $user->setFirstName($firstName);
         $user->setEnabled(1);

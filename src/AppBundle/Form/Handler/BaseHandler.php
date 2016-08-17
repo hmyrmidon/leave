@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form\Handler;
 
-use AppBundle\Entity\User;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\ORM\EntityManager;
@@ -53,7 +52,6 @@ class BaseHandler
 
             return true;
         }
-        
           return false;
     }
 

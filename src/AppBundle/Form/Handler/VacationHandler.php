@@ -2,7 +2,6 @@
 
 namespace AppBundle\Form\Handler;
 
-
 use AppBundle\Entity\User;
 use AppBundle\Form\Handler\BaseHandler;
 use Doctrine\ORM\EntityManager;

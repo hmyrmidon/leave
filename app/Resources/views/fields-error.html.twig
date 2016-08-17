@@ -2,7 +2,7 @@
     {% import _self as forms %}
     {% if form_errors(form) is not empty %}
         {% for error in form.vars.errors %}
-        <li>{{ error.message|lower|trim|trans({}, 'commun') }}</li>
+        <li>{{ error.message|lower|trim|trans({}, 'message') }}</li>
         {% endfor %}
     {% endif %}
     {% for children in form.children %}
@@ -16,10 +16,10 @@
     {% if not form.vars.valid or app.session.flashbag.get('error')|length > 0 %}
         <div class="callout callout-danger alert alert-danger col-lg-12 text-left alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <p>{{ 'message.form.error'|trans({}, 'commun') }}</p>
+            <p>{{ 'message.error.form'|trans({}, 'messages') }}</p>
             <ul>
                 {% for flashMessage in app.session.flashbag.get('error') %}
-                    <li>{{ flashMessage|lower|trim|trans({}, 'commun') }}</li>
+                    <li>{{ flashMessage|lower|trim|trans({}, 'messages') }}</li>
                 {% endfor %}
                 {{ forms.my_form_errors(form) }}
                 
