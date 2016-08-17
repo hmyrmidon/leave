@@ -4,8 +4,9 @@ namespace AppBundle\Manager;
 
 use Symfony\Component\Templating\EngineInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
-class MailerManager 
+class MailerManager extends BaseManager
 {
     /**
      *
@@ -20,17 +21,24 @@ class MailerManager
     protected $templating;
 
     /**
+     *
+     * @var Translator $translator
+     */
+    protected $translator;
+
+    /**
      * 
      * @param \AppBundle\Manager\EntityManagerInterface $entityManager
      * @param type $mailer
      * @param \AppBundle\Manager\EngineInterface $templating
      * 
      */
-    public function __construct(EntityManagerInterface $entityManager, $mailer, EngineInterface $templating)
+    public function __construct(EntityManagerInterface $entityManager, $router, $mailer, EngineInterface $templating, Translator $translator)
     {
-        $this->entityManager = $entityManager;
+        parent::__construct($entityManager, $router);
         $this->mailer        = $mailer;
         $this->templating    = $templating;
+        $this->translator = $translator;
     }
 
     /**
@@ -56,7 +64,7 @@ class MailerManager
 
             return $this->mailer->send($message);
         } catch (\Exception $e) {
-            return $e->getMessage();
+           dump($e->getMessage());die;
         }
     }
 }

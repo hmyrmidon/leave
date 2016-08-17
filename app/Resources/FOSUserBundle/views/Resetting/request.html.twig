@@ -1,0 +1,11 @@
+{% extends "::auth-base-layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block fos_user_content%}
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                {% include "FOSUserBundle:Resetting:request_content.html.twig" %}
+            </section>
+        </div>
+    </div>
+{% endblock fos_user_content%}

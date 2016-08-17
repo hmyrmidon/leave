@@ -52,4 +52,31 @@ class BaseManager
         $this->entityManager->flush();
     }
 
+    /**
+     * sendMessage
+     *
+     * @param string $from
+     * @param string $to
+     * @param string $subject
+     * @param string $template
+     * @param array  $body
+     *
+     * @return boolean
+     */
+    public function sendMessage($from, $to, $subject, $template, $body)
+    {
+        try {
+            $message = \Swift_Message::newInstance()
+                ->setFrom($from)
+                ->setTo($to)
+                ->setSubject($this->translator->trans($subject, array(), 'common'))
+                ->setBody($this->templating->render($template, $body))
+                ->setContentType('text/html');
+
+            return $this->mailer->send($message);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
 }
