@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use AppBundle\Entity\Employee;
 
 /**
  * ValidatorRepository
@@ -10,4 +11,14 @@ namespace AppBundle\Repository;
  */
 class ValidatorRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getByEmployee(Employee $employee)
+    {
+        return $this->_em->createQuery('
+            SELECT e, u FROM AppBundle:Employee e 
+            JOIN e.team t
+            JOIN AppBundle:TeamValidator v
+            JOIN e.user u
+            WHERE e.id = :id
+        ')->setParameters(array('id'=>$employee->getId()));
+    }
 }

@@ -38,6 +38,7 @@ label:
         to_validate: Liste à valider
         holiday: "{0}Jour férié|{1}Jours fériés"
         holiday_list: Liste des jours fériés
+        welcome: Bienvenue %user%
     holiday:
         easter_day: Pâques
         easter_monday: Lundi des pâques

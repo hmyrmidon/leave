@@ -4,7 +4,9 @@ namespace AppBundle\Controller\Admin;
 
 use AppBundle\Entity\User;
 use AppBundle\Entity\VacationRequest;
-use AppBundle\Form\Handler\BaseHandler;
+use AppBundle\Event\OnSubmitVacationRequestEvent;
+use AppBundle\Event\OnValidateEvent;
+use AppBundle\Event\VacationAvailableEvent;
 use AppBundle\Form\Handler\VacationHandler;
 use AppBundle\Form\Type\VacationType;
 use AppBundle\Manager\VacationRequestManager;
@@ -58,7 +60,9 @@ class VacationController extends Controller
     public function validateAction(VacationRequest $vacation)
     {
         $user = $this->getUser();
-        if($this->get('app.vacation_request_manager')->validate($vacation, $user)){
+        if($this->get(VacationRequestManager::SERVICE_NAME)->validate($vacation, $user)){
+            $event = new OnValidateEvent($vacation);
+            $this->get('event_dispatcher')->dispatch(VacationAvailableEvent::ON_VALIDATE, $event);
             $this->get('session')->getFlashBag()->set('success', 'La demande a éte validé avec succès');
         }
 
@@ -79,6 +83,10 @@ class VacationController extends Controller
         if($handler->process($user)){
             $ogcVacationRequestManager = $this->get(VacationRequestManager::SERVICE_NAME);
             $ogcVacationRequestManager->saveVacation($vacation, $user->getEmployee());
+
+            $event = new OnSubmitVacationRequestEvent($vacation);
+            $this->get('event_dispatcher')->dispatch(VacationAvailableEvent::ON_SUBMIT_VACATION, $event);
+
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('message.success.add_vacation', [], 'messages'));
 
             return $this->redirectToRoute('app_vacation_history');

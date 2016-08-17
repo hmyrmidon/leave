@@ -46,6 +46,13 @@ services:
                 dispatcher: "@event_dispatcher"
         tags:
             - { name: twig.extension }
+    app.dashboard_manager:
+        class: 'AppBundle\Manager\DashboardManager'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+            - available:
+                holiday: "@app.holiday_manager"
     #Application custom validators
     app.validator.date_range:
         class: 'AppBundle\Validator\Constraints\ConstraintsVacationDateValidator'
