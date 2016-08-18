@@ -64,6 +64,7 @@ services:
             - "@router"
             - available:
                 holiday: "@app.holiday_manager"
+                templating: "@templating"
     #Application custom validators
     app.validator.date_range:
         class: 'AppBundle\Validator\Constraints\ConstraintsVacationDateValidator'
