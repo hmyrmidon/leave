@@ -24,6 +24,13 @@ label:
         address: Adresse
         team: Equipe
         role: Rôle
+    user:
+        add: Ajouter un utilisateur
+        username: Nom d'utilisateur
+        lastname: Nom
+        firstname: Prénoms
+        email: Addresse e-mail
+        password: Mot de passe
     team:
         name: Equipe
     title:

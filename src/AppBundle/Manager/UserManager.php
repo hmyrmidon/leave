@@ -14,7 +14,7 @@ class UserManager extends BaseManager
 
     /**
      *
-     * @var Mailer $mailerClass 
+     * @var Mailer $mailerManager 
      * 
      */
     private $mailerManager;

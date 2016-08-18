@@ -78,6 +78,7 @@ services:
         tags:
             - { name: "kernel.event_listener", event: "app.on_validate_event", method: "onValidate" }
             - { name: "kernel.event_listener", event: "app.on_submit_vacation_event", method: 'onSubmitRequest'}
+            - { name: "kernel.event_listener", event: "app.send_email_on_validate_vacation_request", method: 'sendMailOnValidateVacationRequest'}
 
     app.employee_listener:
             class: 'AppBundle\Listener\VacationEmployeeListener'

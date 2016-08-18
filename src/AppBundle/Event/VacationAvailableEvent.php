@@ -15,4 +15,5 @@ final class VacationAvailableEvent
     const ON_USER_CONNECTED = 'app.on_user_connected_event';
     const ON_STATUS_CHANGED = 'app.on_status_changed_event';
     const ON_SUBMIT_VACATION = 'app.on_submit_vacation_event';
+    const SEND_EMAIL_ON_VALIDATE_VACATION_REQUEST = 'app.send_email_on_validate_vacation_request';
 }

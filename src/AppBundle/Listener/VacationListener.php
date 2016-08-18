@@ -45,6 +45,22 @@ class VacationListener
         $this->entityManager->clear();
     }
 
+    /**
+     * 
+     * @param \AppBundle\Entity\User $user
+     */
+    public function sendMailOnValidateVacationRequest(\AppBundle\Entity\User $user)
+    {
+        $from     = self::FROM;
+        $to       = $user->getEmail();
+        $subject  = 'email de validation de congée';
+        $template = 'admin/emails/emailValidateRequest.html.twig';
+        $body     = array(
+            'name'            => $user->getUsername()
+        );
+        $this->mailerManager->sendMessage($from, $to, $subject, $template, $body);
+    }
+
     public function onDenied(){}
     public function onUserCreated(){}
     public function onUserUpdates(){}
