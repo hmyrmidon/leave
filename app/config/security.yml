@@ -5,7 +5,7 @@ security:
         FOS\UserBundle\Model\UserInterface: bcrypt
 
     role_hierarchy:
-        ROLE_VALIDATEUR: ROLE_CLIENT, ROLE_VALIDATEUR
+        ROLE_VALIDATEUR: ROLE_VALIDATEUR
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:

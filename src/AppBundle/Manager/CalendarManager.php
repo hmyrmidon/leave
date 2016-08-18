@@ -8,10 +8,14 @@ use AppBundle\Manager\BaseManager;
 class CalendarManager extends BaseManager
 {
     const SERVICE_NAME = 'app.calendar_manager';
-    public function populate()
+    public function populate($user = null)
     {
         $calendarData = array();
-        $vacations = $this->entityManager->getRepository('AppBundle:VacationRequest')->findAll();
+        if(is_null($user)){
+            $vacations = $this->entityManager->getRepository('AppBundle:VacationRequest')->findAll();
+        } else {
+            $vacations = $this->entityManager->getRepository('AppBundle:VacationRequest')->listBy($user);
+        }
         foreach($vacations as $vacation){
             $calendar = new \stdClass();
             $calendar->title = sprintf('%s %s (equipe: %s)', $vacation->getEmployee()->getFirstName(), $vacation->getEmployee()->getLastName(), $vacation->getEmployee()->getTeam()->getName());

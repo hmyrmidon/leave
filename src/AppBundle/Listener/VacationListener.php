@@ -58,6 +58,6 @@ class VacationListener
     {
         $vacation = $event->getVacation();
         $validator = $this->entityManager->getRepository('AppBundle:TeamValidator')->getByEmployee($vacation->getEmployee());
-        dump('email send to '. $validator->getEmail());
+        //dump('email send to '. $validator->getEmail());
     }
 }

@@ -70,6 +70,10 @@ class DashboardManager extends BaseManager
          * @var VacationRequestManager $vacationSrv
          */
         $vacationSrv = $this->getServices(VacationRequestManager::SERVICE_NAME);
+        /**
+         * @var CalendarManager $calendarSrv
+         */
+        $calendarSrv = $this->getServices(CalendarManager::SERVICE_NAME);
         $sumPending = $this->getSumVacation($user, $current, VacationRequest::PENDING_STATUS);
         $sumRejected = $this->getSumVacation($user, $current, VacationRequest::DENIED_STATUS);
         $sumValidate = $this->getSumVacation($user, $current, VacationRequest::VALIDATE_STATUS);
@@ -88,13 +92,11 @@ class DashboardManager extends BaseManager
                 ];
             }
             $pendingVacations = $vacationSrv->performListData($user);
+            $vacations = $calendarSrv->populate($user);
             $params['pendingVacations'] = $pendingVacations;
+            $params['data'] = $vacations;
             $template = ':admin/dashboard:dashboard-validator.html.twig';
         }elseif ($roleHierarchy->isGranted('ROLE_ADMIN', $user)){
-            /**
-             * @var CalendarManager $calendarSrv
-             */
-            $calendarSrv = $this->getServices(CalendarManager::SERVICE_NAME);
             $calendarData = $calendarSrv->populate();
             $params = [
                 'data' => $calendarData

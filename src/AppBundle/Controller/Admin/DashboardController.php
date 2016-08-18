@@ -28,6 +28,5 @@ class DashboardController extends Controller
         $user = $this->getUser();
         return $this->get(DashboardManager::SERVICE_NAME)->performDashboard($user);
 
-        //return $this->render('::admin-base-layout.html.twig');
     }
 }
