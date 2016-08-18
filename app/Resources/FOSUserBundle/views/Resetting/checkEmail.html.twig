@@ -5,9 +5,9 @@
         <div class="animate form login_form">
             <section class="login_content">
                 <form  method="POST" class="fos_user_resetting_request">
-                     <h1>Gestion Congé</h1>
+                     <h1>{{ 'label.title.login'|trans({}, 'label') }}</h1>
                     <div class="alert alert-success alert-dismissable">{{ 'resetting.check_email'|trans({'%email%': email}) }}</div>
-                    <a href="{{ url('fos_user_security_login') }}" title="Revenir à l’écran de connexion">Revenir à l’écran de connexion</a>
+                    <a href="{{ url('fos_user_security_login') }}" title="Revenir à l’écran de connexion">{{ 'label.button.back'|trans({}, 'label') }}</a>
                     <div class="separator">
                         <div class="clearfix"></div>
                         <div>

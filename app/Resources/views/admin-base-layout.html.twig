@@ -86,7 +86,7 @@
                                                 <span class=" fa fa-angle-down"></span>
                                             </a>
                                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                                <li><a href="javascript:;">{{ 'label.edit_profil'|trans({}, 'label') }}</a></li>
+                                                <li><a href="{{ path('app_profil') }}">{{ 'label.edit_profil'|trans({}, 'label') }}</a></li>
                                                 <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out pull-right"></i>{{ 'label.logout'|trans({}, 'label') }}</a></li>
                                             </ul>
                                         </li>

@@ -1,18 +1,19 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace AppBundle\Form\Handler;
 
-/**
- * Description of UserHandler
- *
- * @author USER
- */
-class UserHandler {
-    //put your code here
+use AppBundle\Form\Handler\BaseHandler;
+
+class UserHandler extends BaseHandler
+{
+    public function process()
+    {
+        $this->form->handleRequest($this->request);
+        if ($this->request->isMethod('post') && $this->form->isValid()) {
+            $user = $this->form->getData();
+
+            return $user;
+        }
+          return false;
+    }
 }
