@@ -57,14 +57,30 @@ services:
                 dispatcher: "@event_dispatcher"
         tags:
             - { name: twig.extension }
+
     app.dashboard_manager:
         class: 'AppBundle\Manager\DashboardManager'
         arguments:
             - "@doctrine.orm.entity_manager"
             - "@router"
             - available:
-                holiday: "@app.holiday_manager"
+                app.holiday_manager: "@app.holiday_manager"
                 templating: "@templating"
+                app.role_manager: "@app.role_manager"
+                app.vacation_request_manager: "@app.vacation_request_manager"
+                app.calendar_manager: "@app.calendar_manager"
+
+    app.role_manager:
+        class: 'AppBundle\Manager\RoleManager'
+        arguments:
+            - "@security.role_hierarchy"
+
+    app.calendar_manager:
+        class: 'AppBundle\Manager\CalendarManager'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+
     #Application custom validators
     app.validator.date_range:
         class: 'AppBundle\Validator\Constraints\ConstraintsVacationDateValidator'

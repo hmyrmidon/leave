@@ -9,6 +9,9 @@ use AppBundle\Manager\BaseManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Bundle\TwigBundle\TwigEngine;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class DashboardManager extends BaseManager
 {
@@ -37,7 +40,7 @@ class DashboardManager extends BaseManager
             'v.status' => $status,
             'v.startDate' => [$currentDate->format('Y'), '=', 'YEAR']
         ];
-        $holidaySrv = $this->services['available']['holiday'];
+        $holidaySrv = $this->getServices(HolidayManager::SERVICE_NAME);
         $vacations = $this->entityManager->getRepository('AppBundle:VacationRequest')->getVacationBy($params);
         $count = 0;
         /**
@@ -55,32 +58,69 @@ class DashboardManager extends BaseManager
     public function performDashboard($user)
     {
         $current = new \DateTime();
-        //$srv = $this->services['available']['holiday'];
         /**
          * @var TwigEngine $tmp
          */
-        $tmp = $this->services['available']['templating'];
-        //$vacations = $srv->getCurrentUserVacations($user, $current);
+        $tmp = $this->getServices('templating');
+        /**
+         * @var RoleManager $roleHierarchy
+         */
+        $roleHierarchy = $this->getServices(RoleManager::SERVICE_NAME);
+        /**
+         * @var VacationRequestManager $vacationSrv
+         */
+        $vacationSrv = $this->getServices(VacationRequestManager::SERVICE_NAME);
         $sumPending = $this->getSumVacation($user, $current, VacationRequest::PENDING_STATUS);
         $sumRejected = $this->getSumVacation($user, $current, VacationRequest::DENIED_STATUS);
         $sumValidate = $this->getSumVacation($user, $current, VacationRequest::VALIDATE_STATUS);
-        if($user instanceof User && $user->getEmployee() instanceof Employee)
-        {
-            return $tmp->renderResponse(
-                ':admin/dashboard:dashboard.html.twig',
-                [
+        
+        $isUser = $user instanceof User;
+        $isEmployee = ($isUser && $user->getEmployee() instanceof Employee);
+
+        if($roleHierarchy->isGranted('ROLE_VALIDATEUR', $user)){
+            if($roleHierarchy->isGranted('ROLE_CLIENT', $user)){
+                $params = [
                     'user'=>$user->getEmployee(),
                     'now'=>$current,
                     'sumValidate'=>$sumValidate,
                     'sumPending'=>$sumPending,
                     'sumRejected'=>$sumRejected,
-                ]
-            );
+                ];
+            }
+            $pendingVacations = $vacationSrv->performListData($user);
+            $params['pendingVacations'] = $pendingVacations;
+            $template = ':admin/dashboard:dashboard-validator.html.twig';
+        }elseif ($roleHierarchy->isGranted('ROLE_ADMIN', $user)){
+            /**
+             * @var CalendarManager $calendarSrv
+             */
+            $calendarSrv = $this->getServices(CalendarManager::SERVICE_NAME);
+            $calendarData = $calendarSrv->populate();
+            $params = [
+                'data' => $calendarData
+            ];
+            $template = ':admin/dashboard:dashboard-admin.html.twig';
+        } else {
+            $params = [
+                'user'=>$user->getEmployee(),
+                'now'=>$current,
+                'sumValidate'=>$sumValidate,
+                'sumPending'=>$sumPending,
+                'sumRejected'=>$sumRejected,
+            ];
+            $template = ':admin/dashboard:dashboard.html.twig';
         }
 
-        return $tmp->renderResponse(
-            '::admin-base-layout.html.twig'
-        );
+        return $this->getDashoard($tmp, $template, $params);
     }
 
+    public function getDashoard(TwigEngine $templateEngine, $template, $params = array())
+    {
+        return $templateEngine->renderResponse($template, $params);
+    }
+
+    public function getServices($serviceName)
+    {
+        return $this->services['available'][$serviceName];
+    }
 }

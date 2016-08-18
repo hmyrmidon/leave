@@ -36,9 +36,9 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
         return $this->_em->getRepository('AppBundle:VacationRequest')->findBy($criteria);
     }
 
-    public function getVacationBy($params)
+    public function getVacationBy($params, $joinDql = '')
     {
-        $dql = 'SELECT v FROM AppBundle:VacationRequest v';
+        $dql = 'SELECT v FROM AppBundle:VacationRequest v '.$joinDql;
 
         $parameters = array();
         $conditions = array();
@@ -67,5 +67,5 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
         //dump([$this->_em->createQuery($dql)->setParameters($parameters)->getSQL(), $parameters]);die;
         return $this->_em->createQuery($dql)->setParameters($parameters)->getResult();
     }
-    
+
 }
