@@ -92,7 +92,7 @@ class VacationRequestManager extends BaseManager
      */
     public function performListData(User $validator)
     {
-        return $this->entityManager->getRepository('AppBundle:VacationRequest')->listNotValidateBy($validator);
+        return $this->entityManager->getRepository('AppBundle:VacationRequest')->listBy($validator, VacationRequest::PENDING_STATUS);
     }
 
 }

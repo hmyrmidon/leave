@@ -12,3 +12,24 @@
 .bocasay_blue_bg{
     background-color: #092b62;
 }
+.pending_event{
+    background-color: #6a5a8c!important;
+}
+.validate_event{
+    background-color: #00A000!important;
+}
+.denied_event{
+    background-color: #90111A!important;
+}
+.legend_pending_event{
+    color: #6a5a8c;
+    padding-right: 3px;
+}
+.legend_validate_event{
+    color: #00A000;
+    padding-right: 3px;
+}
+.legend_denied_event{
+    color: #90111A;
+    padding-right: 3px;
+}

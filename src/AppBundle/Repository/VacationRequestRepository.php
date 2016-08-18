@@ -14,20 +14,24 @@ use AppBundle\Entity\VacationRequest;
  */
 class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function listNotValidateBy(User $validator)
+    public function listBy(User $validator, $status = null)
     {
         $query = "SELECT v, e, t, u FROM AppBundle:VacationRequest v 
                           JOIN v.employee e 
                           JOIN e.team t
                           JOIN t.validator u
-                          WHERE u.validator = :uid AND v.status = :status AND v.id NOT IN (
+                          WHERE u.validator = :uid AND v.id NOT IN (
                             SELECT vc.id FROM AppBundle:VacationValidation vs JOIN vs.vacation vc WHERE vs.manager = :uid
                           ) ";
-
+        if(!is_null($status)){
+            $query .= ' AND v.status = :status';
+            $params['status'] = $status;
+        }
+        $params['uid'] = $validator->getId();
         $list = $this->_em->createQuery($query)
-                  ->setParameters(['uid' => $validator->getId(), 'status' => VacationRequest::PENDING_STATUS])
+                  ->setParameters($params)
                   ->getResult();
-        
+
         return $list;
     }
 
@@ -36,9 +40,9 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
         return $this->_em->getRepository('AppBundle:VacationRequest')->findBy($criteria);
     }
 
-    public function getVacationBy($params)
+    public function getVacationBy($params, $joinDql = '')
     {
-        $dql = 'SELECT v FROM AppBundle:VacationRequest v';
+        $dql = 'SELECT v FROM AppBundle:VacationRequest v '.$joinDql;
 
         $parameters = array();
         $conditions = array();
@@ -67,5 +71,5 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
         //dump([$this->_em->createQuery($dql)->setParameters($parameters)->getSQL(), $parameters]);die;
         return $this->_em->createQuery($dql)->setParameters($parameters)->getResult();
     }
-    
+
 }
