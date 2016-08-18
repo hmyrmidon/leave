@@ -47,10 +47,15 @@ class VacationListener
 
     /**
      * 
-     * @param \AppBundle\Entity\User $user
+     * @param type $eventEmail
      */
-    public function sendMailOnValidateVacationRequest(\AppBundle\Entity\User $user)
+    public function sendMailOnValidateVacationRequest($eventEmail)
     {
+        //dump('test');die;
+        /**
+         * @var User $user
+         */
+        $user = $eventEmail->getVacation();
         $from     = self::FROM;
         $to       = $user->getEmail();
         $subject  = 'email de validation de congée';
