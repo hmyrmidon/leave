@@ -2,6 +2,7 @@
 
 namespace AppBundle\Manager;
 
+use AppBundle\Entity\Employee;
 use AppBundle\Manager\BaseManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -78,5 +79,20 @@ class EmployeeManager extends BaseManager
 
         $event = new \AppBundle\Event\VacationEmployeeEvent($param); 
         $this->eventDispatcher->dispatch(\AppBundle\Event\VacationEmployeeEvent::VACATION_EMPLOYEE_EVENT_NAME_UPDATE_USER, $event);
+    }
+
+    public function addMonthlyVacationRight($number)
+    {
+        $employees = $this->entityManager->getRepository('AppBundle:Employee')->findAll();
+        /**
+         * @var Employee $employee
+         */
+        foreach ($employees as $employee){
+            $oldBalance = $employee->getBalance();
+            $employee->setBalance($oldBalance + floatval($number));
+            $this->entityManager->persist($employee);
+        }
+
+        $this->flushAndClear();
     }
 }

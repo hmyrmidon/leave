@@ -4,6 +4,7 @@ namespace AppBundle\Manager;
 
 
 use AppBundle\Entity\Holiday;
+use AppBundle\Entity\VacationRequest;
 use AppBundle\Manager\BaseManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
@@ -230,4 +231,27 @@ class HolidayManager extends BaseManager
         $holidays[] = $date;
     }
 
+    public function getSumVacationFromYear($year, $status)
+    {
+        $params = [];
+        $now = new \DateTime();
+        if(!empty($year)){
+            $params['v.startDate'] =  [$year, '=', 'YEAR'];
+        }
+        if(!empty($status)){
+            $params['v.status'] =  $status ;
+        }
+        $vacations = $this->entityManager->getRepository('AppBundle:VacationRequest')->getVacationBy($params);
+        $count = 0;
+        /**
+         * @var VacationRequest $vacation
+         */
+        foreach ($vacations as $vacation){
+            $d1 = $this->getDayCount($vacation->getStartDate()->format('Y-m-d'), $vacation->getReturnDate()->format('Y-m-d'));
+            $d2 = $this->countHolidayBetween($vacation->getStartDate(), $vacation->getReturnDate());
+            $count += ( $d1- $d2);
+        }
+
+        return $count;
+    }
 }

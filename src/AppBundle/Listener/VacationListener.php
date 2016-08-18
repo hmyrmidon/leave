@@ -20,6 +20,11 @@ class VacationListener
     }
 
     public function onWaiting(){}
+
+    /**
+     * Event listner on validated vacation
+     * @param $event
+     */
     public function onValidate($event){
         /**
          * @var VacationRequest $vacation
@@ -39,20 +44,20 @@ class VacationListener
         $this->entityManager->flush();
         $this->entityManager->clear();
     }
+
     public function onDenied(){}
     public function onUserCreated(){}
     public function onUserUpdates(){}
     public function onStatusChanged(){}
+
+    /**
+     * Event listener on vacation request is submited
+     * @param OnSubmitVacationRequestEvent $event
+     */
     public function onSubmitRequest(OnSubmitVacationRequestEvent $event)
     {
         $vacation = $event->getVacation();
-        $validator = $this->entityManager->createQuery('
-            SELECT e, u FROM AppBundle:Employee e 
-            JOIN e.team t
-            JOIN AppBundle:TeamValidator v
-            JOIN e.user u
-            WHERE e.id = :id
-        ')->setParameters(array('id'=>$vacation->getEmployee()));
+        $validator = $this->entityManager->getRepository('AppBundle:TeamValidator')->getByEmployee($vacation->getEmployee());
         dump('email send to '. $validator->getEmail());
     }
 }

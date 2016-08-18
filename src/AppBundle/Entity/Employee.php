@@ -121,6 +121,12 @@ class Employee
     protected $vacation;
 
     /**
+     * @var float
+     * @ORM\Column(name="balance", type="decimal", precision=5, scale=2, nullable=true)
+     */
+    protected $balance;
+
+    /**
      * @return int
      */
     public function getId()
@@ -457,4 +463,21 @@ class Employee
 
         return $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getBalance()
+    {
+        return $this->balance;
+    }
+
+    /**
+     * @param mixed $balance
+     */
+    public function setBalance($balance)
+    {
+        $this->balance = $balance;
+    }
+
 }

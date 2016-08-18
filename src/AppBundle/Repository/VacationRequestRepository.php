@@ -35,4 +35,37 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
     {
         return $this->_em->getRepository('AppBundle:VacationRequest')->findBy($criteria);
     }
+
+    public function getVacationBy($params)
+    {
+        $dql = 'SELECT v FROM AppBundle:VacationRequest v';
+
+        $parameters = array();
+        $conditions = array();
+        foreach ($params as $key => $value) {
+            $param = str_replace(".", "", $key);
+            if ($value != "" && !is_null($value) && !is_array($value)) {
+                $conditions[] = "$key = :$param";
+                $parameters[$param] = $value;
+            } elseif (is_array($value) && count($value) == 2 && $value[0]) {
+                $val = $value[0];
+                $ope = isset($value[1]) ? $value[1] : '=';
+                $conditions[] = "$key $ope :$param";
+                $parameters[$param] = ($ope == 'LIKE') ? "%$val%" : $val;
+            }elseif (is_array($value) && count($value) == 3 && $value[0]){
+                $val = $value[0];
+                $ope = isset($value[1]) ? $value[1] : '=';
+                $callback = isset($value[2]) ? $value[2] : '';
+                $conditions[] = "$callback($key) $ope :$param";
+                $parameters[$param] = ($ope == 'YEAR') ? "$val" : $val;
+            }
+        }
+
+        if (count($conditions) > 0) {
+            $dql .= ' WHERE '.implode(' AND ', $conditions);
+        }
+        //dump([$this->_em->createQuery($dql)->setParameters($parameters)->getSQL(), $parameters]);die;
+        return $this->_em->createQuery($dql)->setParameters($parameters)->getResult();
+    }
+    
 }
