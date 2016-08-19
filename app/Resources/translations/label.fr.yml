@@ -57,6 +57,8 @@ label:
         label: Description
     button:
         back: Revenir à l’écran de connexion
+        cancel: Annuler
+        save: Enregistrer
 
     edit_profil: Modifier le profile
     app.name: Gestion de congé

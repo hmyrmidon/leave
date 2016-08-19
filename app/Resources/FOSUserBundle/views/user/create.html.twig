@@ -32,35 +32,35 @@
                             <form method="post" action="{{ path('app_user_create') }}" class="fos_user_edition_register form-horizontal form-label-left" novalidate="novalidate">
 
                                 <div class="form-group {% if form.username.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.username, 'label.user.username'|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.username, 'label.user.username'|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.lastName.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.lastName, 'label.user.lastname'|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.lastName, 'label.user.lastname'|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.lastName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.firstName.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.firstName, 'label.user.firstname'|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.firstName, 'label.user.firstname'|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.firstName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.email.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.email, 'label.user.email'|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.email, 'label.user.email'|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.plainPassword.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.plainPassword, 'label.user.password'|trans({}, 'FOSUserBundle'), 
+                                    {{ form_label(form.plainPassword, 'label.user.password'|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.plainPassword, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
@@ -70,7 +70,7 @@
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-9">
                                         <a href="{{ path('app_user') }}" class="btn btn-primary">{{ 'label.button.cancel'|trans({}, 'label') }}</a>
-                                        <button type="submit" class="btn btn-success">{{ 'label.user. save'|trans({}, 'label') }}</button>
+                                        <button type="submit" class="btn btn-success">{{ 'label.button. save'|trans({}, 'label') }}</button>
                                     </div>
                                 </div>
                                 {{ form_widget(form._token) }}

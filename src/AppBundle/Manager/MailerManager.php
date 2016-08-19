@@ -8,6 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
 class MailerManager extends BaseManager
 {
+    const MAILER_MANAGER = 'app.mailer_manager';
+    const FROM = 'contact@bocasay.fr';
+
     /**
      *
      * @var Mailer $mailer
@@ -64,7 +67,21 @@ class MailerManager extends BaseManager
 
             return $this->mailer->send($message);
         } catch (\Exception $e) {
-           dump($e->getMessage());die;
+           return $e->getMessage();
         }
+    }
+
+    public function sendEmail(\AppBundle\Entity\User $user, $pass, $subjectMail, $templateMail)
+    { 
+        $from     = self::FROM;
+        $to       = $user->getEmail();
+        $subject  = $subjectMail;
+        $template = $templateMail;
+        $body     = array(
+            'name'            => $user->getUsername(),
+            'email'           => $to,
+            'pass'            => $pass
+        );
+        $this->sendMessage($from, $to, $subject, $template, $body);
     }
 }

@@ -63,8 +63,6 @@ class VacationController extends Controller
         if($this->get(VacationRequestManager::SERVICE_NAME)->validate($vacation, $user)){
             $event = new OnValidateEvent($vacation);
             $this->get('event_dispatcher')->dispatch(VacationAvailableEvent::ON_VALIDATE, $event);
-            $eventEmail = new \AppBundle\Event\SendEmailVacationRequestEvent($vacation);
-            $this->get('event_dispatcher')->dispatch(VacationAvailableEvent::SEND_EMAIL_ON_VALIDATE_VACATION_REQUEST, $eventEmail);
             $this->get('session')->getFlashBag()->set('success', 'La demande a éte validé avec succès');
         }
 

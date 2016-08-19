@@ -39,15 +39,18 @@ class UserController extends BaseController
     {
         $em = $this->getDoctrine()->getManager();
         $user = new \AppBundle\Entity\User();
+        $subjectMail = 'Email de première connexion';
+        $templatingMail = 'admin/emails/emailCreateUser.html.twig';
 
         $formUser  = $this->createForm(\AppBundle\Form\Type\CreateUserType::class, $user);
         $formHandler = new \AppBundle\Form\Handler\UserHandler($formUser, $request, $em);
         if ($user = $formHandler->process()) { 
             $pass = $user->getPlainPassword();
             $ogcUserManager = $this->get(\AppBundle\Manager\UserManager::USER_MANAGER);
+            $ogcMailerManager = $this->get(\AppBundle\Manager\MailerManager::MAILER_MANAGER);
             $ogcUserManager->save($user);
-            $ogcUserManager->flushAndClear();
-            $ogcUserManager->sendEmailOnCreateUser($user, $pass); 
+            $ogcUserManager->flushAndClear(); 
+            $ogcMailerManager->sendEmail($user, $pass, $subjectMail, $templatingMail);
 
             $flashMessage = $this->get('translator')->trans('message.success.add.user', array(), 'messages');
             $this->addFlash('success', $flashMessage);
