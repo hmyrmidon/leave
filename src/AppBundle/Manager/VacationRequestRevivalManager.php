@@ -27,7 +27,7 @@ class VacationRequestRevivalManager extends BaseManager
         $date1 = $vacation->getRevival();
         $withHoliday = 0;
         $revival     = $this->getDayCount($date1, $dateNewRevival, $withHoliday);
-        if ($revival >= 2) {
+        if ($revival == 2) {
             $event = new \AppBundle\Event\RevivalMailEvent($vacation);
             $this->eventDispatcher->dispatch(\AppBundle\Event\VacationAvailableEvent::REVIVAL_SEND_MAIL, $event);
             $vacation->setRevival($dateNewRevival);
