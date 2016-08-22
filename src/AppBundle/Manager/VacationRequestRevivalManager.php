@@ -8,19 +8,32 @@ class VacationRequestRevivalManager extends BaseManager
 {
     const VACATION_REVIVAL_MANAGER = 'app.vacation_request_revival_manager';
 
+    /**
+     * 
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
+     * @param type $eventDispatcher
+     */
+    public function __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Symfony\Bundle\FrameworkBundle\Routing\Router $router, $eventDispatcher) 
+    {
+        parent::__construct($entityManager, $router);
+        $this->eventDispatcher = $eventDispatcher;
+    }
     public function revivalDate(\AppBundle\Entity\VacationRequest $vacation)
     {
-//        $date1 = $vacation->getRevival();
-        $date2 = new \DateTime();
+        
+        $date2          = new \DateTime();
         $dateNewRevival = $date2->format('Y-m-d H:i:s');
-//        $withHoliday = 0;
-//        $revival = $this->getDayCount($date1, $dateNewRevival, $withHoliday);
-//        if ($revival->h > 48) {
-//            
-//        }
-        $vacation->setRevival($dateNewRevival);
-        $this->save($vacation);
-        $this->flushAndClear();
+        $date1 = $vacation->getRevival();
+        $withHoliday = 0;
+        $revival     = $this->getDayCount($date1, $dateNewRevival, $withHoliday);
+        if ($revival >= 2) {
+            $event = new \AppBundle\Event\RevivalMailEvent($vacation);
+            $this->eventDispatcher->dispatch(\AppBundle\Event\VacationAvailableEvent::REVIVAL_SEND_MAIL, $event);
+            $vacation->setRevival($dateNewRevival);
+            $this->save($vacation);
+            $this->flushAndClear();
+        }
     }
 
     /**

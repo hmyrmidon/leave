@@ -72,4 +72,10 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
         return $this->_em->createQuery($dql)->setParameters($parameters)->getResult();
     }
 
+    public function getRevivalDayByStatus($vacationRequestId = array())
+    {
+        $query = $this->_em->createQuery('SELECT vr.revival FROM AppBundle:VacationRequest vr WHERE vr.status = 0 AND vr.id = :ids')
+                ->setParameter('ids', $vacationRequestId);
+        return $query->getResult();
+    }
 }

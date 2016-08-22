@@ -43,6 +43,8 @@ class VacationListener
         $pass             = $user->getPlainPassword();
         $subjectMail      = 'Email de validation de congé';
         $templateMail     = 'admin/emails/emailValidateRequest.html.twig';
+        $sendMail         = $user->getEmail();
+        $fromMail         = 'contact@bocasay.fr';
         $teamResult       = $this->entityManager->getRepository('AppBundle:TeamValidator')->findBy(array('team'=>$team));
         $vacationValidate = $this->entityManager->getRepository('AppBundle:VacationValidation')->findBy(array(
             'vacation'    => $vacation
@@ -53,7 +55,7 @@ class VacationListener
         }
         $vacation->setStatus($status);
         $this->entityManager->persist($vacation);
-        $this->mailerManager->sendEmail($user, $pass, $subjectMail, $templateMail);
+        $this->mailerManager->sendEmail($user, $pass, $subjectMail, $templateMail, $sendMail, $fromMail);
         $this->entityManager->flush();
         $this->entityManager->clear();
     }
