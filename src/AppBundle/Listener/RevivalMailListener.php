@@ -35,8 +35,8 @@ class RevivalMailListener
         $subjectMail    = 'Email de relance pour les congées encore en attente.';
         $templateMail   = 'admin/emails/emailRevival.html.twig';
         $sendMail       = $user->getEmail();
-        $fromMail       = 'koloinarov@gmail.com';
-        $revivalDay     = $this->entityManager->getRepository('AppBundle:VacationRequest')->getRevivalDayByStatus($vacation->getId());
+        $fromMail       = 'employee@bocasay.fr';
+        $revivalDay     = $this->entityManager->getRepository('AppBundle:VacationRequest')->getRevivalDayByStatus($vacation->getId()); 
         if ($revivalDay == NULL) {
             //do nothing
         } else { 
