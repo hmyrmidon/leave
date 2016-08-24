@@ -14,11 +14,8 @@ class ValidatorRepository extends \Doctrine\ORM\EntityRepository
     public function getByEmployee(Employee $employee)
     {
         return $this->_em->createQuery('
-            SELECT e, u FROM AppBundle:Employee e 
-            JOIN e.team t
-            JOIN AppBundle:TeamValidator v
-            JOIN e.user u
-            WHERE e.id = :id
-        ')->setParameters(array('id'=>$employee->getId()));
+            SELECT u, t, e, tm FROM AppBundle:TeamValidator tm JOIN tm.validator u JOIN tm.team t JOIN t.employee e WHERE e.id = :id')
+                ->setParameters(array('id'=>$employee->getId()))->getResult();
+        
     }
 }
