@@ -92,9 +92,9 @@ class DashboardManager extends BaseManager
                 ];
             }
             $pendingVacations = $vacationSrv->performListData($user);
-            $vacations = $calendarSrv->populate($user);
+            $calendarData = $calendarSrv->populate($user);
             $params['pendingVacations'] = $pendingVacations;
-            $params['data'] = $vacations;
+            $params['data'] = $calendarData;
             $template = ':admin/dashboard:dashboard-validator.html.twig';
         }elseif ($roleHierarchy->isGranted('ROLE_ADMIN', $user)){
             $calendarData = $calendarSrv->populate();
@@ -103,12 +103,14 @@ class DashboardManager extends BaseManager
             ];
             $template = ':admin/dashboard:dashboard-admin.html.twig';
         } else {
+            $calendarData = $calendarSrv->populate($user);
             $params = [
                 'user'=>$user->getEmployee(),
                 'now'=>$current,
                 'sumValidate'=>$sumValidate,
                 'sumPending'=>$sumPending,
                 'sumRejected'=>$sumRejected,
+                'data' => $calendarData
             ];
             $template = ':admin/dashboard:dashboard.html.twig';
         }

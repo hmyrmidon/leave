@@ -2,12 +2,19 @@
 
 namespace AppBundle\Manager;
 
+use AppBundle\Entity\User;
 use AppBundle\Entity\VacationRequest;
 use AppBundle\Manager\BaseManager;
 
 class CalendarManager extends BaseManager
 {
     const SERVICE_NAME = 'app.calendar_manager';
+
+    /**
+     * @param User|null $user
+     *
+     * @return mixed
+     */
     public function populate($user = null)
     {
         $calendarData = array();
@@ -30,6 +37,11 @@ class CalendarManager extends BaseManager
         return json_encode($calendarData);
     }
 
+    /**
+     * @param int $status
+     *
+     * @return string
+     */
     public function getClassNameByStatus($status)
     {
         switch ($status){
