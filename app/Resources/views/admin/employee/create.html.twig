@@ -28,7 +28,7 @@
                                     {{ form_label(form.username, "label.employee.username"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': 'nom d\'utilisateur', 'maxlength': 10} }) }}
+                                        {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'placeholder': "nom d'utilisateur", 'maxlength': 10} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.lastName.vars.errors|length %}has-error{% endif %}">
@@ -77,7 +77,7 @@
                                     {{ form_label(form.hiringDate, "label.employee.hiring.date"|trans({}, 'label'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.hiringDate, { 'attr': {'class': 'form-control col-md-7 col-xs-12 datepicker', 'placeholder': 'date d\'embauche', 'maxlength': 10} }) }}
+                                        {{ form_widget(form.hiringDate, { 'attr': {'class': 'form-control col-md-7 col-xs-12 datepicker', 'placeholder': "date d'embauche", 'maxlength': 10} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.maritalStatus.vars.errors|length %}has-error{% endif %}">

@@ -16,7 +16,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>{{ 'label.user.add'|trans({}, 'label') }}</h2>
+                            <h2>Modifier mon profil</h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -29,48 +29,40 @@
                             {{ display_errors.all_form_errors(form) }}
                             <div class="flashbag">{% include '::flashbag_message.html.twig' %}</div>
                             <br />
-                            <form method="post" action="{{ path('app_user_create') }}" class="fos_user_edition_register form-horizontal form-label-left" novalidate="novalidate">
-
+                            <form method="post" action="{{ path('app_profil') }}" class="fos_user_edition_register form-horizontal form-label-left" novalidate="novalidate">
                                 <div class="form-group {% if form.username.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.username, 'label.user.username'|trans({}, 'label'), 
+                                    {{ form_label(form.username, "Nom d'utilisateur"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.username, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.lastName.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.lastName, 'label.user.lastname'|trans({}, 'label'), 
+                                    {{ form_label(form.lastName, "Nom"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.lastName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.firstName.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.firstName, 'label.user.firstname'|trans({}, 'label'), 
+                                    {{ form_label(form.firstName, "Prénoms"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.firstName, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form.email.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.email, 'label.user.email'|trans({}, 'label'), 
+                                    {{ form_label(form.email, "Adresse e-mail"|trans({}, 'FOSUserBundle'), 
                                         { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.email, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
                                     </div>
                                 </div>
-                                <div class="form-group {% if form.plainPassword.vars.errors|length %}has-error{% endif %}">
-                                    {{ form_label(form.plainPassword, 'label.user.password'|trans({}, 'label'), 
-                                        { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
-                                    <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.plainPassword, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
-                                    </div>
-                                </div>
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
                                     <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-9">
-                                        <a href="{{ path('app_user') }}" class="btn btn-primary">{{ 'label.button.cancel'|trans({}, 'label') }}</a>
-                                        <button type="submit" class="btn btn-success">{{ 'label.button. save'|trans({}, 'label') }}</button>
+                                        <a href="{{ path('app_user') }}" class="btn btn-primary">Annuler</a>
+                                        <button type="submit" class="btn btn-success">Enregistrer</button>
                                     </div>
                                 </div>
                                 {{ form_widget(form._token) }}

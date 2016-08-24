@@ -29,6 +29,9 @@ class VacationRequestManager extends BaseManager
         $vacation->setEmployee($employee);
         $vacation->setStatus(VacationRequest::PENDING_STATUS);
         $vacation->setRecovery(0);
+        $now = new \DateTime();
+        $revival = $now->format('Y-m-d H:i:s');
+        $vacation->setRevival($revival);
 
         $this->save($vacation);
         $this->flushAndClear();

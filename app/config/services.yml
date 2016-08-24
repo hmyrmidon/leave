@@ -26,7 +26,6 @@ services:
         arguments: 
             - "@doctrine.orm.entity_manager"
             - "@router"
-            - "@app.mailer_manager"
 
     app.team_manager:
         class: 'AppBundle\Manager\TeamManager'
@@ -81,6 +80,13 @@ services:
             - "@doctrine.orm.entity_manager"
             - "@router"
 
+    app.vacation_request_revival_manager:
+        class: 'AppBundle\Manager\VacationRequestRevivalManager'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+            - "@event_dispatcher"
+
     #Application custom validators
     app.validator.date_range:
         class: 'AppBundle\Validator\Constraints\ConstraintsVacationDateValidator'
@@ -92,6 +98,7 @@ services:
         class: 'AppBundle\Listener\VacationListener'
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@app.mailer_manager"
         tags:
             - { name: "kernel.event_listener", event: "app.on_validate_event", method: "onValidate" }
             - { name: "kernel.event_listener", event: "app.on_submit_vacation_event", method: 'onSubmitRequest'}
@@ -104,3 +111,11 @@ services:
                 - { name : "kernel.event_listener" , event: "app.on_user_process", method: "onCreateEmployee"}
                 - { name : "kernel.event_listener" , event: "app.on_user_update", method: "onUpdateEmployee"}
                 - { name : "kernel.event_listener" , event: "app.on_user_remove", method: "onRemoveEmployee"}
+
+    app.revival_mail:
+        class: 'AppBundle\Listener\RevivalMailListener'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@app.mailer_manager"
+        tags:
+            - { name : "kernel.event_listener" , event: "app.revival_send_email", method: "onRevivalSendEmail"}

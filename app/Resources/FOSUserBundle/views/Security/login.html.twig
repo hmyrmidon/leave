@@ -13,12 +13,12 @@
                     {% endif %}
                     <form action="{{ path("fos_user_security_check") }}" method="post">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-                        <h1>Gestion Congé</h1>
+                        <h1>{{ 'label.title.login'|trans({}, 'label') }}</h1>
                         <div class="form-group">
-                            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="Nom d'utilisateur" required="required" />
+                            <input type="text" id="username" name="_username" value="{{ last_username }}" class="form-control" placeholder="{{ 'label.employee.username'|trans({}, 'label') }}" required="required" />
                         </div>
                         <div class="form-group">
-                            <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="Mot de passe" />
+                            <input type="password" id="password" name="_password" required="required" class="form-control" placeholder="{{ 'label.employee.password'|trans({}, 'label') }}" />
                         </div>
                         <div class="row">
                             <div class="col-xs-4">
@@ -32,18 +32,13 @@
                                 </div>
                             </div><!-- /.col -->
                         </div>
-
                         <div class="form-group">
                             <a class="reset_pass" href="{{ url('fos_user_resetting_request') }}">Mot de passe oublié?</a><br>
                         </div>
-
                         <div class="clearfix">
                         </div>
-
                         <div class="separator">
-
                             <div class="clearfix"></div>
-
                             <div>
                                 <h1><i class="fa fa-paw"></i> Bocasay_</h1>
                                 <p>©2016 All Rights Reserved. Bocasay Team Agency. Privacy and Terms</p>

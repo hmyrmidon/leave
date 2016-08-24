@@ -24,6 +24,13 @@ label:
         address: Adresse
         team: Equipe
         role: Rôle
+    user:
+        add: Ajouter un utilisateur
+        username: Nom d'utilisateur
+        lastname: Nom
+        firstname: Prénoms
+        email: Addresse e-mail
+        password: Mot de passe
     team:
         name: Equipe
     title:
@@ -39,6 +46,7 @@ label:
         holiday: "{0}Jour férié|{1}Jours fériés"
         holiday_list: Liste des jours fériés
         welcome: Bienvenue %user%
+        login: Géstion de congé
     holiday:
         easter_day: Pâques
         easter_monday: Lundi des pâques
@@ -47,6 +55,10 @@ label:
         whit_monday: Lundi de pentecôte
         date: Date
         label: Description
+    button:
+        back: Revenir à l’écran de connexion
+        cancel: Annuler
+        save: Enregistrer
 
     edit_profil: Modifier le profile
     app.name: Gestion de congé

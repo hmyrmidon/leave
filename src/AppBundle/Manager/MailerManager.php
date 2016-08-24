@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Translation\Translator;
 
 class MailerManager extends BaseManager
 {
+    const MAILER_MANAGER = 'app.mailer_manager';
+
     /**
      *
      * @var Mailer $mailer
@@ -58,13 +60,27 @@ class MailerManager extends BaseManager
             $message = \Swift_Message::newInstance()
                 ->setFrom($from)
                 ->setTo($to)
-                ->setSubject($this->translator->trans($subject, array(), 'common'))
+                ->setSubject($this->translator->trans($subject, array(), 'label'))
                 ->setBody($this->templating->render($template, $body))
                 ->setContentType('text/html');
 
             return $this->mailer->send($message);
         } catch (\Exception $e) {
-           dump($e->getMessage());die;
+           return $e->getMessage();
         }
+    }
+
+    public function sendEmail(\AppBundle\Entity\User $user, $pass, $subjectMail, $templateMail, $sendMail, $fromMail)
+    {
+        $from     = $fromMail;
+        $to       = $sendMail;
+        $subject  = $subjectMail;
+        $template = $templateMail;
+        $body     = array(
+            'name'            => $user->getUsername(),
+            'email'           => $to,
+            'pass'            => $pass
+        );
+        $this->sendMessage($from, $to, $subject, $template, $body);
     }
 }
