@@ -30,17 +30,13 @@ class RevivalMailListener
          * @var VacationRequest $vacation
          */
         $vacation       = $event->getVacation();
-        $user           = $vacation->getEmployee()->getUser();
-        $pass           = $user->getPlainPassword();
+        $employee       = $vacation->getEmployee();
         $subjectMail    = 'Email de relance pour les congées encore en attente.';
         $templateMail   = 'admin/emails/emailRevival.html.twig';
-        $sendMail       = $user->getEmail();
+        $validators     = $this->entityManager->getRepository('AppBundle:TeamValidator')->getByEmployee($employee);
         $fromMail       = 'employee@bocasay.fr';
-        $revivalDay     = $this->entityManager->getRepository('AppBundle:VacationRequest')->getRevivalDayByStatus($vacation->getId()); 
-        if ($revivalDay == NULL) {
-            //do nothing
-        } else { 
-            $this->mailerManager->sendEmail($user, $pass, $subjectMail, $templateMail, $sendMail, $fromMail);
-        }
+        $this->mailerManager->sendMultipleEmailToValidator($subjectMail, $templateMail, $validators, $fromMail);
     }
+    
+    
 }

@@ -40,7 +40,7 @@ class MailerManager extends BaseManager
         parent::__construct($entityManager, $router);
         $this->mailer        = $mailer;
         $this->templating    = $templating;
-        $this->translator = $translator;
+        $this->translator    = $translator;
     }
 
     /**
@@ -66,21 +66,35 @@ class MailerManager extends BaseManager
 
             return $this->mailer->send($message);
         } catch (\Exception $e) {
-           return $e->getMessage();
+            //return $e->getMessage(); 
+            dump($e->getMessage());die;
         }
     }
 
-    public function sendEmail(\AppBundle\Entity\User $user, $pass, $subjectMail, $templateMail, $sendMail, $fromMail)
+    public function sendEmail(\AppBundle\Entity\User $user, $pass, $subjectMail, $templateMail, $sendMail, $fromMail, $bodyMail = array())
     {
         $from     = $fromMail;
         $to       = $sendMail;
         $subject  = $subjectMail;
         $template = $templateMail;
-        $body     = array(
+        $content  = array(
             'name'            => $user->getUsername(),
             'email'           => $to,
             'pass'            => $pass
         );
+        $body = array_merge($content, $bodyMail);
         $this->sendMessage($from, $to, $subject, $template, $body);
+    }
+
+    public function sendMultipleEmailToValidator($subjectMail, $templateMail, $users, $fromMail)
+    {
+        $employee = $this->entityManager->getRepository('AppBundle:Employee');
+        foreach ($users as $user) {
+            $listUser = $employee->getEmployeeListByValidator($user->getValidator());
+            $body = array(
+                'listUser' => $listUser
+            ); 
+            $this->sendEmail($user->getValidator(), '', $subjectMail, $templateMail, $user->getValidator()->getEmail(), $fromMail, $body);
+        }
     }
 }

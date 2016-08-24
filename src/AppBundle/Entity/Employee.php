@@ -480,4 +480,9 @@ class Employee
         $this->balance = $balance;
     }
 
+    public function getFullName()
+    {
+        return $this->getFirstName().' '.$this->getLastName();
+    }
+
 }

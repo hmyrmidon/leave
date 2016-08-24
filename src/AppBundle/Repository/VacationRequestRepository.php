@@ -71,18 +71,4 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
         //dump([$this->_em->createQuery($dql)->setParameters($parameters)->getSQL(), $parameters]);die;
         return $this->_em->createQuery($dql)->setParameters($parameters)->getResult();
     }
-
-    public function getRevivalDayByStatus($vacationRequestId = array())
-    {
-        $query = $this->_em->createQuery('SELECT vr.revival FROM AppBundle:VacationRequest vr WHERE vr.status = 0 AND vr.id = :ids')
-                ->setParameters('ids', $vacationRequestId);
-        return $query->getResult();
-    }
-
-    public function findValidator()
-    {
-        $query = $this->_em->createQuery('SELECT u FROM AppBundle:User u WHERE u.roles LIKE :role')
-                ->setParameter('role', '%ROLE_VALIDATEUR%');
-        return $query->getResult();
-    }
 }

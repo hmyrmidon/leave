@@ -29,6 +29,7 @@ class ProjectExtension extends \Twig_Extension
             new \Twig_SimpleFilter('status', [$this, 'status']),
             new \Twig_SimpleFilter('delete', [$this, 'addDeleteButtonByStatus']),
             new \Twig_SimpleFilter('format_number', [$this, 'formatNumber']),
+            new \Twig_SimpleFilter('tostring', array($this, 'toString')),
         ];
     }
 
@@ -94,4 +95,23 @@ class ProjectExtension extends \Twig_Extension
     {
         return vsprintf($format, $value);
     }
+
+    public function toString($objects, $attribute = 'name') 
+    { 
+        $result = [];
+        $method = 'get' . ucfirst($attribute);
+        if (is_array($objects)) {
+            foreach ($objects as $object) {
+                if (method_exists($object, $method)) {
+                    $result[] = $object->{$method}();
+                }
+            }
+        } else {
+            if (method_exists($objects, $method)) {
+                $result[] = $objects->{$method}();
+            }
+        }
+        return implode(', ', $result);
+    }
+
 }
