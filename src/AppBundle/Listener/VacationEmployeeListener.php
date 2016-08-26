@@ -24,10 +24,9 @@ class VacationEmployeeListener
         /**
          * @var AppBundle\Entity\Employee $employee
          */
-        $eventOpt = $event->getOption();
+        $eventOpt  = $event->getOption();
         $employee  = $eventOpt->employee;
-
-        $lastName = $employee->getLastName();
+        $lastName  = $employee->getLastName();
         $firstName = $employee->getFirstName();
 
         $username  = $eventOpt->username;
@@ -46,7 +45,6 @@ class VacationEmployeeListener
         } else {
             $user->setRoles(['ROLE_VALIDATEUR']);
         }
-
         $user->setLastName($lastName);
         $user->setFirstName($firstName);
         $user->setEnabled(1);
@@ -54,10 +52,15 @@ class VacationEmployeeListener
         $templatingMail   = 'admin/emails/emailCreateUser.html.twig';
         $sendMail         = $user->getEmail();
         $fromMail         = 'contact@bocasay.fr';
-
         $this->entityManager->persist($user);
         $employee->setUser($user);
         $this->mailerManager->sendEmail($user, $pass, $subjectMail, $templatingMail, $sendMail, $fromMail);
+        if ($role === "ROLE_VALIDATEUR") {
+            $validator = new \AppBundle\Entity\TeamValidator();
+            $validator->setValidator($employee->getUser());
+            $validator->setTeam($employee->getTeam());
+            $this->entityManager->persist($validator);
+        }
         $this->entityManager->flush();
 
     }

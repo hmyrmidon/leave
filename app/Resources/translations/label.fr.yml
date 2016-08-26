@@ -6,6 +6,7 @@ label:
         day_count: Nombre de jours prises
         status: Statut
         sended_date: Date de la demande
+        employee: Nom de l'employé
     employee:
         username: Nom d'utilisateur
         lastname: Nom

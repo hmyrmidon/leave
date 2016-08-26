@@ -25,7 +25,7 @@ class EmployeeType extends AbstractType
                 'mapped' => false
             ))
             ->add('roles', \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class, array(
-                'choices'     => array(
+                'choices'         => array(
                     'Admin'       => 'ROLE_ADMIN',
                     'Utilisateur' => 'ROLE_CLIENT',
                     'Validateur'  => 'ROLE_VALIDATEUR',
@@ -42,9 +42,9 @@ class EmployeeType extends AbstractType
             ))
             ->add('maritalStatus', \Symfony\Component\Form\Extension\Core\Type\ChoiceType::class, array(
                 'choices'         => array(
-                    'Divorcé'     => 0,
+                    'Divorcé(é)'  => 0,
                     'Célibataire' => 1,
-                    'Marrié'      => 2
+                    'Marié(é)'    => 2
                 ),
                 'placeholder' => 'Selectionnez la situation matriminial de l\'employé',
             ))
