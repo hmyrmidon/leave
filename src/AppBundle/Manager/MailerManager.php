@@ -66,8 +66,8 @@ class MailerManager extends BaseManager
 
             return $this->mailer->send($message);
         } catch (\Exception $e) {
-            //return $e->getMessage(); 
-            dump($e->getMessage());die;
+            return $e->getMessage(); 
+            //dump($e->getMessage());die;
         }
     }
 
