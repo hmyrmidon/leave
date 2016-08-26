@@ -74,6 +74,7 @@ class DashboardManager extends BaseManager
          * @var CalendarManager $calendarSrv
          */
         $calendarSrv = $this->getServices(CalendarManager::SERVICE_NAME);
+        $employeeRepo = $this->entityManager->getRepository('AppBundle:Employee');
         $sumPending = $this->getSumVacation($user, $current, VacationRequest::PENDING_STATUS);
         $sumRejected = $this->getSumVacation($user, $current, VacationRequest::DENIED_STATUS);
         $sumValidate = $this->getSumVacation($user, $current, VacationRequest::VALIDATE_STATUS);
@@ -92,9 +93,10 @@ class DashboardManager extends BaseManager
                 ];
             }
             $pendingVacations = $vacationSrv->performListData($user);
-            $vacations = $calendarSrv->populate($user);
+            $calendarData = $calendarSrv->populate($user);
             $params['pendingVacations'] = $pendingVacations;
-            $params['data'] = $vacations;
+            $params['data'] = $calendarData;
+            $params['employees'] = $employeeRepo->getEmployeeListByValidator($user);
             $template = ':admin/dashboard:dashboard-validator.html.twig';
         }elseif ($roleHierarchy->isGranted('ROLE_ADMIN', $user)){
             $calendarData = $calendarSrv->populate();
@@ -103,12 +105,14 @@ class DashboardManager extends BaseManager
             ];
             $template = ':admin/dashboard:dashboard-admin.html.twig';
         } else {
+            $calendarData = $calendarSrv->populate($user);
             $params = [
                 'user'=>$user->getEmployee(),
                 'now'=>$current,
                 'sumValidate'=>$sumValidate,
                 'sumPending'=>$sumPending,
                 'sumRejected'=>$sumRejected,
+                'data' => $calendarData
             ];
             $template = ':admin/dashboard:dashboard.html.twig';
         }

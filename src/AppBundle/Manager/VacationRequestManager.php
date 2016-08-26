@@ -9,6 +9,8 @@ use AppBundle\Manager\BaseManager;
 use AppBundle\Entity\VacationRequest;
 use AppBundle\Entity\VacationValidation;
 use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Class VacationRequestManager
@@ -17,6 +19,13 @@ use Doctrine\DBAL\DBALException;
 class VacationRequestManager extends BaseManager
 {
     const SERVICE_NAME = 'app.vacation_request_manager';
+    private $holiday;
+
+    public function __construct(EntityManagerInterface $entityManager, Router $router, HolidayManager $holiday)
+    {
+        parent::__construct($entityManager, $router);
+        $this->holiday = $holiday;
+    }
 
     /**
      * @param VacationRequest $vacation
@@ -60,6 +69,15 @@ class VacationRequestManager extends BaseManager
         $employee = $vacation->getEmployee();
         $team     = $employee->getTeam();
         $status   = $this->performStatus($team, $vacation);
+
+        if($status == VacationRequest::VALIDATE_STATUS){
+            $oldBalance = $employee->getBalance();
+            $days = $this->holiday->getDayCount($vacation->getStartDate(), $vacation->getReturnDate());
+            $newBalance = floatval($oldBalance) - floatval($days);
+            $employee->setBalance($newBalance);
+            $this->save($employee);
+        }
+
         $vacation->setStatus($status);
         $this->save($vacation);
 

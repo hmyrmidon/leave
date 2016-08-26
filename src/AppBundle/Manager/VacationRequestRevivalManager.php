@@ -9,31 +9,40 @@ class VacationRequestRevivalManager extends BaseManager
     const VACATION_REVIVAL_MANAGER = 'app.vacation_request_revival_manager';
 
     /**
-     * 
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     *
+     * @param \Doctrine\ORM\EntityManagerInterface           $entityManager
      * @param \Symfony\Bundle\FrameworkBundle\Routing\Router $router
-     * @param type $eventDispatcher
+     * @param type                                           $eventDispatcher
      */
     public function __construct(\Doctrine\ORM\EntityManagerInterface $entityManager, \Symfony\Bundle\FrameworkBundle\Routing\Router $router, $eventDispatcher) 
     {
         parent::__construct($entityManager, $router);
         $this->eventDispatcher = $eventDispatcher;
     }
-    public function revivalDate(\AppBundle\Entity\VacationRequest $vacation)
+
+    /**
+     * revivalDate
+     */
+    public function revivalDate()
     {
-        
+        $vacations = $this
+            ->entityManager
+            ->getRepository('AppBundle:VacationRequest')
+            ->getVacationBy(['v.status' => 0]);
         $date2          = new \DateTime();
         $dateNewRevival = $date2->format('Y-m-d H:i:s');
-        $date1 = $vacation->getRevival();
-        $withHoliday = 0;
-        $revival     = $this->getDayCount($date1, $dateNewRevival, $withHoliday);
-        if ($revival > 0) {
-            $event = new \AppBundle\Event\RevivalMailEvent($vacation);
-            $this->eventDispatcher->dispatch(\AppBundle\Event\VacationAvailableEvent::REVIVAL_SEND_MAIL, $event);
-            $vacation->setRevival($dateNewRevival);
-            $this->save($vacation);
-            $this->flushAndClear();
+        foreach($vacations as $vacation) {
+            $date1       = $vacation->getRevival();
+            $withHoliday = 0;
+            $revival     = $this->getDayCount($date1, $dateNewRevival, $withHoliday);
+            if ($revival >= 2) {
+                $event = new \AppBundle\Event\RevivalMailEvent($vacation);
+                $this->eventDispatcher->dispatch(\AppBundle\Event\VacationAvailableEvent::REVIVAL_SEND_MAIL, $event);
+                $vacation->setRevival($dateNewRevival);
+                $this->save($vacation);
+            }
         }
+        $this->flushAndClear();
     }
 
     /**
@@ -55,6 +64,12 @@ class VacationRequestRevivalManager extends BaseManager
         return $days;
     }
 
+    /**
+     * @param \DateTime $dateSart
+     * @param \DateTime $dateEnd
+     *
+     * @return int
+     */
     public function countHolidayBetween(\DateTime $dateSart, \DateTime $dateEnd)
     {
         $count = 0;
@@ -70,6 +85,12 @@ class VacationRequestRevivalManager extends BaseManager
         return $count;
     }
 
+    /**
+     * @param     $value
+     * @param int $places
+     *
+     * @return float
+     */
     public function roundUp($value, $places = 0)
     {
         if ($places < 0) {
