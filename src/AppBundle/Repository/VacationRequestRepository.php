@@ -16,18 +16,23 @@ class VacationRequestRepository extends \Doctrine\ORM\EntityRepository
 {
     public function listBy(User $validator, $status = null)
     {
-        $query = "SELECT v, e, t, u FROM AppBundle:VacationRequest v 
+        if(in_array('ROLE_CLIENT',$validator->getRoles())) {
+            $query = "SELECT v FROM AppBundle:VacationRequest v WHERE v.employee = :uid";
+            $params['uid'] = $validator->getEmployee()->getId();
+        } else {
+            $query = "SELECT v, e, t, u FROM AppBundle:VacationRequest v 
                           JOIN v.employee e 
                           JOIN e.team t
                           JOIN t.validator u
                           WHERE u.validator = :uid AND v.id NOT IN (
                             SELECT vc.id FROM AppBundle:VacationValidation vs JOIN vs.vacation vc WHERE vs.manager = :uid
                           ) ";
-        if(!is_null($status)){
-            $query .= ' AND v.status = :status';
-            $params['status'] = $status;
+            if(!is_null($status)){
+                $query .= ' AND v.status = :status';
+                $params['status'] = $status;
+            }
+            $params['uid'] = $validator->getId();
         }
-        $params['uid'] = $validator->getId();
         $list = $this->_em->createQuery($query)
                   ->setParameters($params)
                   ->getResult();

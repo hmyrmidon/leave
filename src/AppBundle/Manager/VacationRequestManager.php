@@ -9,6 +9,8 @@ use AppBundle\Manager\BaseManager;
 use AppBundle\Entity\VacationRequest;
 use AppBundle\Entity\VacationValidation;
 use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
 
 /**
  * Class VacationRequestManager
