@@ -33,7 +33,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group {% if form_errors(form.type) %}has-error{% endif %}">
-                                    {{ form_label(form.type, "label.vacation.employee"|trans({}, 'label'),
+                                    {{ form_label(form.type, "label.vacation.type"|trans({}, 'label'),
                                     { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
                                         {{ form_widget(form.type, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
