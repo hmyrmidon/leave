@@ -9,6 +9,7 @@
 namespace AppBundle\Form\Type;
 
 
+use AppBundle\Entity\Type;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -25,6 +26,11 @@ class VacationType extends AbstractType
                 'class'         => 'AppBundle:Employee',
                 'choice_label'  => 'firstName',
                 'multiple'      =>  false,
+            ))
+            ->add('type', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array(
+                'class'        => 'AppBundle:Type',
+                'choice_label' => 'name',
+                'multiple'     => false,
             ))
             ->add('startDate', DateTimeType::class, ['required'=>true, 'widget'=> 'single_text', 'format'=>'dd/MM/yyyy'])
             ->add('returnDate', DateType::class, ['required' =>true, 'widget' => 'single_text', 'format' =>'dd/MM/yyyy'])

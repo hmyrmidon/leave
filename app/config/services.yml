@@ -88,6 +88,12 @@ services:
             - "@router"
             - "@event_dispatcher"
 
+    app.type_manager:
+        class: 'AppBundle\Manager\TypeManager'
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - "@router"
+
     #Application custom validators
     app.validator.date_range:
         class: 'AppBundle\Validator\Constraints\ConstraintsVacationDateValidator'

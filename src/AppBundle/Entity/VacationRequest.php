@@ -72,6 +72,10 @@ class VacationRequest
      * @ORM\OneToMany(targetEntity="VacationValidation", mappedBy="vacation")
      */
     protected $validation;
+    /**
+     * @ORM\ManyToOne(targetEntity="Type", inversedBy="vacation")
+     */
+    protected $type;
 
     /**
      *
@@ -274,4 +278,21 @@ class VacationRequest
     {
         $this->validation->removeElement($validation);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param mixed $type
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
 }
