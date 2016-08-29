@@ -39,6 +39,7 @@
                                 <th>{{ 'label.vacation.start_date'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.return_date'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.day_count'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.type'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.reason'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.status'|trans({}, 'label') }}</th>
                                 <th></th>
@@ -57,6 +58,7 @@
                                     <td>{{ item.startDate|date('d/m/Y') }}</td>
                                     <td>{{ item.returnDate|date('d/m/Y') }}</td>
                                     <td>{{ item.startDate|dayCount(item.returnDate) }}</td>
+                                    <td>{{ item.type.name }}</td>
                                     <td>{{ item.reason }}</td>
                                     <td>{{ item.status|status|raw }}</td>
                                     <td>

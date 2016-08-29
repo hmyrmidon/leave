@@ -10,6 +10,7 @@ message:
             element: Voulez-vous vraiment supprimer cet élément
             team: Voulez-vous vraiment supprimer cet équipe
             holiday: Voulez-vous que cette date ne figure plus dans la liste des jours fériés
+            type: Voulez-vous vraiment supprimer ce type de congé
         cancel: Voulez-vous vraiment annuler les modifications
     success:
         delete:
@@ -18,6 +19,7 @@ message:
             user: l'utilisateur à bien été supprimé.
             team: l'équipe a bien été supprimé.
             employee: l'employé a bien été supprimé.
+            type: le type a bien été supprimé.
         create:
             holiday: "{1}La date %date% a été enregistré comme jour férié|[2,Inf[Les dates %date% ont été enregistré comme jour férié"
         edit:
@@ -26,6 +28,7 @@ message:
             user: l'utilisateur à bien été ajouté.
             team: l'équipe a bien été ajouté.
             employee: l'employé a bien été ajouté.
+            type: Vos modifications sont bien pris en compte.
         update:
             user: l'utilisateur à bien été modifié.
             team: l'équipe a bien été modifié.

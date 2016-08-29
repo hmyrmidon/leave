@@ -11,6 +11,7 @@
             </ul>
         </li>
         {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('app_type') }}"><i class="fa fa-ticket"></i> {{ 'label.vacation.type'|trans({}, 'label') }}</a></li>
             <li><a href="{{ path('app_user') }}"><i class="fa fa-user"></i> {{ 'label.title.user'|trans({}, 'label') }}</a></li>
             <li><a href="{{ path('app_employee') }}"><i class="fa fa-user-secret"></i> {{ 'label.title.employee'|trans({}, 'label') }}</a></li>
             <li><a href="{{ path('app_team') }}"><i class="fa fa-group"></i> {{ 'label.title.team'|trans({}, 'label') }} </a></li>

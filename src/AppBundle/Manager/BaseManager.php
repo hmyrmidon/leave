@@ -37,7 +37,7 @@ class BaseManager
 
     /**
      * 
-     * @param type $entity
+     * @param mixed $entity
      */
     public function delete($entity)
     {
@@ -51,4 +51,5 @@ class BaseManager
     {
         $this->entityManager->flush();
     }
+
 }

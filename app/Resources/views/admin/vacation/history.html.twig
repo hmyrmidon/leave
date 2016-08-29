@@ -46,6 +46,7 @@
                                 <th>{{ 'label.vacation.return_date'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.reason'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.day_count'|trans({}, 'label') }}</th>
+                                <th>{{ 'label.vacation.type'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.status'|trans({}, 'label') }}</th>
                                 <th></th>
                             </tr>
@@ -58,6 +59,7 @@
                                     <td>{{ item.returnDate|date('d/m/Y') }}</td>
                                     <td>{{ item.reason }}</td>
                                     <td>{{ item.startDate|dayCount(item.returnDate) }}</td>
+                                    <td>{{ item.type.name }}</td>
                                     <td><span class="hidden">{{ item.status }}</span>{{ item.status|status|raw }}</td>
                                     <td>{{ item.status|delete('data-url="'~path('app_vacation_delete', {id:item.id})~'" data-toggle="tooltip" data-placement="left" data-text=""')|raw }}</td>
                                 </tr>
