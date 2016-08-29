@@ -7,9 +7,16 @@ class VacationEmployeeListener
 {
     protected $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    /**
+     *
+     * @var MailerManager $mailerManager
+     */
+    private $mailerManager;
+
+    public function __construct(EntityManagerInterface $entityManager, \AppBundle\Manager\MailerManager $mailerManager)
     {
         $this->entityManager = $entityManager;
+        $this->mailerManager = $mailerManager;
     }
 
     public function onCreateEmployee(\AppBundle\Event\VacationEmployeeEvent $event)
@@ -17,10 +24,9 @@ class VacationEmployeeListener
         /**
          * @var AppBundle\Entity\Employee $employee
          */
-        $eventOpt = $event->getOption();
+        $eventOpt  = $event->getOption();
         $employee  = $eventOpt->employee;
-
-        $lastName = $employee->getLastName();
+        $lastName  = $employee->getLastName();
         $firstName = $employee->getFirstName();
 
         $username  = $eventOpt->username;
@@ -31,7 +37,7 @@ class VacationEmployeeListener
         $user = new \AppBundle\Entity\User(); 
         $user->setUsername($username);
         $user->setEmail($email);
-        $user->setPassword($password);
+        $pass = $user->setPassword($password);
         if ($role === "ROLE_ADMIN") {
             $user->setRoles(['ROLE_ADMIN']);
         } elseif ($role === "ROLE_CLIENT") {
@@ -39,14 +45,22 @@ class VacationEmployeeListener
         } else {
             $user->setRoles(['ROLE_VALIDATEUR']);
         }
-
         $user->setLastName($lastName);
         $user->setFirstName($firstName);
         $user->setEnabled(1);
-
+        $subjectMail      = 'Email de première connexion';
+        $templatingMail   = 'admin/emails/emailCreateUser.html.twig';
+        $sendMail         = $user->getEmail();
+        $fromMail         = 'contact@bocasay.fr';
         $this->entityManager->persist($user);
         $employee->setUser($user);
-
+        $this->mailerManager->sendEmail($user, $pass, $subjectMail, $templatingMail, $sendMail, $fromMail);
+        if ($role === "ROLE_VALIDATEUR") {
+            $validator = new \AppBundle\Entity\TeamValidator();
+            $validator->setValidator($employee->getUser());
+            $validator->setTeam($employee->getTeam());
+            $this->entityManager->persist($validator);
+        }
         $this->entityManager->flush();
 
     }

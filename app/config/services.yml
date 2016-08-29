@@ -108,6 +108,7 @@ services:
             class: 'AppBundle\Listener\VacationEmployeeListener'
             arguments:
                 - "@doctrine.orm.entity_manager"
+                - "@app.mailer_manager"
             tags:
                 - { name : "kernel.event_listener" , event: "app.on_user_process", method: "onCreateEmployee"}
                 - { name : "kernel.event_listener" , event: "app.on_user_update", method: "onUpdateEmployee"}

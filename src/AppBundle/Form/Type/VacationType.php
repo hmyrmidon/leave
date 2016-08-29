@@ -21,6 +21,11 @@ class VacationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('employee', \Symfony\Bridge\Doctrine\Form\Type\EntityType::class, array(
+                'class'         => 'AppBundle:Employee',
+                'choice_label'  => 'firstName',
+                'multiple'      =>  false,
+            ))
             ->add('startDate', DateTimeType::class, ['required'=>true, 'widget'=> 'single_text', 'format'=>'dd/MM/yyyy'])
             ->add('returnDate', DateType::class, ['required' =>true, 'widget' => 'single_text', 'format' =>'dd/MM/yyyy'])
             ->add('reason', TextType::class, ['required'=>false]);
