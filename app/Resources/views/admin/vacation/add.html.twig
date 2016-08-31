@@ -24,12 +24,17 @@
                         <div class="x_content">
                             <br />
                             {{ display_errors.all_form_errors(form) }}
+                            {{ dump(form_errors(form)) }}
                             <form method="post" action="{{ path('app_vacation_create') }}" class="form-horizontal form-label-left" novalidate="novalidate">
                                 <div class="form-group {% if form_errors(form.employee) %}has-error{% endif %}">
                                     {{ form_label(form.employee, "label.vacation.employee"|trans({}, 'label'),
                                     { 'label_attr': {'class':'control-label col-md-3 col-sm-3 col-xs-12'} }) }}
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        {{ form_widget(form.employee, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {% if is_granted('ROLE_CLIENT') %}
+                                            {{ form_widget(form.employee, { 'attr': {'class': 'form-control col-md-7 col-xs-12', 'readonly': 'readonly'} }) }}
+                                        {% else %}
+                                            {{ form_widget(form.employee, { 'attr': {'class': 'form-control col-md-7 col-xs-12'} }) }}
+                                        {% endif %}
                                     </div>
                                 </div>
                                 <div class="form-group {% if form_errors(form.type) %}has-error{% endif %}">

@@ -33,9 +33,8 @@ class VacationRequestManager extends BaseManager
      *
      * @return VacationRequest
      */
-    public function saveVacation(VacationRequest $vacation, Employee $employee)
+    public function saveVacation(VacationRequest $vacation)
     {
-        $vacation->setEmployee($employee);
         $vacation->setStatus(VacationRequest::PENDING_STATUS);
         $vacation->setRecovery(0);
         $now = new \DateTime();

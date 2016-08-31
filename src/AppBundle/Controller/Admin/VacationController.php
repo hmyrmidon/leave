@@ -75,14 +75,18 @@ class VacationController extends Controller
      */
     public function createVacationAction(Request $request)
     {
-        $user = $this->getUser();
         $entityManager = $this->getDoctrine()->getManager();
         $vacation = new VacationRequest();
+        $user = $this->getUser();
+        $role = $user->getRoles();
         $form = $this->createForm(VacationType::class, $vacation);
-        $handler = new VacationHandler($form, $request, $entityManager, $user);
-        if($handler->process($user)){
+        $handler = new \AppBundle\Form\Handler\BaseHandler($form, $request, $entityManager);
+        if($handler->process()){
             $ogcVacationRequestManager = $this->get(VacationRequestManager::SERVICE_NAME);
-            $ogcVacationRequestManager->saveVacation($vacation, $user->getEmployee());
+            $ogcVacationRequestManager->saveVacation($vacation);
+            if (in_array("ROLE_CLIENT", $role)) {
+                $employee = $vacation->getEmployee(); dump($employee);die;
+            }
 
             $event = new OnSubmitVacationRequestEvent($vacation);
             $this->get('event_dispatcher')->dispatch(VacationAvailableEvent::ON_SUBMIT_VACATION, $event);

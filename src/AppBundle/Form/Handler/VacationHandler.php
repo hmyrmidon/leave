@@ -26,7 +26,7 @@ class VacationHandler extends BaseHandler
      * @return bool
      */
     public function process()
-    {
+    { 
         $this->form->handleRequest($this->request);
         if ($this->request->isMethod('post') && $this->form->isValid() && $this->user->getEmployee()) {
             $this->entity = $this->form->getData();
@@ -34,7 +34,6 @@ class VacationHandler extends BaseHandler
             return true;
         }
         $error = $this->form->getErrors();
-
         return false;
     }
 }
