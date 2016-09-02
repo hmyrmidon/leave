@@ -32,31 +32,27 @@
                                width="100%">
                             <thead>
                             <tr>
-                                <th><input type="checkbox" id="check-all" class="flat"></th>
+                                {#<th><input type="checkbox" id="check-all" class="flat"></th>#}
                                 <th>{{ 'label.employee.lastname'|trans({}, 'label') }}</th>
-                                <th>{{ 'label.employee.firstname'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.team.name'|trans({}, 'label') }}</th>
-                                <th>{{ 'label.vacation.start_date'|trans({}, 'label') }}</th>
-                                <th>{{ 'label.vacation.return_date'|trans({}, 'label') }}</th>
+                                <th>{{ 'Date'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.day_count'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.type'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.reason'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.status'|trans({}, 'label') }}</th>
                                 <th></th>
-                                <th class="bulk-actions" colspan="7">
-                                    <a class="antoo" style="color:#fff; font-weight:500;"> Sélectionnés ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                                </th>
+                                {#<th class="bulk-actions" colspan="7">#}
+                                    {#<a class="antoo" style="color:#fff; font-weight:500;"> Sélectionnés ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>#}
+                                {#</th>#}
                             </tr>
                             </thead>
                             <tbody>
                             {% for item in vacations %}
                                 <tr>
-                                    <td><input type="checkbox" class="flat" name="table_records"></td>
-                                    <td>{{ item.employee.lastname }}</td>
-                                    <td>{{ item.employee.firstName }}</td>
+                                    {#<td><input type="checkbox" class="flat" name="table_records"></td>#}
+                                    <td>{{ item.employee.lastname ~ ' ' ~ item.employee.firstName }}</td>
                                     <td>{{ item.employee.team.name }}</td>
-                                    <td>{{ item.startDate|date('d/m/Y') }}</td>
-                                    <td>{{ item.returnDate|date('d/m/Y') }}</td>
+                                    <td>{{ item.startDate|date('d/m/Y') ~ ' au ' ~ item.returnDate|date('d/m/Y') }}</td>
                                     <td>{{ item.startDate|dayCount(item.returnDate) }}</td>
                                     <td>{{ item.type.name }}</td>
                                     <td>{{ item.reason }}</td>
@@ -95,7 +91,7 @@
                                 'info': false,
                                 'order': [[1, 'asc']],
                                 'columnDefs': [
-                                    {orderable: false, targets: [0]},
+//                                    {orderable: false, targets: [0]},
                                     {orderable: false, targets: [$('#datatable-responsive th').length - 1]}
                                 ]
                             });

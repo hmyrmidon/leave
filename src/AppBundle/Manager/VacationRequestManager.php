@@ -3,6 +3,7 @@
 namespace AppBundle\Manager;
 
 use AppBundle\Entity\Team;
+use AppBundle\Entity\Type;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Employee;
 use AppBundle\Manager\BaseManager;
@@ -72,7 +73,11 @@ class VacationRequestManager extends BaseManager
 
         if($status == VacationRequest::VALIDATE_STATUS){
             $oldBalance = $employee->getBalance();
-            $days = $this->holiday->getDayCount($vacation->getStartDate(), $vacation->getReturnDate());
+            $type = $vacation->getType();
+            $days = 0;
+            if($type->isDeductable()){
+                $days = $this->holiday->getDayCount($vacation->getStartDate(), $vacation->getReturnDate());
+            }
             $newBalance = floatval($oldBalance) - floatval($days);
             $employee->setBalance($newBalance);
             $this->save($employee);
