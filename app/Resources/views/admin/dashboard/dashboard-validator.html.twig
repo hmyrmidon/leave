@@ -1,0 +1,37 @@
+{% extends ":admin/dashboard:dashboard.html.twig" %}
+
+{% block top_tiles %}
+    {% if is_granted('ROLE_CLIENT') %}
+        {{ parent() }}
+    {% endif %}
+{% endblock top_tiles %}
+
+{% block infos %}
+    <div class="col-md-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Planning de congés</h2>
+                <div class="pull-right">
+                    Statut:
+                    <i id="pending" class="fa fa-square fa-lg legend_pending_event"></i>En attente
+                    <i id="validate" class="fa fa-square fa-lg legend_validate_event"></i>Validé
+                    <i id="denied" class="fa fa-square fa-lg legend_denied_event"></i>Refusé
+                </div>
+                <div class="form-group col-md-4 col-sm-4 col-xs-12">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <select class="planning_select form-control">
+                            <option value=""></option>
+                            {% for employee in employees %}
+                                <option class="has-feedback-left" value="{{ employee.id }}"><span class="fa fa-user form-control-feedback lead"></span>{{ employee.firstName ~ ' ' ~ employee.lastName }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <div id='calendar'></div>
+            </div>
+        </div>
+    </div>
+{% endblock infos %}

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {% block title %}<title>{% block title_content %}{{ 'label.app.name'|trans({}, 'label') }}{% endblock title_content %}</title>{% endblock title %}
+    <link href="{{ asset('admin/img/ico.JPG') }}" type="image/jpg" rel="shortcut icon">
+    {% block stylesheet %}
+        <!-- Bootstrap -->
+        <link href="{{ asset('plugins/bootstrap/dist/css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Font Awesome -->
+        <link href="{{ asset('plugins/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+        <!-- NProgress -->
+        <link href="{{ asset('plugins/nprogress/nprogress.css') }}" rel="stylesheet">
+        <!-- iCheck -->
+        <link href="{{ asset('plugins/iCheck/skins/flat/green.css') }}" rel="stylesheet">
+        <!-- bootstrap-progressbar -->
+        <link href="{{ asset('plugins/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css') }}" rel="stylesheet">
+        <!-- JQVMap -->
+        <link href="{{ asset('plugins/jqvmap/dist/jqvmap.min.css') }}" rel="stylesheet"/>
+        <!-- Custom Theme Style -->
+        <link href="{{ asset('plugins/gentelella/build/css/custom.css') }}" rel="stylesheet">
+        <!-- Datatable bootstrap -->
+        <link rel="stylesheet" href="{{ asset('plugins/datatables/dataTables.bootstrap.css') }}" rel="stylesheet">
+        {# Custom css color#}
+        <link rel="stylesheet" href="{{ asset('admin/css/colors.css') }}" rel="stylesheet">
+    {% endblock stylesheet %}
+</head>
+{% block body %}
+    <body class="nav-md">
+    {% block container %}
+        <div class="container body">
+            {% block main_content %}
+                <div class="main_container">
+                    {% block sidebar %}
+                        <div class="col-md-3 left_col">
+                            <div class="left_col scroll-view">
+                                <div class="navbar nav_title" style="border: 0;">
+                                    <a href="#" class="site_title"><i class="glyphicon glyphicon-leaf" ></i> <span>Gestion de congé</span></a>
+                                </div>
+
+                                <div class="clearfix"></div>
+
+                                <!-- sidebar menu -->
+                                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                                    {% include "::sidebar-menu.html.twig" %}
+                                </div>
+                                <!-- /sidebar menu -->
+
+                                <!-- /menu footer buttons -->
+                                <div class="sidebar-footer hidden-small">
+                                    <a data-toggle="tooltip" data-placement="top" title="Settings">
+                                        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                                        <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Lock">
+                                        <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                                    </a>
+                                    <a data-toggle="tooltip" data-placement="top" title="Logout">
+                                        <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                                    </a>
+                                </div>
+                                <!-- /menu footer buttons -->
+                            </div>
+                        </div>
+                    {% endblock sidebar %}
+                    {% block top_navigation %}
+                        <!-- top navigation -->
+                        <div class="top_nav">
+                            <div class="nav_menu">
+                                <nav>
+                                    <div class="nav toggle">
+                                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                                    </div>
+
+                                    <ul class="nav navbar-nav navbar-right">
+                                        <li class="">
+                                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                {{ 'label.title.welcome'|trans({'%user%': app.user.username }, 'label') }}
+                                                <span class=" fa fa-angle-down"></span>
+                                            </a>
+                                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                                <li><a href="{{ path('app_profil') }}">{{ 'label.edit_profil'|trans({}, 'label') }}</a></li>
+                                                <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out pull-right"></i>{{ 'label.logout'|trans({}, 'label') }}</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- /top navigation -->
+                    {% endblock top_navigation %}
+                    {% block page_content %}
+                        <!-- page content -->
+                        <!-- /page content -->
+                    {% endblock page_content %}
+                    {% block footer %}
+                        <!-- footer content -->
+                        <footer>
+                            <div class="pull-right">
+                                Gestion de congé - ©2016 <a href="http://www.bocasay.com">Bocasay_</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </footer>
+                        <!-- /footer content -->
+                    {% endblock footer %}
+                </div>
+                {% block modal %}
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog modal-sm" style="width: 400px">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal"></button><br/>
+                                    <p><i class="fa fa-warning fa-lg bocasay_yellow"></i> {% block modal_body_content %}{% endblock modal_body_content %}<span></span> ?</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <form>
+                                        <button class="btn btn-primary btn-sm" data-dismiss="modal"><i class="fa fa-times"></i></button>
+                                        <button type="submit" class="btn btn-success btn-sm"><i class="fa fa-check"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endblock modal %}
+            {% endblock main_content %}
+        </div>
+    {% endblock container %}
+    {% block javascript %}
+        <!-- jQuery -->
+        <script src="{{ asset('plugins/jquery/dist/jquery.js') }}"></script>
+        <!-- Bootstrap -->
+        <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
+        <script src="{{ asset('plugins/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+        <!-- FastClick -->
+        <script src="{{ asset('plugins/fastclick/lib/fastclick.js') }}"></script>
+        <!-- bootstrap-progressbar -->
+        <script src="{{ asset('plugins/bootstrap-progressbar/bootstrap-progressbar.min.js') }}"></script>
+        <!-- iCheck -->
+        <script src="{{ asset('plugins/iCheck/icheck.min.js') }}"></script>
+        <!-- DateJS -->
+        <script src="{{ asset('plugins/DateJS/build/date.js') }}"></script>
+        <!-- bootstrap-daterangepicker -->
+        <script src="{{ asset('plugins/moment/moment.js') }}"></script>
+        <script src="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
+        <!-- Custom Theme Scripts -->
+        <script src="{{ asset('plugins/gentelella/build/js/custom.js') }}"></script>
+        <script type="text/javascript">
+            $(document).on('click', ".btn-delete, .btn-edit", function(e){
+                var url = $(this).attr('data-url');
+                var text = $(this).attr('data-text');
+                $('#myModal .modal-footer form').attr('action', url);
+                $('#myModal .modal-body span').text(text);
+                $("#myModal").modal({backdrop: true});
+                return false;
+            });
+        </script>
+    {% endblock javascript %}
+    </body>
+{% endblock body %}
+</html>

@@ -1,0 +1,21 @@
+<div class="menu_section">
+    <ul class="nav side-menu">
+        <li><a href="{{ path('app_dashboard') }}"><i class="fa fa-th-large"></i> {{ 'label.title.dashboard'|trans({}, 'label') }} </a>
+        </li>
+        <li><a><i class="fa fa-table"></i> {{ 'label.title.vacation_request'|trans({}, 'label') }} <span class="fa fa-chevron-down"></span></a>
+            <ul class="nav child_menu">
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_VALIDATEUR') %}
+                    <li><a href="{{ path('app_vacation') }}">{{ 'label.title.to_validate'|trans({}, 'label') }}</a></li>
+                {% endif %}
+                <li><a href="{{ path('app_vacation_history') }}">{{ 'label.title.history'|trans({}, 'label') }}</a></li>
+            </ul>
+        </li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li><a href="{{ path('app_type') }}"><i class="fa fa-ticket"></i> {{ 'label.vacation.type'|trans({}, 'label') }}</a></li>
+            <li><a href="{{ path('app_user') }}"><i class="fa fa-user"></i> {{ 'label.title.user'|trans({}, 'label') }}</a></li>
+            <li><a href="{{ path('app_employee') }}"><i class="fa fa-user-secret"></i> {{ 'label.title.employee'|trans({}, 'label') }}</a></li>
+            <li><a href="{{ path('app_team') }}"><i class="fa fa-group"></i> {{ 'label.title.team'|trans({}, 'label') }} </a></li>
+            <li><a href="{{ path('app_holiday') }}"><i class="fa fa-calendar-check-o"></i> {{ 'label.title.holiday'|transchoice(1, {}, 'label') }} </a></li>
+        {% endif %}
+    </ul>
+</div>

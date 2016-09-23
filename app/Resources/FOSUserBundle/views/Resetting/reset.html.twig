@@ -1,0 +1,49 @@
+{% extends "::auth-base-layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block fos_user_content %}
+    <div class="login_wrapper">
+        <div class="animate form login_form">
+            <section class="login_content">
+                <form id="_login-form" action="{{ path('fos_user_resetting_reset', {'token': token}) }}" method="post" class="fos_user_resetting_reset">
+                    <h1>{{ 'label.title.login'|trans({}, 'label') }}</h1>
+                    {{ form_widget(form._token) }}
+                    <div class="form-group has-feedback">
+                        {{ form_widget(form.plainPassword.first, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'form.new_password'|trans({}, 'useradmin'),
+                    'data-error': 'message.password.notblank'|trans({}, 'messages'),
+                    'data-min-length': 'message.length.password.too.short'|trans({}, 'messages')
+                }
+            })
+                        }}
+                    </div>
+                    <div class="form-group has-feedback">
+                        {{ form_widget(form.plainPassword.second, {
+                'attr': {
+                    'class': 'form-control',
+                    'placeholder': 'form.new_password_confirmation'|trans({}, 'useradmin'),
+                    'data-error': 'message.confirm.password'|trans({}, 'messages'),
+                    'data-error-equalTo': 'message.confirm.password.equalTo'|trans({}, 'messages')
+                }
+            })
+                        }}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button type="submit" class="btn btn-dark btn-block btn-flat" id="_submit" name="_submit">{% trans from 'FOSUserBundle' %}resetting.reset.submit{% endtrans %}</button>
+                        </div><!-- /.col -->
+                    </div>
+                    <div class="separator">
+                        <div class="clearfix"></div>
+                        <div>
+                            <h1><i class="fa fa-paw"></i> Bocasay_</h1>
+                            <p>©2016 All Rights Reserved. Bocasay Team Agency. Privacy and Terms</p>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
+{% endblock fos_user_content %}
