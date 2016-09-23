@@ -8,6 +8,7 @@ label:
         sended_date: Date de la demande
         employee: Nom de l'employé
         type: Type de congé
+        save: Enregistrer
     employee:
         username: Nom d'utilisateur
         lastname: Nom

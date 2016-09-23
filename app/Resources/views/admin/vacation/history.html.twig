@@ -27,7 +27,7 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
                     <div class="x_title">
-                        <h2>{{ 'label.title.history'|trans({}, 'label') }}<span class="badge bg-green"
+                        <h2>{{ 'label.title.history'|trans({}, 'label') }}&nbsp;<span class="badge bg-green"
                                                               style="color: white">{{ list|length }}</span></h2>
                         <div class="box-tool pull-right">
                             {{ addButton('fa fa-plus', path('app_vacation_create'), 'Nouvelle demande', 'btn btn-success btn-xs')|raw }}
@@ -42,10 +42,9 @@
                             <thead>
                             <tr class="">
                                 <th>{{ 'label.vacation.sended_date'|trans({}, 'label') }}</th>
-                                <th>{{ 'label.vacation.start_date'|trans({}, 'label') }}</th>
-                                <th>{{ 'label.vacation.return_date'|trans({}, 'label') }}</th>
+                                <th>{{ 'Date'|trans({}, 'label') }}</th>
+                                <th>{{ 'Nb jours'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.reason'|trans({}, 'label') }}</th>
-                                <th>{{ 'label.vacation.day_count'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.type'|trans({}, 'label') }}</th>
                                 <th>{{ 'label.vacation.status'|trans({}, 'label') }}</th>
                                 <th></th>
@@ -55,10 +54,9 @@
                             {% for item in list %}
                                 <tr>
                                     <td>{{ item.created|date('d/m/Y') }}</td>
-                                    <td>{{ item.startDate|date('d/m/Y') }}</td>
-                                    <td>{{ item.returnDate|date('d/m/Y') }}</td>
-                                    <td>{{ item.reason }}</td>
+                                    <td>{{ item.startDate|date('d/m/Y') ~ ' au ' ~ item.returnDate|date('d/m/Y') }}</td>
                                     <td>{{ item.startDate|dayCount(item.returnDate) }}</td>
+                                    <td>{{ item.reason }}</td>
                                     <td>{{ item.type.name }}</td>
                                     <td><span class="hidden">{{ item.status }}</span>{{ item.status|status|raw }}</td>
                                     <td>{{ item.status|delete('data-url="'~path('app_vacation_delete', {id:item.id})~'" data-toggle="tooltip" data-placement="left" data-text=""')|raw }}</td>

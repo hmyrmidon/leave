@@ -62,7 +62,7 @@ class ProjectExtension extends \Twig_Extension
                 $element = '<i class="fa fa-close fa-lg red"></i>';
                 break;
             default:
-                $element = '<i class="fa fa-spin fa-refresh fa-lg purple"></i>';
+                $element = '<i class="fa fa-refresh fa-lg purple"></i>';
                 break;
         }
 
