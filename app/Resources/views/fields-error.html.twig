@@ -2,7 +2,7 @@
     {% import _self as forms %}
     {% if form_errors(form) is not empty %}
         {% for error in form.vars.errors %}
-        <li>{{ error.message|lower|trim|trans({}, 'message') }}</li>
+        <li>{{ error.message|lower|trim|trans({}, 'messages') }}</li>
         {% endfor %}
     {% endif %}
     {% for children in form.children %}

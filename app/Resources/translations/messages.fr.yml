@@ -33,4 +33,7 @@ message:
             user: l'utilisateur à bien été modifié.
             team: l'équipe a bien été modifié.
             employee: l'employé a bien été modifié.
+    form:
+        email:
+            notvalid: Veuillez vérifier votre adresse email
             
